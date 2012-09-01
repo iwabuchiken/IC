@@ -1,6 +1,10 @@
 package ic.utils;
 
 
+
+import ic.listeners.DialogButtonOnClickListener;
+import ic.listeners.DialogButtonOnTouchListener;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileFilter;
@@ -17,6 +21,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -51,9 +56,6 @@ import android.widget.Toast;
 import android.os.AsyncTask;
 
 import org.apache.commons.lang.StringUtils;
-
-import cm2.listeners.DialogButtonOnClickListener;
-import cm2.listeners.DialogButtonOnTouchListener;
 
 public class Methods {
 
