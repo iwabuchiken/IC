@@ -5,6 +5,7 @@ import java.util.List;
 
 import ic.items.CL;
 import ic.utils.DBUtils;
+import ic.utils.MainListAdapter;
 import ic.utils.Methods;
 import android.app.Activity;
 import android.app.ListActivity;
@@ -73,6 +74,8 @@ public class MainActv extends ListActivity {
 		 * 4. Build list
 		 * 
 		 * 5. Set list to adapter
+		 * 
+		 * 6. Set adapter to view
 		 ********************************/
 		DBUtils dbu = new DBUtils(this, MainActv.dbName);
 		
@@ -145,7 +148,16 @@ public class MainActv extends ListActivity {
 		/********************************
 		 * 5. Set list to adapter
 		 ********************************/
+		MainListAdapter mlAdp = new MainListAdapter(
+				this,
+				R.layout.list_row_main,
+				CLList
+				);
 		
+		/********************************
+		 * 6. Set adapter to view
+		 ********************************/
+		setListAdapter(mlAdp);
 		
 	}//private void show_list()
 
