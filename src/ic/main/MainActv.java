@@ -1,3 +1,7 @@
+/*********************************
+ * IC=ItemChecker
+ * Date=20120914_205758
+ *********************************/
 package ic.main;
 
 import java.util.ArrayList;
@@ -5,6 +9,7 @@ import java.util.List;
 
 import ic.items.CL;
 import ic.utils.DBUtils;
+import ic.utils.MainListAdapter;
 import ic.utils.Methods;
 import android.app.Activity;
 import android.app.ListActivity;
@@ -38,9 +43,9 @@ public class MainActv extends ListActivity {
 	// items
 	public static String tableName_items = "items";
 	
-	public static String[] cols_items =			{"text",	"serial_num",	"list_id"};
+	public static String[] cols_items =			{"text", "serial_num",	"list_id"};
 	
-	public static String[] col_types_items = {"TEXT", "INTEGER",		"INTEGER"};
+	public static String[] col_types_items = {"TEXT", 	 "INTEGER",		"INTEGER"};
 
 
     /** Called when the activity is first created. */
@@ -73,6 +78,8 @@ public class MainActv extends ListActivity {
 		 * 4. Build list
 		 * 
 		 * 5. Set list to adapter
+		 * 
+		 * 6. Set adapter to view
 		 ********************************/
 		DBUtils dbu = new DBUtils(this, MainActv.dbName);
 		
@@ -145,7 +152,16 @@ public class MainActv extends ListActivity {
 		/********************************
 		 * 5. Set list to adapter
 		 ********************************/
+		MainListAdapter mlAdp = new MainListAdapter(
+				this,
+				R.layout.list_row_main,
+				CLList
+				);
 		
+		/********************************
+		 * 6. Set adapter to view
+		 ********************************/
+		setListAdapter(mlAdp);
 		
 	}//private void show_list()
 

@@ -1,6 +1,6 @@
 a
-cd C:\WORKS\WORKSPACES_ANDROID\IC
-C:\WORKS\PROGRAMS\FreeMind\FreeMind.exe C:\WORKS\WORKSPACES_ANDROID\FM\IC\IC.mm
+cd C:\WORKS\WS\WS_Android~\IC
+C:\WORKS\PROGRAMS\FreeMind\FreeMind.exe C:\WORKS\WS\WS_Android~\FM\IC\IC.mm
 gitk
 
 
