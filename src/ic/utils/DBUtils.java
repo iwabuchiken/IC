@@ -3,6 +3,8 @@ package ic.utils;
 
 
 
+import ic.main.MainActv;
+
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -463,6 +465,57 @@ public class DBUtils extends SQLiteOpenHelper{
 		//return false;
 		
 	}//public insertData(String tableName, String[] columnNames, String[] values)
+
+	public boolean insertData_genre(SQLiteDatabase wdb, String genre_name) {
+		/*----------------------------
+		* 1. Insert data
+		----------------------------*/
+		long created_at = Methods.getMillSeconds_now();
+		long modified_at = Methods.getMillSeconds_now();
+
+		try {
+			// Start transaction
+			wdb.beginTransaction();
+			
+			// ContentValues
+			ContentValues val = new ContentValues();
+			
+			// Put values
+			val.put("created_at", created_at);		// file_name
+
+			val.put("modified_at", modified_at);		// date_added
+			val.put(MainActv.cols_genres[0], genre_name);		// date_modified
+			
+			// Insert data
+			wdb.insert(MainActv.tableName_genres, null, val);
+			
+			// Set as successful
+			wdb.setTransactionSuccessful();
+			
+			// End transaction
+			wdb.endTransaction();
+			
+			// Log
+			Log.d("DBUtils.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "Transaction => Ends");
+			
+			
+			return true;
+		
+		} catch (Exception e) {
+			// Log
+			Log.e("DBUtils.java" + "["
+			+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+			+ "]", "Exception! => " + e.toString());
+			
+			return false;
+		}//try
+		
+		////debug
+		//return false;
+		
+	}//public boolean insertData_genre
 
 	public boolean updateData(SQLiteDatabase wdb, String tableName) {
 		/*----------------------------

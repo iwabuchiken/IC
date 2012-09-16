@@ -4,6 +4,9 @@ package ic.utils;
 
 import ic.listeners.DialogButtonOnClickListener;
 import ic.listeners.DialogButtonOnTouchListener;
+import ic.listeners.DialogOnItemClickListener;
+import ic.main.MainActv;
+import ic.main.R;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -65,76 +68,18 @@ public class Methods {
 	/****************************************
 	 * Enums
 	 ****************************************/
-	public static enum DialogTags {
+	public static enum DialogButtonTags {
 		// Generics
 		dlg_generic_dismiss, dlg_generic_dismiss_second_dialog, dlg_generic_dismiss_third_dialog,
+
+		// dlg_register_genre.xml
+		dlg_register_genre_bt_ok,
 		
-		
-		// dlg_create_folder.xml
-		dlg_create_folder_ok, dlg_create_folder_cancel,
-
-		// dlg_input_empty.xml
-		dlg_input_empty_reenter, dlg_input_empty_cancel,
-		
-		// dlg_confirm_create_folder.xml
-		dlg_confirm_create_folder_ok, dlg_confirm_create_folder_cancel,
-
-		// dlg_confirm_remove_folder.xml
-		dlg_confirm_remove_folder_ok, dlg_confirm_remove_folder_cancel,
-
-		// dlg_drop_table.xml
-		dlg_drop_table_btn_cancel, dlg_drop_table,
-		
-		// dlg_confirm_drop.xml
-		dlg_confirm_drop_table_btn_ok, dlg_confirm_drop_table_btn_cancel,
-		
-		// dlg_add_memos.xml
-		dlg_add_memos_bt_add, dlg_add_memos_bt_cancel, dlg_add_memos_bt_patterns,
-		dlg_add_memos_gv,
-
-		// dlg_move_files.xml
-		dlg_move_files_move, dlg_move_files,
-		
-		// dlg_confirm_move_files.xml	=> ok, cancel, dlg tag
-		dlg_confirm_move_files_ok, dlg_confirm_move_files_cancel, dlg_confirm_move_files,
-
-		// dlg_item_menu.xml
-		dlg_item_menu_bt_cancel, dlg_item_menu,
-
-		// dlg_create_table.xml
-		dlg_create_table_bt_create,
-
-		// dlg_memo_patterns.xml
-		dlg_memo_patterns,
-		
-		// dlg_register_patterns.xml
-		dlg_register_patterns_register,
-
-		// dlg_search.xml
-		dlg_search, dlg_search_ok,
-
-		// dlg_admin_patterns.xml
-
-		// dlg_confirm_delete_patterns.xml
-		dlg_confirm_delete_patterns_ok,
-		
-	}//public static enum DialogTags
+	}//public static enum DialogButtonTags
 	
 	public static enum DialogItemTags {
-		// dlg_moveFiles(Activity actv)
-		dlg_move_files,
-		
-		// dlg_add_memos.xml
-		dlg_add_memos_gv,
-
-		// dlg_db_admin.xml
-		dlg_db_admin_lv,
-
-		// dlg_admin_patterns.xml
-		dlg_admin_patterns_lv,
-
-		// dlg_delete_patterns.xml
-		dlg_delete_patterns_gv,
+		// dlg_register.xml
+		dlg_register_lv,
 		
 	}//public static enum DialogItemTags
 	
@@ -628,7 +573,6 @@ public class Methods {
 		
 	}//private static boolean insertDataIntoDB()
 
-
 	public static boolean set_pref(Activity actv, String pref_name, String value) {
 //		SharedPreferences prefs = 
 //				actv.getSharedPreferences(pref_name, MainActv.MODE_PRIVATE);
@@ -719,7 +663,7 @@ public class Methods {
 	}//public static boolean set_pref(String pref_name, String value)
 
 	public static Dialog dlg_template_cancel(Activity actv, int layoutId, int titleStringId,
-			int cancelButtonId, DialogTags cancelTag) {
+			int cancelButtonId, DialogButtonTags cancelTag) {
 		/*----------------------------
 		* Steps
 		* 1. Set up
@@ -762,7 +706,7 @@ public class Methods {
 	}//public static Dialog dlg_template_okCancel()
 
 	public static Dialog dlg_template_okCancel(Activity actv, int layoutId, int titleStringId,
-			int okButtonId, int cancelButtonId, DialogTags okTag, DialogTags cancelTag) {
+			int okButtonId, int cancelButtonId, DialogButtonTags okTag, DialogButtonTags cancelTag) {
 		/*----------------------------
 		* Steps
 		* 1. Set up
@@ -850,7 +794,7 @@ public class Methods {
 		
 	}//public static String get_TimeLabel(long millSec)
 
-		public static String  convert_millSeconds2digitsLabel(long millSeconds) {
+	public static String  convert_millSeconds2digitsLabel(long millSeconds) {
 		/*----------------------------
 		 * Steps
 		 * 1. Prepare variables
@@ -903,7 +847,7 @@ public class Methods {
 		
 	}//public static String get_TimeLabel(long millSec)
 
-		public static HashMap<String, Integer> convert_to_histogram(String[] data) {
+	public static HashMap<String, Integer> convert_to_histogram(String[] data) {
 		/*----------------------------
 		 * 1. Get hash map
 		 * 2. Return
@@ -937,5 +881,151 @@ public class Methods {
 		return hm;
 		
 	}//public static HashMap<String, Integer> convert_to_histogram(String[] data)
+
+	public static void dlg_register(Activity actv) {
+		/*----------------------------
+		 * Steps
+		 * 1. Get a dialog
+		 * 2. List view
+		 * 3. Set listener => list
+		 * 9. Show dialog
+			----------------------------*/
+		 
+		Dialog dlg = dlg_template_cancel(actv, 
+				R.layout.dlg_register, R.string.generic_tv_register,
+				R.id.dlg_register_btn_cancel,
+				Methods.DialogButtonTags.dlg_generic_dismiss);
+		
+		/*----------------------------
+		 * 2. List view
+		 * 	1. Get view
+		 * 	1-2. Set tag to view
+		 * 
+		 * 	2. Prepare list data
+		 * 	3. Prepare adapter
+		 * 	4. Set adapter
+			----------------------------*/
+		ListView lv = (ListView) dlg.findViewById(R.id.dlg_register_lv);
+		
+		lv.setTag(Methods.DialogItemTags.dlg_register_lv);
+		
+		/*----------------------------
+		 * 2.2. Prepare list data
+			----------------------------*/
+		List<String> registerItems = new ArrayList<String>();
+		
+		registerItems.add(actv.getString(R.string.main_menu_register_list));
+		registerItems.add(actv.getString(R.string.main_menu_register_genre));
+		
+		ArrayAdapter<String> adp = new ArrayAdapter<String>(
+		
+				actv,
+				android.R.layout.simple_list_item_1,
+				registerItems
+		);
+		
+		/*----------------------------
+		 * 2.4. Set adapter
+			----------------------------*/
+		lv.setAdapter(adp);
+		
+		
+		
+		/*----------------------------
+		 * 3. Set listener => list
+			----------------------------*/
+		lv.setOnItemClickListener(
+						new DialogOnItemClickListener(
+								actv, 
+								dlg));
+		
+		/*----------------------------
+		 * 9. Show dialog
+			----------------------------*/
+		dlg.show();
+		
+	}//public static void dlg_register(Activity actv)
+
+	public static void dlg_register_genre(Activity actv, Dialog dlg) {
+		/*----------------------------
+		 * Steps
+		 * 1. Set up
+		 * 2. Add listeners => OnTouch
+		 * 3. Add listeners => OnClick
+			----------------------------*/
+		
+		// 
+		Dialog dlg2 = new Dialog(actv);
+		
+		//
+		dlg2.setContentView(R.layout.dlg_register_genre);
+		
+		// Title
+		dlg2.setTitle(R.string.dlg_register_genre_title);
+		
+		/*----------------------------
+		 * 2. Add listeners => OnTouch
+			----------------------------*/
+		//
+		Button btn_ok = 
+			(Button) dlg2.findViewById(R.id.dlg_register_genre_btn_ok);
+		Button btn_cancel = (Button) dlg2.findViewById(R.id.dlg_register_genre_btn_cancel);
+		
+		//
+		btn_ok.setTag(DialogButtonTags.dlg_register_genre_bt_ok);
+		btn_cancel.setTag(DialogButtonTags.dlg_generic_dismiss_second_dialog);
+		
+		//
+		btn_ok.setOnTouchListener(new DialogButtonOnTouchListener(actv, dlg2));
+		btn_cancel.setOnTouchListener(new DialogButtonOnTouchListener(actv, dlg2));
+		
+		/*----------------------------
+		 * 3. Add listeners => OnClick
+			----------------------------*/
+		//
+		btn_ok.setOnClickListener(
+					new DialogButtonOnClickListener(actv, dlg, dlg2));
+		btn_cancel.setOnClickListener(
+					new DialogButtonOnClickListener(actv, dlg, dlg2));
+		
+		//
+		dlg2.show();
+		
+	}//public static void dlg_register_genre(Activity actv, Dialog dlg)
+
+	public static void register_genre(Activity actv, Dialog dlg, Dialog dlg2) {
+		/*********************************
+		 * 1. Get text
+		 * 2. db
+		 * 
+		 * 3. Insert data
+		 * 
+		 * 9. Close db
+		 * 
+		 *********************************/
+		EditText et = (EditText) dlg2.findViewById(R.id.dlg_register_genre_et);
+		
+		String genre_name = et.getText().toString();
+		
+		
+		DBUtils dbu = new DBUtils(actv, MainActv.dbName);
+		
+		SQLiteDatabase wdb = dbu.getWritableDatabase();
+		
+		
+
+		boolean res = dbu.insertData_genre(wdb, genre_name);
+		
+		// Log
+		Log.d("Methods.java" + "["
+				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ "]", "res: " + res + "(" + genre_name + ")");
+		
+		/*********************************
+		 * 9. Close db
+		 *********************************/
+		wdb.close();
+		
+	}//public static void register_genre(Activity actv, Dialog dlg, Dialog dlg2)
 
 }//public class Methods

@@ -1,5 +1,7 @@
 package ic.listeners;
 
+import ic.utils.Methods;
+import ic.main.R;
 import android.app.Activity;
 import android.app.Dialog;
 import android.os.Vibrator;
@@ -61,23 +63,68 @@ public class DialogButtonOnClickListener implements OnClickListener {
 //	@Override
 	public void onClick(View v) {
 		//
-//		Methods.DialogTags tag_name = (Methods.DialogTags) v.getTag();
+		Methods.DialogButtonTags tag_name = (Methods.DialogButtonTags) v.getTag();
 
 		//
-//		switch (tag_name) {
+		switch (tag_name) {
 		
-//		case dlg_generic_dismiss://------------------------------------------------
-//			
-//			vib.vibrate(Methods.vibLength_click);
-//			
-//			dlg.dismiss();
-//			
-//			break;
+		case dlg_generic_dismiss://------------------------------------------------
 			
+			vib.vibrate(Methods.vibLength_click);
+			
+			dlg.dismiss();
+			
+			break;
+			
+		case dlg_generic_dismiss_second_dialog://------------------------------------------------
+			
+			vib.vibrate(Methods.vibLength_click);
+			
+			dlg2.dismiss();
+			
+			break;// case dlg_generic_dismiss_second_dialog
 
-//		default: // ----------------------------------------------------
-//			break;
-//		}//switch (tag_name)
+		case dlg_register_genre_bt_ok://------------------------------------------------
+			/*********************************
+			 * dlg	=> dlg_register.xml
+			 * dlg2	=> dlg_register_genre.xml
+			 * 
+			 * 1. Vibrate
+			 * 2. Input empty?
+			 * 
+			 * 3. Register
+			 *********************************/
+			vib.vibrate(Methods.vibLength_click);
+			
+			/*********************************
+			 * 2. Input empty?
+			 *********************************/
+			EditText et = 
+				(EditText) dlg2.findViewById(R.id.dlg_register_genre_et);
+			
+			if (et.getText().toString().equals("")) {
+				
+				// debug
+				Toast.makeText(actv, "No input!", 2000).show();
+				
+				return;
+				
+			}//if (!et.getText().toString().equals(""))
+			
+//			// debug
+//			Toast.makeText(actv, et.getText().toString(), 2000).show();
+			
+			/*********************************
+			 * 3. Register
+			 *********************************/
+			Methods.register_genre(actv, dlg, dlg2);
+			
+			
+			break;// case dlg_register_genre_bt_ok
+
+		default: // ----------------------------------------------------
+			break;
+		}//switch (tag_name)
 	}
 
 }

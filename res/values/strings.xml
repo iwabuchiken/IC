@@ -17,4 +17,13 @@
     <!-- main.xml -->
     	<string name="main_title">チェック・リスト</string>
 
+    <!-- main_menu.xml -->
+    	<string name="main_menu_register_list">リスト</string>
+    	<string name="main_menu_register_genre">ジャンル</string>
+    
+    <!-- dlg_register_genre.xml -->
+    	<string name="dlg_register_genre_title">ジャンル登録</string>
+    	<string name="dlg_register_genre_prompt_genre ">ジャンル名</string>
+    
+    
 </resources>

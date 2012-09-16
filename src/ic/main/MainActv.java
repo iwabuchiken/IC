@@ -18,6 +18,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -27,6 +28,7 @@ public class MainActv extends ListActivity {
 	 * Lists
 	 ********************************/
 	public static List<CL> CLList;
+	public static MainListAdapter mlAdp;
 	
 	/********************************
 	 * DB
@@ -47,6 +49,12 @@ public class MainActv extends ListActivity {
 	
 	public static String[] col_types_items = {"TEXT", 	 "INTEGER",		"INTEGER"};
 
+	// genres
+	public static String tableName_genres = "genres";
+	
+	public static String[] cols_genres =		{"name"};
+	
+	public static String[] col_types_genres = 	{"TEXT"};
 
     /** Called when the activity is first created. */
     @Override
@@ -100,7 +108,7 @@ public class MainActv extends ListActivity {
 			
 		} catch (Exception e) {
 			// Log
-			Log.d("Methods.java" + "["
+			Log.d("MainActv.java" + "["
 					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
 					+ "]", "Exception => " + e.toString());
 			
@@ -110,7 +118,7 @@ public class MainActv extends ListActivity {
 		}
 		
 		// Log
-		Log.d("Methods.java" + "["
+		Log.d("MainActv.java" + "["
 				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
 				+ "]", "c.getCount() => " + c.getCount());
 
@@ -145,14 +153,14 @@ public class MainActv extends ListActivity {
 		}//for (int i = 0; i < c.getCount(); i++)
 
 		// Log
-		Log.d("Methods.java" + "["
+		Log.d("MainActv.java" + "["
 				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
 				+ "]", "CLList.size(): " + CLList.size());
 		
 		/********************************
 		 * 5. Set list to adapter
 		 ********************************/
-		MainListAdapter mlAdp = new MainListAdapter(
+		mlAdp = new MainListAdapter(
 				this,
 				R.layout.list_row_main,
 				CLList
@@ -168,6 +176,9 @@ public class MainActv extends ListActivity {
 	private void create_tables() {
 		/********************************
 		 * 1. Set up db
+		 * 2. check_lists
+		 * 3. items
+		 * 4. genres
 		 ********************************/
 		DBUtils dbu = new DBUtils(this, MainActv.dbName);
 		
@@ -181,7 +192,7 @@ public class MainActv extends ListActivity {
 											MainActv.col_types_check_lists);
 		
 		// Log
-		Log.d("Methods.java" + "["
+		Log.d("MainActv.java" + "["
 				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
 				+ "]", "res(" + MainActv.tableName_check_lists + ": " + res);
 		
@@ -191,19 +202,35 @@ public class MainActv extends ListActivity {
 				MainActv.cols_items, 
 				MainActv.col_types_items);
 		
+		/*********************************
+		 * 4. genres
+		 *********************************/
 		// Log
-		Log.d("Methods.java" + "["
+		Log.d("MainActv.java" + "["
 				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
-				+ "]", "res(" + MainActv.tableName_items + ": " + res);
+				+ "]", "res(" + MainActv.tableName_genres + ": " + res);
 
+		res = dbu.createTable(
+				wdb, 
+				MainActv.tableName_genres, 
+				MainActv.cols_genres, 
+				MainActv.col_types_genres);
+		
+		// Log
+		Log.d("MainActv.java" + "["
+				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ "]", "res(" + MainActv.tableName_genres + ": " + res);
 		
 	}//private void create_tables()
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// TODO 自動生成されたメソッド・スタブ
+
+		MenuInflater mi = getMenuInflater();
+		mi.inflate(R.menu.main_menu, menu);
+
 		return super.onCreateOptionsMenu(menu);
-	}
+	}//public boolean onCreateOptionsMenu(Menu menu)
 
 	@Override
 	protected void onDestroy() {
@@ -213,9 +240,19 @@ public class MainActv extends ListActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO 自動生成されたメソッド・スタブ
+
+		switch (item.getItemId()) {
+		
+		case R.id.main_opt_menu_register://---------------
+			
+			Methods.dlg_register(this);
+			
+			break;// case R.id.opt_menu_main_actv_register
+		
+		}//switch (item.getItemId())
+
 		return super.onOptionsItemSelected(item);
-	}
+	}//public boolean onOptionsItemSelected(MenuItem item)
 
 	@Override
 	protected void onPause() {

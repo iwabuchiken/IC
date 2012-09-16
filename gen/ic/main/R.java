@@ -29,15 +29,35 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int list_row_main_tv=0x7f070000;
-        public static final int main_tv=0x7f070001;
+        public static final int dlg_register_btn_cancel=0x7f080001;
+        public static final int dlg_register_genre_LL_buttons=0x7f080007;
+        public static final int dlg_register_genre_LL_edit=0x7f080005;
+        public static final int dlg_register_genre_LL_message=0x7f080003;
+        public static final int dlg_register_genre_LL_root=0x7f080002;
+        public static final int dlg_register_genre_btn_cancel=0x7f080009;
+        public static final int dlg_register_genre_btn_ok=0x7f080008;
+        public static final int dlg_register_genre_et=0x7f080006;
+        public static final int dlg_register_genre_tv_message=0x7f080004;
+        public static final int dlg_register_lv=0x7f080000;
+        public static final int list_row_main_tv=0x7f08000a;
+        public static final int main_opt_menu_register=0x7f08000c;
+        public static final int main_tv=0x7f08000b;
     }
     public static final class layout {
-        public static final int list_row_main=0x7f030000;
-        public static final int main=0x7f030001;
+        public static final int dlg_register=0x7f030000;
+        public static final int dlg_register_genre=0x7f030001;
+        public static final int list_row_main=0x7f030002;
+        public static final int main=0x7f030003;
+    }
+    public static final class menu {
+        public static final int main_menu=0x7f070000;
     }
     public static final class string {
         public static final int app_name=0x7f050001;
+        public static final int dlg_register_genre_prompt_genre =0x7f05000e;
+        /**  dlg_register_genre.xml 
+         */
+        public static final int dlg_register_genre_title=0x7f05000d;
         public static final int generic_bt_cancel=0x7f050003;
         /**  Generic items 
          */
@@ -49,6 +69,10 @@ public final class R {
         public static final int generic_tv_menu=0x7f050005;
         public static final int generic_tv_register=0x7f050006;
         public static final int hello=0x7f050000;
+        public static final int main_menu_register_genre=0x7f05000c;
+        /**  main_menu.xml 
+         */
+        public static final int main_menu_register_list=0x7f05000b;
         /**  main.xml 
          */
         public static final int main_title=0x7f05000a;

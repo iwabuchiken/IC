@@ -1,5 +1,7 @@
 package ic.listeners;
 
+import ic.main.R;
+import ic.utils.Methods;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -41,17 +43,47 @@ public class DialogOnItemClickListener implements OnItemClickListener {
 		 * 3. Switching
 			----------------------------*/
 		
-//		Methods.DialogOnItemClickTags tag = (Methods.DialogOnItemClickTags) parent.getTag();
+		Methods.DialogItemTags tag = (Methods.DialogItemTags) parent.getTag();
 //		
-//		vib.vibrate(Methods.vibLength_click);
+		vib.vibrate(Methods.vibLength_click);
 		
 		/*----------------------------
 		 * 3. Switching
 			----------------------------*/
-//		switch (tag) {
+		switch (tag) {
 		
+		case dlg_register_lv://------------------------------
+			/*********************************
+			 * 1. Get item
+			 * 2. Switching
+			 *********************************/
+			String item = (String) parent.getItemAtPosition(position);
+
+			/*********************************
+			 * 2. Switching
+			 *********************************/
+			if (item.equals(actv.getString(R.string.main_menu_register_list))) {
+				
+				// debug
+				Toast.makeText(actv, item + "=> Under construction", 2000).show();
+				
+//				Methods.dlg_register_list(actv, dlg);
+				
+			} else if (item.equals(actv.getString(R.string.main_menu_register_genre))) {
+				
+				Methods.dlg_register_genre(actv, dlg);
+					
+			} else {//if (item.equals(actv.getString(R.string.main_menu_register_list)))
+
+				// debug
+				Toast.makeText(actv, "Unknown item: " + item, 2000).show();
+				
+			}//if (item.equals(actv.getString(R.string.main_menu_register_list)))
 			
-//		}//switch (tag)
+			
+			break;// case dlg_register_lv
+			
+		}//switch (tag)
 		
 	}//public void onItemClick(AdapterView<?> parent, View v, int position, long id)
 }
