@@ -2,6 +2,7 @@ package ic.utils;
 
 
 
+import ic.items.CL;
 import ic.listeners.DialogButtonOnClickListener;
 import ic.listeners.DialogButtonOnTouchListener;
 import ic.listeners.DialogOnItemClickListener;
@@ -64,7 +65,8 @@ import org.apache.commons.lang.StringUtils;
 public class Methods {
 
 	static int counter;		// Used => sortFileList()
-	
+
+	static Activity actv_methods;
 	
 	/****************************************
 	 * Enums
@@ -200,6 +202,75 @@ public class Methods {
 		Arrays.sort(files, filecomparator);
 
 	}//public static void sortFileList(File[] files)
+
+	public static boolean sort_list_CLList(Activity actv, List<CL> cLList) {
+		/*********************************
+		 * 1. Comaparator
+		 * 2. Sort
+		 *********************************/
+		actv_methods = actv;
+		
+		/*********************************
+		 * 1. Comaparator
+		 *********************************/
+		Comparator<CL> comp = new Comparator<CL>(){
+
+			public int compare(CL c1, CL c2) {
+				/*********************************
+				 * 1. Get genre name
+				 * 2. Null?
+				 * 
+				 * 3. Genre names => Not equal?
+				 * 4. Genre names => Equal?
+				 *********************************/
+				String c1_genre_name = 
+						Methods.get_genre_name_from_genre_id(actv_methods, c1.getGenre_id());
+				
+				String c2_genre_name = 
+						Methods.get_genre_name_from_genre_id(actv_methods, c2.getGenre_id());
+				
+				/*********************************
+				 * 2. Null?
+				 *********************************/
+				if (c1_genre_name == null || c2_genre_name == null) {
+					
+					return 0;
+					
+				}
+				
+				/*********************************
+				 * 3. Genre names => Not equal?
+				 *********************************/
+				if (!c1_genre_name.equals(c2_genre_name)) {
+					
+					return c1_genre_name.compareTo(c2_genre_name);
+					
+				} else {//if (condition)
+					/*********************************
+					 * 4. Genre names => Equal?
+					 * 		=> Then sort by "created_at"
+					 *********************************/
+					
+					return (int)(c1.getCreated_at() - c2.getCreated_at());
+					
+				}//if (condition)
+				
+			}//public int compare(CL c1, CL c2)
+			
+		};//Comparator<CL> comp
+		
+		/*********************************
+		 * 2. Sort
+		 *********************************/
+		Collections.sort(cLList, comp);
+		
+		// Log
+		Log.d("Methods.java" + "["
+				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ "]", "Sort done: " + cLList.toString());
+		
+		return true;
+	}//public static boolean sort_list_CLList(Activity actv, List<CL> cLList)
 
 	/****************************************
 	 *
@@ -1196,6 +1267,9 @@ public class Methods {
 		 * 3. Insert data
 		 * 
 		 * 9. Close db
+		 * 10. Dismiss dialogues
+		 * 
+		 * 11. Notify adapter
 		 * 
 		 *********************************/
 		/*********************************
@@ -1252,6 +1326,17 @@ public class Methods {
 		 * 9. Close db
 		 *********************************/
 		wdb.close();
+		
+		/*********************************
+		 * 10. Dismiss dialogues
+		 *********************************/
+		dlg2.dismiss();
+		dlg.dismiss();
+		
+		/*********************************
+		 * 11. Notify adapter
+		 *********************************/
+		
 		
 	}//public static void register_list(Activity actv, Dialog dlg, Dialog dlg2)
 
@@ -1336,5 +1421,89 @@ public class Methods {
 		return genre_id;
 		
 	}//private static int get_genre_id_from_genre_name(String genre_name)
+
+
+	/**********************************************
+	 * get_genre_name_from_genre_id(Activity actv, int genre_id)
+	 * 
+	 * <Return>
+	 * 	null	=> Cursor == null
+	 * 			=> c.getCount() < 1
+	 **********************************************/
+	public static String get_genre_name_from_genre_id(Activity actv, int genre_id) {
+		/*********************************
+		 * 1. db
+		 * 2. Query
+		 *
+		 * 3. Get data
+		 * 4. Close db
+		 * 
+		 * 5. Return
+		 *********************************/
+		DBUtils dbu = new DBUtils(actv, MainActv.dbName);
+		
+		SQLiteDatabase rdb = dbu.getReadableDatabase();
+		
+		/*********************************
+		 * 2. Query
+		 *********************************/
+		String sql = "SELECT * FROM " + MainActv.tableName_genres + 
+					" WHERE " + android.provider.BaseColumns._ID + "='" + genre_id + "'";
+		
+		Cursor c = null;
+		
+		try {
+			
+			c = rdb.rawQuery(sql, null);
+			
+			actv.startManagingCursor(c);
+			
+		} catch (Exception e) {
+			// Log
+			Log.d("Methods.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "Exception => " + e.toString());
+			
+			rdb.close();
+			
+			return null;
+		}
+		
+		/*********************************
+		 * 2-2. If no entry => Return
+		 *********************************/
+		if (c.getCount() < 1) {
+			
+			// Log
+			Log.d("Methods.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "c.getCount() < 1");
+			
+			rdb.close();
+			
+			return null;
+			
+		}//if (c.getCount() < 1)
+		
+		
+		/*********************************
+		 * 3. Get data
+		 *********************************/
+		c.moveToFirst();
+		
+		String genre_name = (String) c.getString(3);
+		
+		/*********************************
+		 * 4. Close db
+		 *********************************/
+		rdb.close();
+		
+		/*********************************
+		 * 5. Return
+		 *********************************/
+		return genre_name;
+		
+	}//public static String get_genre_name_from_genre_id(int genre_id)
+
 
 }//public class Methods

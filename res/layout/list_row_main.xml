@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+          
+    android:orientation="vertical"
+    >
       <TextView
-          xmlns:android="http://schemas.android.com/apk/res/android"
-          android:id="@+id/list_row_main_tv"
+          
+          android:id="@+id/list_row_main_tv_list_name"
           
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -23,3 +31,58 @@
           android:background="@color/white"
           
       />
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content" >
+
+          <TextView
+              android:id="@+id/list_row_main_tv_created_at"
+              
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              
+              android:gravity="center"
+              
+              android:layout_weight="1"
+
+	          android:layout_marginBottom="5dp"
+			  android:layout_marginTop="5dp"
+			  android:layout_marginLeft="5dp"
+			  android:layout_marginRight="5dp"
+              
+              android:text="TextView"
+              
+	          android:textSize="25dp"
+	          android:textColor="@color/white"
+	          android:background="@color/black"
+              
+              />
+
+          <TextView
+              android:id="@+id/list_row_main_tv_genre"
+              
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              
+              android:gravity="center"
+              
+	          android:layout_marginBottom="5dp"
+			  android:layout_marginTop="5dp"
+			  android:layout_marginLeft="5dp"
+			  android:layout_marginRight="5dp"
+              
+              
+              android:layout_weight="1"
+              
+              android:text="TextView" 
+              
+	          android:textSize="25dp"
+	          android:textColor="@color/white"
+	          android:background="@color/black"
+              
+              />
+
+      </LinearLayout>
+
+</LinearLayout>

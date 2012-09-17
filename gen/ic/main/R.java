@@ -47,9 +47,11 @@ public final class R {
         public static final int dlg_register_list_tv_genre=0x7f08000d;
         public static final int dlg_register_list_tv_message=0x7f08000b;
         public static final int dlg_register_lv=0x7f080000;
-        public static final int list_row_main_tv=0x7f080012;
-        public static final int main_opt_menu_register=0x7f080014;
-        public static final int main_tv=0x7f080013;
+        public static final int list_row_main_tv_created_at=0x7f080013;
+        public static final int list_row_main_tv_genre=0x7f080014;
+        public static final int list_row_main_tv_list_name=0x7f080012;
+        public static final int main_opt_menu_register=0x7f080016;
+        public static final int main_tv=0x7f080015;
     }
     public static final class layout {
         public static final int dlg_register=0x7f030000;

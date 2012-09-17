@@ -76,7 +76,9 @@ public class MainListAdapter extends ArrayAdapter<CL> {
 		 * Steps
 		 * 1. Set up
 		 * 2. Get view
+		 * 
 		 * 3. Get item
+		 * 3-2. Set value to views
 		 * 
 		 * 4. Set bg color
 			----------------------------*/
@@ -96,14 +98,28 @@ public class MainListAdapter extends ArrayAdapter<CL> {
     	/*----------------------------
 		 * 2. Get view
 			----------------------------*/
-		TextView tv = (TextView) v.findViewById(R.id.list_row_main_tv);
+		TextView tv_list_name = (TextView) v.findViewById(R.id.list_row_main_tv_list_name);
+		
+		TextView tv_created_at = (TextView) v.findViewById(R.id.list_row_main_tv_created_at);
+		
+		TextView tv_genre = (TextView) v.findViewById(R.id.list_row_main_tv_genre);
 
 		/*----------------------------
 		 * 3. Get item
 			----------------------------*/
 		CL item = (CL) getItem(position);
 		
-		tv.setText(item.getName());
+		/*********************************
+		 * 3-2. Set value to views
+		 *********************************/
+		tv_list_name.setText(item.getName());
+		
+//		tv_created_at.setText(String.valueOf(item.getCreated_at()));
+		tv_created_at.setText(Methods.convert_millSec_to_DateLabel(item.getCreated_at()));
+		
+		tv_genre.setText(
+							Methods.get_genre_name_from_genre_id((Activity) con,
+							item.getGenre_id()));
 		
 		/*----------------------------
 		 * 4. Set bg color

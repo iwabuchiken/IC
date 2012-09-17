@@ -58,11 +58,21 @@ public class MainActv extends ListActivity {
 	
 	public static String[] col_types_genres = 	{"TEXT"};
 
+	/*********************************
+	 * Others
+	 *********************************/
+	public static Activity mainActv;
+	
+	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	/********************************
+		 * 1. Set up
+		 * 2. Create tables
 		 * 
+		 * 3. Show list
+		 * 4. Initialise vars
 		 ********************************/
     	
         super.onCreate(savedInstanceState);
@@ -76,6 +86,11 @@ public class MainActv extends ListActivity {
         
         show_list();
         
+        /*********************************
+		 * 4. Initialise vars
+		 *********************************/
+        mainActv = this;
+        
     }//public void onCreate(Bundle savedInstanceState)
 
 	private void show_list() {
@@ -86,6 +101,7 @@ public class MainActv extends ListActivity {
 		 * 3. Close db
 		 * 
 		 * 4. Build list
+		 * 4-2. Sort list
 		 * 
 		 * 5. Set list to adapter
 		 * 
@@ -164,6 +180,16 @@ public class MainActv extends ListActivity {
 		Log.d("MainActv.java" + "["
 				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
 				+ "]", "CLList.size(): " + CLList.size());
+		
+		/*********************************
+		 * 4-2. Sort list
+		 *********************************/
+		boolean res = Methods.sort_list_CLList(this, CLList);
+		
+		// Log
+		Log.d("MainActv.java" + "["
+				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ "]", "res: " + res);
 		
 		/********************************
 		 * 5. Set list to adapter
