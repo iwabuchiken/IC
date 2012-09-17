@@ -62,28 +62,33 @@ public class DialogOnItemClickListener implements OnItemClickListener {
 			/*********************************
 			 * 2. Switching
 			 *********************************/
-			if (item.equals(actv.getString(R.string.main_menu_register_list))) {
-				
-				// debug
-				Toast.makeText(actv, item + "=> Under construction", 2000).show();
-				
-//				Methods.dlg_register_list(actv, dlg);
-				
-			} else if (item.equals(actv.getString(R.string.main_menu_register_genre))) {
-				
-				Methods.dlg_register_genre(actv, dlg);
-					
-			} else {//if (item.equals(actv.getString(R.string.main_menu_register_list)))
-
-				// debug
-				Toast.makeText(actv, "Unknown item: " + item, 2000).show();
-				
-			}//if (item.equals(actv.getString(R.string.main_menu_register_list)))
-			
+			register_switching(item);
 			
 			break;// case dlg_register_lv
 			
 		}//switch (tag)
 		
 	}//public void onItemClick(AdapterView<?> parent, View v, int position, long id)
-}
+
+	private void register_switching(String item) {
+		if (item.equals(actv.getString(R.string.main_menu_register_list))) {
+			
+//			// debug
+//			Toast.makeText(actv, item + "=> Under construction", 2000).show();
+			
+			Methods.dlg_register_list(actv, dlg);
+			
+		} else if (item.equals(actv.getString(R.string.main_menu_register_genre))) {
+			
+			Methods.dlg_register_genre(actv, dlg);
+				
+		} else {//if (item.equals(actv.getString(R.string.main_menu_register_list)))
+	
+			// debug
+			Toast.makeText(actv, "Unknown item: " + item, 2000).show();
+			
+		}//if (item.equals(actv.getString(R.string.main_menu_register_list)))
+		
+	}//private void register_switching(String item)
+	
+}//DialogOnItemClickListener

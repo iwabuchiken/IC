@@ -20,6 +20,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ListView;
 import android.widget.Toast;
 
 public class MainActv extends ListActivity {
@@ -147,8 +149,14 @@ public class MainActv extends ListActivity {
 			
 			CLList.add(new CL(
 					c.getString(3),
-					c.getInt(4)
+					c.getInt(4),
+					
+					c.getLong(0),
+					c.getLong(1),
+					c.getLong(2)
 					));
+			
+			c.moveToNext();
 			
 		}//for (int i = 0; i < c.getCount(); i++)
 
@@ -172,6 +180,22 @@ public class MainActv extends ListActivity {
 		setListAdapter(mlAdp);
 		
 	}//private void show_list()
+
+	@Override
+	protected void onListItemClick(
+					ListView l, View v, int position, long id) {
+		/*********************************
+		 * memo
+		 *********************************/
+		CL clList = (CL) l.getItemAtPosition(position);
+		
+		// debug
+		Toast.makeText(this, clList.getName(), 2000).show();
+		
+		
+		super.onListItemClick(l, v, position, id);
+		
+	}//protected void onListItemClick(ListView l, View v, int position, long id)
 
 	private void create_tables() {
 		/********************************

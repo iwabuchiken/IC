@@ -38,16 +38,25 @@ public final class R {
         public static final int dlg_register_genre_btn_ok=0x7f080008;
         public static final int dlg_register_genre_et=0x7f080006;
         public static final int dlg_register_genre_tv_message=0x7f080004;
+        public static final int dlg_register_list_LL_buttons=0x7f08000f;
+        public static final int dlg_register_list_LL_root=0x7f08000a;
+        public static final int dlg_register_list_btn_cancel=0x7f080011;
+        public static final int dlg_register_list_btn_ok=0x7f080010;
+        public static final int dlg_register_list_et=0x7f08000c;
+        public static final int dlg_register_list_sp=0x7f08000e;
+        public static final int dlg_register_list_tv_genre=0x7f08000d;
+        public static final int dlg_register_list_tv_message=0x7f08000b;
         public static final int dlg_register_lv=0x7f080000;
-        public static final int list_row_main_tv=0x7f08000a;
-        public static final int main_opt_menu_register=0x7f08000c;
-        public static final int main_tv=0x7f08000b;
+        public static final int list_row_main_tv=0x7f080012;
+        public static final int main_opt_menu_register=0x7f080014;
+        public static final int main_tv=0x7f080013;
     }
     public static final class layout {
         public static final int dlg_register=0x7f030000;
         public static final int dlg_register_genre=0x7f030001;
-        public static final int list_row_main=0x7f030002;
-        public static final int main=0x7f030003;
+        public static final int dlg_register_list=0x7f030002;
+        public static final int list_row_main=0x7f030003;
+        public static final int main=0x7f030004;
     }
     public static final class menu {
         public static final int main_menu=0x7f070000;
@@ -58,6 +67,11 @@ public final class R {
         /**  dlg_register_genre.xml 
          */
         public static final int dlg_register_genre_title=0x7f05000d;
+        public static final int dlg_register_list_prompt_list =0x7f050010;
+        /**  dlg_register_list.xml 
+         */
+        public static final int dlg_register_list_title=0x7f05000f;
+        public static final int dlg_register_list_tv_genre =0x7f050011;
         public static final int generic_bt_cancel=0x7f050003;
         /**  Generic items 
          */

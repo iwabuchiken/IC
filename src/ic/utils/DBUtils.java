@@ -517,6 +517,58 @@ public class DBUtils extends SQLiteOpenHelper{
 		
 	}//public boolean insertData_genre
 
+	public boolean insertData_list(SQLiteDatabase wdb, String list_name, int genre_id) {
+		/*----------------------------
+		* 1. Insert data
+		----------------------------*/
+		long created_at = Methods.getMillSeconds_now();
+		long modified_at = Methods.getMillSeconds_now();
+
+		try {
+			// Start transaction
+			wdb.beginTransaction();
+			
+			// ContentValues
+			ContentValues val = new ContentValues();
+			
+			// Put values
+			val.put("created_at", created_at);		// 
+			val.put("modified_at", modified_at);		//
+			
+			val.put(MainActv.cols_check_lists[0], list_name);		// 
+			val.put(MainActv.cols_check_lists[1], genre_id);		//
+			
+			// Insert data
+			wdb.insert(MainActv.tableName_check_lists, null, val);
+			
+			// Set as successful
+			wdb.setTransactionSuccessful();
+			
+			// End transaction
+			wdb.endTransaction();
+			
+			// Log
+			Log.d("DBUtils.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "Transaction => Ends");
+			
+			
+			return true;
+		
+		} catch (Exception e) {
+			// Log
+			Log.e("DBUtils.java" + "["
+			+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+			+ "]", "Exception! => " + e.toString());
+			
+			return false;
+		}//try
+		
+		////debug
+		//return false;
+		
+	}//public boolean insertData_list
+
 	public boolean updateData(SQLiteDatabase wdb, String tableName) {
 		/*----------------------------
 		* 1. Insert data

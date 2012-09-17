@@ -24,6 +24,10 @@
     <!-- dlg_register_genre.xml -->
     	<string name="dlg_register_genre_title">ジャンル登録</string>
     	<string name="dlg_register_genre_prompt_genre ">ジャンル名</string>
-    
+
+    <!-- dlg_register_list.xml -->
+    	<string name="dlg_register_list_title">リスト登録</string>
+    	<string name="dlg_register_list_prompt_list ">リスト名</string>
+    	<string name="dlg_register_list_tv_genre ">ジャンル</string>
     
 </resources>

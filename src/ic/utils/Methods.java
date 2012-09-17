@@ -53,6 +53,7 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -74,7 +75,10 @@ public class Methods {
 
 		// dlg_register_genre.xml
 		dlg_register_genre_bt_ok,
-		
+
+		// dlg_register_list.xml
+		dlg_register_list_bt_ok,
+
 	}//public static enum DialogButtonTags
 	
 	public static enum DialogItemTags {
@@ -993,6 +997,160 @@ public class Methods {
 		
 	}//public static void dlg_register_genre(Activity actv, Dialog dlg)
 
+	public static void dlg_register_list(Activity actv, Dialog dlg) {
+		/*----------------------------
+		 * Steps
+		 * 1. Set up
+		 * 2. Add listeners => OnTouch
+		 * 3. Add listeners => OnClick
+		 * 
+		 * 4. Set spinner
+			----------------------------*/
+		
+		// 
+		Dialog dlg2 = new Dialog(actv);
+		
+		//
+		dlg2.setContentView(R.layout.dlg_register_list);
+		
+		// Title
+		dlg2.setTitle(R.string.dlg_register_list_title);
+		
+		/*----------------------------
+		 * 2. Add listeners => OnTouch
+			----------------------------*/
+		//
+		Button btn_ok = 
+			(Button) dlg2.findViewById(R.id.dlg_register_list_btn_ok);
+		Button btn_cancel = (Button) dlg2.findViewById(R.id.dlg_register_list_btn_cancel);
+		
+		//
+		btn_ok.setTag(DialogButtonTags.dlg_register_list_bt_ok);
+		btn_cancel.setTag(DialogButtonTags.dlg_generic_dismiss_second_dialog);
+		
+		//
+		btn_ok.setOnTouchListener(new DialogButtonOnTouchListener(actv, dlg2));
+		btn_cancel.setOnTouchListener(new DialogButtonOnTouchListener(actv, dlg2));
+		
+		/*----------------------------
+		 * 3. Add listeners => OnClick
+			----------------------------*/
+		//
+		btn_ok.setOnClickListener(
+					new DialogButtonOnClickListener(actv, dlg, dlg2));
+		btn_cancel.setOnClickListener(
+					new DialogButtonOnClickListener(actv, dlg, dlg2));
+		
+		/*********************************
+		 * 4. Set spinner
+		 * 	1. List
+		 * 	2. Adapter
+		 * 	3. Set adapter
+		 *********************************/
+		Spinner sp = (Spinner) dlg2.findViewById(R.id.dlg_register_list_sp);
+		
+		List<String> genreList = Methods.get_genre_list(actv);
+
+		// Log
+		Log.d("Methods.java" + "["
+				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ "]", "genreList.size(): " + genreList.size());
+
+		/*********************************
+		 * 4.2. Adapter
+		 *********************************/
+		ArrayAdapter<String> adp = new ArrayAdapter<String>(
+	              actv, android.R.layout.simple_spinner_item, genreList);
+		
+		adp.setDropDownViewResource(
+				android.R.layout.simple_spinner_dropdown_item);
+		
+		/*********************************
+		 * 4.3. Set adapter
+		 *********************************/
+		sp.setAdapter(adp);
+		
+		//
+		dlg2.show();
+		
+	}//public static void dlg_register_list(Activity actv, Dialog dlg)
+
+	private static List<String> get_genre_list(Activity actv) {
+		/*********************************
+		 * 1. db
+		 * 2. Query
+		 * 2-2. If no entry => Return
+		 * 
+		 * 3. Build list
+		 * 
+		 *********************************/
+		
+		DBUtils dbu = new DBUtils(actv, MainActv.dbName);
+		
+		SQLiteDatabase rdb = dbu.getReadableDatabase();
+
+		String sql = "SELECT * FROM " + MainActv.tableName_genres;
+		
+		Cursor c = null;
+		
+		try {
+			
+			c = rdb.rawQuery(sql, null);
+			
+		} catch (Exception e) {
+			// Log
+			Log.d("Methods.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "Exception => " + e.toString());
+			
+			rdb.close();
+			
+			return null;
+		}
+		
+		/*********************************
+		 * 2-2. If no entry => Return
+		 *********************************/
+		if (c.getCount() < 1) {
+			
+			// Log
+			Log.d("Methods.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "c.getCount() < 1");
+			
+			rdb.close();
+			
+			return null;
+			
+		}//if (c.getCount() < 1)
+		
+		
+		/*********************************
+		 * 3. Build list
+		 *********************************/
+		c.moveToFirst();
+		
+		List<String> genreList = new ArrayList<String>();
+		
+		for (int i = 0; i < c.getCount(); i++) {
+			
+			genreList.add(c.getString(3));
+			
+			// Log
+			Log.d("Methods.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "c.getString(3): " + c.getString(3));
+			
+			c.moveToNext();
+			
+		}//for (int i = 0; i < c.getCount(); i++)
+		
+		rdb.close();
+		
+		return genreList;
+		
+	}//private static List<String> get_genre_list(Activity actv)
+
 	public static void register_genre(Activity actv, Dialog dlg, Dialog dlg2) {
 		/*********************************
 		 * 1. Get text
@@ -1027,5 +1185,156 @@ public class Methods {
 		wdb.close();
 		
 	}//public static void register_genre(Activity actv, Dialog dlg, Dialog dlg2)
+
+	public static void register_list(Activity actv, Dialog dlg, Dialog dlg2) {
+		/*********************************
+		 * 1. Get text
+		 * 2. db
+		 * 
+		 * 2-2. Get genre id
+		 * 
+		 * 3. Insert data
+		 * 
+		 * 9. Close db
+		 * 
+		 *********************************/
+		/*********************************
+		 * 2-2. Get genre id
+		 *********************************/
+		Spinner sp = (Spinner) dlg2.findViewById(R.id.dlg_register_list_sp);
+		
+		String genre_name = (String) sp.getSelectedItem();
+
+		// Log
+		Log.d("Methods.java" + "["
+				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ "]", "genre_name: " + genre_name);
+		
+		int genre_id = Methods.get_genre_id_from_genre_name(actv, genre_name);
+		
+		if (genre_id < 0) {
+			
+			// Log
+			Log.d("Methods.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "genre_id: " + genre_id);
+			
+			// debug
+			Toast.makeText(actv, "ƒWƒƒƒ“ƒ‹‚ðŽæ“¾‚Å‚«‚Ü‚¹‚ñ", 2000).show();
+			
+		}//if (genre_id < 0)
+		
+		/*********************************
+		 * 1. Get text
+		 *********************************/
+		EditText et = (EditText) dlg2.findViewById(R.id.dlg_register_list_et);
+		
+		String list_name = et.getText().toString();
+		
+		/*********************************
+		 * 2. db
+		 *********************************/
+		DBUtils dbu = new DBUtils(actv, MainActv.dbName);
+		
+		SQLiteDatabase wdb = dbu.getWritableDatabase();
+		
+		/*********************************
+		 * 3. Insert data
+		 *********************************/
+		boolean res = dbu.insertData_list(wdb, list_name, genre_id);
+		
+		// Log
+		Log.d("Methods.java" + "["
+				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ "]", "res: " + res + "(" + list_name + ")");
+		
+		/*********************************
+		 * 9. Close db
+		 *********************************/
+		wdb.close();
+		
+	}//public static void register_list(Activity actv, Dialog dlg, Dialog dlg2)
+
+	/**********************************************
+	 * get_genre_id_from_genre_name(Activity actv, String genre_name)
+	 * 
+	 * <Return>
+	 * -1	=> Error, exception
+	 * -2	=> No entry
+	 **********************************************/
+	private static int get_genre_id_from_genre_name(Activity actv, String genre_name) {
+		/*********************************
+		 * 1. db
+		 * 2. Query
+		 *
+		 * 3. Get data
+		 * 4. Close db
+		 * 
+		 * 5. Return
+		 *********************************/
+		DBUtils dbu = new DBUtils(actv, MainActv.dbName);
+		
+		SQLiteDatabase rdb = dbu.getReadableDatabase();
+		
+		/*********************************
+		 * 2. Query
+		 *********************************/
+		String sql = "SELECT * FROM " + MainActv.tableName_genres + 
+					" WHERE name='" + genre_name + "'";
+		
+		Cursor c = null;
+		
+		try {
+			
+			c = rdb.rawQuery(sql, null);
+			
+			actv.startManagingCursor(c);
+			
+		} catch (Exception e) {
+			// Log
+			Log.d("Methods.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "Exception => " + e.toString());
+			
+			rdb.close();
+			
+			return -1;
+		}
+		
+		/*********************************
+		 * 2-2. If no entry => Return
+		 *********************************/
+		if (c.getCount() < 1) {
+			
+			// Log
+			Log.d("Methods.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "c.getCount() < 1");
+			
+			rdb.close();
+			
+			return -2;
+			
+		}//if (c.getCount() < 1)
+		
+		
+		/*********************************
+		 * 3. Get data
+		 *********************************/
+		c.moveToFirst();
+		
+		int genre_id = (int) c.getLong(0);
+		
+		/*********************************
+		 * 4. Close db
+		 *********************************/
+		rdb.close();
+		
+		/*********************************
+		 * 5. Return
+		 *********************************/
+		return genre_id;
+		
+	}//private static int get_genre_id_from_genre_name(String genre_name)
 
 }//public class Methods
