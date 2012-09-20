@@ -13,6 +13,7 @@ import ic.utils.MainListAdapter;
 import ic.utils.Methods;
 import android.app.Activity;
 import android.app.ListActivity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -58,6 +59,12 @@ public class MainActv extends ListActivity {
 	
 	public static String[] col_types_genres = 	{"TEXT"};
 
+	/*********************************
+	 * Intents
+	 *********************************/
+	public static String intent_list_id = "list_id";
+	
+	
 	/*********************************
 	 * Others
 	 *********************************/
@@ -147,7 +154,7 @@ public class MainActv extends ListActivity {
 		if (c.getCount() < 1) {
 			
 			// debug
-			Toast.makeText(this, "No data yet", 2000).show();
+			Toast.makeText(this, "No data yet", Toast.LENGTH_SHORT).show();
 			
 			/********************************
 			 * 3. Close db
@@ -211,13 +218,30 @@ public class MainActv extends ListActivity {
 	protected void onListItemClick(
 					ListView l, View v, int position, long id) {
 		/*********************************
-		 * memo
+		 * 1. Get item
+		 * 2. Set up for intent
+		 * 
+		 * 3. Start
 		 *********************************/
 		CL clList = (CL) l.getItemAtPosition(position);
 		
-		// debug
-		Toast.makeText(this, clList.getName(), 2000).show();
+		/*********************************
+		 * 2. Set up for intent
+		 *********************************/
+		Intent i = new Intent();
 		
+		i.setClass(this, CheckActv.class);
+		
+		i.putExtra(MainActv.intent_list_id, clList.getDb_id());
+		
+		/*********************************
+		 * 3. Start
+		 *********************************/
+		startActivity(i);
+		
+		// debug
+//		Toast.makeText(this, clList.getName(), Toast.LENGTH_SHORT).show();
+//		Toast.makeText(this, "list_id=" + clList.getDb_id(), Toast.LENGTH_SHORT).show();
 		
 		super.onListItemClick(l, v, position, id);
 		
@@ -234,7 +258,9 @@ public class MainActv extends ListActivity {
 		
 		SQLiteDatabase wdb = dbu.getWritableDatabase();
 
-		
+		/*********************************
+		 * 2. check_lists
+		 *********************************/
 		boolean res = dbu.createTable(
 											wdb, 
 											MainActv.tableName_check_lists, 
@@ -246,6 +272,9 @@ public class MainActv extends ListActivity {
 				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
 				+ "]", "res(" + MainActv.tableName_check_lists + ": " + res);
 		
+		/*********************************
+		 * 3. items
+		 *********************************/
 		res = dbu.createTable(
 				wdb, 
 				MainActv.tableName_items, 

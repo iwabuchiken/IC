@@ -30,4 +30,7 @@
     	<string name="dlg_register_list_prompt_list ">リスト名</string>
     	<string name="dlg_register_list_tv_genre ">ジャンル</string>
     
+    <!-- actv_check.xml -->
+    	
+    	
 </resources>

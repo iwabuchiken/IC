@@ -617,7 +617,7 @@ public class Methods {
 //		if (result == true) {
 //		
 //			// debug
-//			Toast.makeText(actv, "Data stored", 2000).show();
+//			Toast.makeText(actv, "Data stored", Toast.LENGTH_SHORT).show();
 //			
 //			/*----------------------------
 //			* 4. Close db
@@ -1294,7 +1294,7 @@ public class Methods {
 					+ "]", "genre_id: " + genre_id);
 			
 			// debug
-			Toast.makeText(actv, "ƒWƒƒƒ“ƒ‹‚ðŽæ“¾‚Å‚«‚Ü‚¹‚ñ", 2000).show();
+			Toast.makeText(actv, "ƒWƒƒƒ“ƒ‹‚ðŽæ“¾‚Å‚«‚Ü‚¹‚ñ", Toast.LENGTH_SHORT).show();
 			
 		}//if (genre_id < 0)
 		
@@ -1504,6 +1504,91 @@ public class Methods {
 		return genre_name;
 		
 	}//public static String get_genre_name_from_genre_id(int genre_id)
+
+	
+	public static CL get_clList_from_db_id(Activity actv, long list_id) {
+		/*********************************
+		 * 1. db
+		 * 2. Query
+		 *
+		 * 3. Get data
+		 * 4. Close db
+		 * 
+		 * 5. Return
+		 *********************************/
+		DBUtils dbu = new DBUtils(actv, MainActv.dbName);
+		
+		SQLiteDatabase rdb = dbu.getReadableDatabase();
+		
+		/*********************************
+		 * 2. Query
+		 *********************************/
+		String sql = "SELECT * FROM " + MainActv.tableName_check_lists + 
+					" WHERE " + android.provider.BaseColumns._ID + "='" + list_id + "'";
+		
+		Cursor c = null;
+		
+		try {
+			
+			c = rdb.rawQuery(sql, null);
+			
+			actv.startManagingCursor(c);
+			
+		} catch (Exception e) {
+			// Log
+			Log.d("Methods.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "Exception => " + e.toString());
+			
+			rdb.close();
+			
+			return null;
+		}
+		
+		/*********************************
+		 * 2-2. If no entry => Return
+		 *********************************/
+		if (c.getCount() < 1) {
+			
+			// Log
+			Log.d("Methods.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "c.getCount() < 1");
+			
+			rdb.close();
+			
+			return null;
+			
+		}//if (c.getCount() < 1)
+		
+		
+		/*********************************
+		 * 3. Get data
+		 *********************************/
+		c.moveToFirst();
+		
+//		String genre_name = (String) c.getString(3);
+		
+		CL clList = new CL(
+				c.getString(3),
+				c.getInt(4),
+				
+				c.getLong(0),
+				c.getLong(1),
+				c.getLong(2)
+				);
+		
+		/*********************************
+		 * 4. Close db
+		 *********************************/
+		rdb.close();
+		
+		/*********************************
+		 * 5. Return
+		 *********************************/
+		return clList;
+		
+	}//public static CL get_clList_from_db_id(Activity actv, long list_id)
 
 
 }//public class Methods
