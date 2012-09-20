@@ -6,6 +6,8 @@ public class Item {
 	int serial_num;
 	
 	long list_id;
+
+	int status;
 	
 	long db_id;
 	long created_at;
@@ -33,6 +35,14 @@ public class Item {
 	}//public Items(String text, int serial_num, long list_id)
 
 	
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
 	public String getText() {
 		return text;
 	}

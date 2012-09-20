@@ -1,22 +1,76 @@
 package ic.main;
 
+import java.util.List;
+
 import ic.items.CL;
+import ic.items.Item;
+import ic.listeners.ButtonOnClickListener;
+import ic.listeners.ButtonOnTouchListener;
+import ic.utils.DBUtils;
+import ic.utils.ItemListAdapter;
 import ic.utils.Methods;
 import android.app.ListActivity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class CheckActv extends ListActivity {
 
+	/*********************************
+	 * List-related
+	 *********************************/
+	static ItemListAdapter ilAdp;
+	
+	static List<Item> iList;
+
+	static CL clList;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		/********************************
+		 * 1. set_up_1
+		 * 2. Set listeners
+		 ********************************/
+		/*********************************
 		 * 1. Set up
+		 *********************************/
+		super.onCreate(savedInstanceState);
+
+		set_up_1();
+		
+		/*********************************
+		 * 2. Set listeners
+		 *********************************/
+		set_listeners();
+		
+	}//public void onCreate(Bundle savedInstanceState)
+
+	private void set_listeners() {
+		/*********************************
+		 * 
+		 *********************************/
+		Button bt_add = (Button) findViewById(R.id.actv_check_bt_add);
+		
+		bt_add.setTag(Methods.ButtonTags.actv_check_bt_add);
+		
+		bt_add.setOnTouchListener(new ButtonOnTouchListener(this));
+		bt_add.setOnClickListener(new ButtonOnClickListener(this));
+
+		
+	}//private void set_listeners()
+
+	private void set_up_1() {
+		/********************************
+		 * 1. Set up
+		 * 	1. Basics
+		 * 	2. Initialise vars
 		 * 2. Get intent values
 		 * 
 		 * 3. Get list object
@@ -25,15 +79,19 @@ public class CheckActv extends ListActivity {
 		 * 
 		 * 5. Get item list
 		 * 
+		 * 6. Close db
+		 * 
 		 ********************************/
-		/*********************************
-		 * 1. Set up
-		 *********************************/
-		super.onCreate(savedInstanceState);
-
+		
 		setContentView(R.layout.actv_check);
 
 		this.setTitle(this.getClass().getName());
+		
+		/*********************************
+		 * 1.2. Initialise vars
+		 *********************************/
+		
+		
 		
 		/*********************************
 		 * 2. Get intent values
@@ -57,7 +115,7 @@ public class CheckActv extends ListActivity {
 		/*********************************
 		 * 3. Get list object
 		 *********************************/
-		CL clList = Methods.get_clList_from_db_id(this, list_id);
+		clList = Methods.get_clList_from_db_id(this, list_id);
 		
 		// Log
 		Log.d("CheckActv.java" + "["
@@ -83,10 +141,49 @@ public class CheckActv extends ListActivity {
 		
 		/*********************************
 		 * 5. Get item list
+		 * 	1. Query
+		 * 	2. Build list
 		 *********************************/
-		aaa
+		/*********************************
+		 * 5.1. Query
+		 *********************************/
+		DBUtils dbu = new DBUtils(this, MainActv.dbName);
 		
-	}//public void onCreate(Bundle savedInstanceState)
+		SQLiteDatabase rdb = dbu.getReadableDatabase();
+
+		Cursor c = Methods.select_all_from_table(this, rdb, MainActv.tableName_items);
+		
+		if (c.getCount() < 1) {
+			
+			// debug
+			Toast.makeText(this, "No data yet", Toast.LENGTH_SHORT).show();
+			
+			/********************************
+			 * 3. Close db
+			 ********************************/
+			rdb.close();
+
+			return;
+		}//if (c.getCount() < 1)
+		
+		/*********************************
+		 * 5.2. Build list
+		 *********************************/
+		iList = Methods.get_item_list_from_check_list(this, clList.getDb_id());
+		
+		// Log
+		Log.d("Methods.java" + "["
+				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ "]", "iList.size(): " + iList.size());
+		
+		
+		/*********************************
+		 * 6. Close db
+		 *********************************/
+		rdb.close();
+		
+	}//private void set_up_1()
+	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

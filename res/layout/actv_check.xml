@@ -42,4 +42,62 @@
         >
     </ListView>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        
+        android:gravity="center"
+        >
+
+        <Button
+            android:id="@+id/actv_check_bt_top"
+            
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            
+            
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+                        
+            android:text="@string/actv_check_bt_top"
+            android:textSize="25dp" 
+            
+            
+            />
+
+        <Button
+            android:id="@+id/actv_check_bt_add"
+            
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+
+            android:text="@string/actv_check_bt_add" 
+            android:textSize="25dp"
+            />
+
+        <Button
+            android:id="@+id/actv_check_bt_bottom"
+            
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+
+            android:text="@string/actv_check_bt_bottom"
+            android:textSize="25dp"
+            
+            />
+
+    </LinearLayout>
+
 </LinearLayout>

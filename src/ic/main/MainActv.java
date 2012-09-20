@@ -18,6 +18,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -355,6 +356,14 @@ public class MainActv extends ListActivity {
 	protected void onStop() {
 		// TODO 自動生成されたメソッド・スタブ
 		super.onStop();
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		
+		Methods.confirm_quit(this, keyCode);
+		
+		return super.onKeyDown(keyCode, event);
 	}
 
     

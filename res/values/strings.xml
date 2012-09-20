@@ -31,6 +31,13 @@
     	<string name="dlg_register_list_tv_genre ">ジャンル</string>
     
     <!-- actv_check.xml -->
+    	<string name="actv_check_bt_top">T</string>
+    	<string name="actv_check_bt_add">Add</string>
+    	<string name="actv_check_bt_bottom">B</string>
     	
-    	
+    <!-- dlg_register_item.xml -->
+    	<string name="dlg_rgstr_item_title">テキスト登録</string>
+    	<string name="dlg_rgstr_item_text">テキスト</string>
+    	<string name="dlg_rgstr_item_order">順番</string>
+    
 </resources>

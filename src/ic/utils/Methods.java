@@ -3,8 +3,10 @@ package ic.utils;
 
 
 import ic.items.CL;
+import ic.items.Item;
 import ic.listeners.DialogButtonOnClickListener;
 import ic.listeners.DialogButtonOnTouchListener;
+import ic.listeners.DialogListener;
 import ic.listeners.DialogOnItemClickListener;
 import ic.main.MainActv;
 import ic.main.R;
@@ -106,6 +108,10 @@ public class Methods {
 		
 		// TIListAdapter.java
 		tilist_cb,
+
+		// actv_check.xml
+		actv_check_bt_add,
+		
 		
 	}//public static enum ButtonTags
 	
@@ -391,89 +397,147 @@ public class Methods {
 
 	public static void confirm_quit(Activity actv, int keyCode) {
 		
-//		// TODO 自動生成されたメソッド・スタブ
-//		if (keyCode==KeyEvent.KEYCODE_BACK) {
-//			
-//			AlertDialog.Builder dialog=new AlertDialog.Builder(actv);
-//			
-//	        dialog.setTitle("アプリの終了");
-//	        dialog.setMessage("アプリを終了しますか？");
-//	        
-//	        dialog.setPositiveButton("終了",new DialogListener(actv, dialog, 0));
-//	        dialog.setNegativeButton("キャンセル",new DialogListener(actv, dialog, 1));
-//	        
-//	        dialog.create();
-//	        dialog.show();
-//			
-//		}//if (keyCode==KeyEvent.KEYCODE_BACK)
+		// TODO 自動生成されたメソッド・スタブ
+		if (keyCode==KeyEvent.KEYCODE_BACK) {
+			
+			AlertDialog.Builder dialog=new AlertDialog.Builder(actv);
+			
+	        dialog.setTitle("アプリの終了");
+	        dialog.setMessage("アプリを終了しますか？");
+	        
+	        dialog.setPositiveButton("終了",new DialogListener(actv, dialog, 0));
+	        dialog.setNegativeButton("キャンセル",new DialogListener(actv, dialog, 1));
+	        
+	        dialog.create();
+	        dialog.show();
+			
+		}//if (keyCode==KeyEvent.KEYCODE_BACK)
 		
 	}//public static void confirm_quit(Activity actv, int keyCode)
 
 	public static List<String> getTableList(Activity actv) {
-//		DBUtils dbu = new DBUtils(actv, MainActv.dbName);
-//		
-//		SQLiteDatabase rdb = dbu.getReadableDatabase();
-//
-//		//=> source: http://stackoverflow.com/questions/4681744/android-get-list-of-tables : "Just had to do the same. This seems to work:"
-//		String q = "SELECT name FROM " + "sqlite_master"+
-//						" WHERE type = 'table' ORDER BY name";
-//		
-//		Cursor c = null;
-//		try {
-//			c = rdb.rawQuery(q, null);
-//			
-//			// Log
-//			Log.d("Methods.java" + "["
-//					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
-//					+ "]", "c.getCount(): " + c.getCount());
-//
-//		} catch (Exception e) {
-//			// Log
-//			Log.d("Methods.java" + "["
-//					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
-//					+ "]", "Exception => " + e.toString());
-//		}
-//		
-//		// Table names list
-//		List<String> tableList = new ArrayList<String>();
-//		
-//		// Log
-//		if (c != null) {
-//			c.moveToFirst();
-//			
-//			for (int i = 0; i < c.getCount(); i++) {
-//				//
-//				tableList.add(c.getString(0));
-//				
-//				// Log
-//				Log.d("Methods.java"
-//						+ "["
-//						+ Thread.currentThread().getStackTrace()[2]
-//								.getLineNumber() + "]", "c.getString(0): " + c.getString(0));
-//				
-//				
-//				// Next
-//				c.moveToNext();
-//				
-//			}//for (int i = 0; i < c.getCount(); i++)
-//
-//		} else {//if (c != null)
-//			Log.d("Methods.java" + "["
-//					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
-//					+ "]", "c => null");
-//		}//if (c != null)
-//
-////		// Log
-////		Log.d("Methods.java" + "["
-////				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
-////				+ "]", "c.getCount(): " + c.getCount());
-////		
-//		rdb.close();
-//		
-//		return tableList;
+		DBUtils dbu = new DBUtils(actv, MainActv.dbName);
 		
-		return null;
+		SQLiteDatabase rdb = dbu.getReadableDatabase();
+
+		//=> source: http://stackoverflow.com/questions/4681744/android-get-list-of-tables : "Just had to do the same. This seems to work:"
+		String q = "SELECT name FROM " + "sqlite_master"+
+						" WHERE type = 'table' ORDER BY name";
+		
+		Cursor c = null;
+		try {
+			c = rdb.rawQuery(q, null);
+			
+			// Log
+			Log.d("Methods.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "c.getCount(): " + c.getCount());
+
+		} catch (Exception e) {
+			// Log
+			Log.d("Methods.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "Exception => " + e.toString());
+		}
+		
+		// Table names list
+		List<String> tableList = new ArrayList<String>();
+		
+		// Log
+		if (c != null) {
+			c.moveToFirst();
+			
+			for (int i = 0; i < c.getCount(); i++) {
+				//
+				tableList.add(c.getString(0));
+				
+				// Log
+				Log.d("Methods.java"
+						+ "["
+						+ Thread.currentThread().getStackTrace()[2]
+								.getLineNumber() + "]", "c.getString(0): " + c.getString(0));
+				
+				
+				// Next
+				c.moveToNext();
+				
+			}//for (int i = 0; i < c.getCount(); i++)
+
+		} else {//if (c != null)
+			Log.d("Methods.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "c => null");
+		}//if (c != null)
+
+//		// Log
+//		Log.d("Methods.java" + "["
+//				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+//				+ "]", "c.getCount(): " + c.getCount());
+//		
+		rdb.close();
+		
+		return tableList;
+		
+//		return null;
 	}//public static List<String> getTableList()
+
+	public static String[] get_column_list(Activity actv, String dbName, String tableName) {
+		/*********************************
+		 * 1. Set up db
+		 * 2. Cursor null?
+		 * 3. Get names
+		 * 
+		 * 4. Close db
+		 * 5. Return
+		 *********************************/
+		DBUtils dbu = new DBUtils(actv, dbName);
+		
+		SQLiteDatabase rdb = dbu.getReadableDatabase();
+
+		//=> source: http://stackoverflow.com/questions/4681744/android-get-list-of-tables : "Just had to do the same. This seems to work:"
+		String q = "SELECT * FROM " + tableName;
+		
+		/*********************************
+		 * 2. Cursor null?
+		 *********************************/
+		Cursor c = null;
+		
+		try {
+			c = rdb.rawQuery(q, null);
+			
+			// Log
+			Log.d("Methods.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "c.getCount(): " + c.getCount());
+
+		} catch (Exception e) {
+			// Log
+			Log.d("Methods.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "Exception => " + e.toString());
+			
+			rdb.close();
+			
+			return null;
+		}
+		
+		/*********************************
+		 * 3. Get names
+		 *********************************/
+		String[] column_names = c.getColumnNames();
+		
+		/*********************************
+		 * 4. Close db
+		 *********************************/
+		rdb.close();
+		
+		/*********************************
+		 * 5. Return
+		 *********************************/
+		return column_names;
+		
+//		return null;
+	}//public static String[] get_column_list(Activity actv, String tableName)
 
 	/****************************************
 	 *		insertDataIntoDB()
@@ -1590,5 +1654,130 @@ public class Methods {
 		
 	}//public static CL get_clList_from_db_id(Activity actv, long list_id)
 
+	public static Cursor select_all_from_table(Activity actv, SQLiteDatabase rdb, String tableName) {
+		/*********************************
+		 * 
+		 *********************************/
+		/********************************
+		 * 2. Query
+		 ********************************/
+		String sql = "SELECT * FROM " + tableName;
+		
+		Cursor c = null;
+		
+		try {
+			
+			c = rdb.rawQuery(sql, null);
+			
+			actv.startManagingCursor(c);
 
+			return c;
+			
+		} catch (Exception e) {
+			// Log
+			Log.d("MainActv.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "Exception => " + e.toString());
+			
+			rdb.close();
+			
+			return null;
+		}
+		
+	}//public static select_all_from_table(Activity actv, String tableName)
+
+	public static List<Item> get_item_list_from_check_list(
+					Activity actv, long list_id) {
+		/*********************************
+		 * 
+		 *********************************/
+		/*********************************
+		 * 1. db
+		 * 2. Query
+		 *
+		 * 3. Get data
+		 * 4. Close db
+		 * 
+		 * 5. Return
+		 *********************************/
+		DBUtils dbu = new DBUtils(actv, MainActv.dbName);
+		
+		SQLiteDatabase rdb = dbu.getReadableDatabase();
+		
+		/*********************************
+		 * 2. Query
+		 *********************************/
+		String sql = "SELECT * FROM " + MainActv.tableName_items + 
+					" WHERE " + MainActv.cols_items[5] + "='" + list_id + "'";
+		
+		Cursor c = null;
+		
+		try {
+			
+			c = rdb.rawQuery(sql, null);
+			
+			actv.startManagingCursor(c);
+			
+		} catch (Exception e) {
+			// Log
+			Log.d("Methods.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "Exception => " + e.toString());
+			
+			rdb.close();
+			
+			return null;
+		}
+		
+		/*********************************
+		 * 2-2. If no entry => Return
+		 *********************************/
+		if (c.getCount() < 1) {
+			
+			// Log
+			Log.d("Methods.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "c.getCount() < 1");
+			
+			rdb.close();
+			
+			return null;
+			
+		}//if (c.getCount() < 1)
+		
+		
+		/*********************************
+		 * 3. Get data
+		 *********************************/
+		c.moveToFirst();
+
+		List<Item> iList = new ArrayList<Item>();
+		
+		for (int i = 0; i < c.getCount(); i++) {
+			
+			iList.add(new Item(
+					c.getString(3),
+					c.getInt(4),
+					c.getLong(5),
+					
+					c.getLong(0),
+					c.getLong(1),
+					c.getLong(2)
+					));
+			
+			
+		}//for (int i = 0; i < c.getCount(); i++)
+		
+		/*********************************
+		 * 4. Close db
+		 *********************************/
+		rdb.close();
+		
+		/*********************************
+		 * 5. Return
+		 *********************************/
+		return iList;
+		
+	}//public static List<Item> get_item_list_from_check_list
+	
 }//public class Methods
