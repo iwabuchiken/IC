@@ -7,6 +7,7 @@ import ic.main.R;
 import java.util.List;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,9 +30,9 @@ public class ItemListAdapter extends ArrayAdapter<Item> {
 	 * Constructor
 		--------------------------------------------------------*/
 	//
-	public ItemListAdapter(Context con, int resourceId, List<Item> clList) {
+	public ItemListAdapter(Context con, int resourceId, List<Item> iList) {
 		// Super
-		super(con, resourceId, clList);
+		super(con, resourceId, iList);
 
 		// Context
 		this.con = con;
@@ -67,19 +68,22 @@ public class ItemListAdapter extends ArrayAdapter<Item> {
 			v = convertView;
 		} else {//if (convertView != null)
 
-			v = inflater.inflate(R.layout.list_row_main, null);
+//			v = inflater.inflate(R.layout.list_row_main, null);
+			v = inflater.inflate(R.layout.list_row_item_list, null);
 			
 		}//if (convertView != null)
 
     	/*----------------------------
 		 * 2. Get view
 			----------------------------*/
-		TextView tv_text = (TextView) v.findViewById(R.id.list_row_item_list_tv_text);
+		TextView tv_text =
+				(TextView) v.findViewById(R.id.list_row_item_list_tv_text);
 		
-		TextView tv_status = (TextView) v.findViewById(R.id.list_row_item_list_tv_status);
+		TextView tv_status =
+				(TextView) v.findViewById(R.id.list_row_item_list_tv_status);
 		
 		TextView tv_serial_num = 
-						(TextView) v.findViewById(R.id.list_row_item_list_tv_serial_num);
+				(TextView) v.findViewById(R.id.list_row_item_list_tv_serial_num);
 
 		/*----------------------------
 		 * 3. Get item
@@ -89,12 +93,24 @@ public class ItemListAdapter extends ArrayAdapter<Item> {
 		/*********************************
 		 * 3-2. Set value to views
 		 *********************************/
-		tv_text.setText(item.getText());
+		if (item != null) {
+			
+			tv_text.setText(item.getText());
+
+//			tv_status.setText(String.valueOf(item.getCreated_at()));
+			tv_status.setText(String.valueOf(item.getStatus()));
+			
+			tv_serial_num.setText(String.valueOf(item.getSerial_num()));
+			
+		} else {//if (item != null)
+			
+			// Log
+			Log.d("ItemListAdapter.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "item => null");
+			
+		}//if (item != null)
 		
-//		tv_status.setText(String.valueOf(item.getCreated_at()));
-		tv_status.setText(String.valueOf(item.getStatus()));
-		
-		tv_serial_num.setText(String.valueOf(item.getSerial_num()));
 		
 		/*----------------------------
 		 * 4. Set bg color
@@ -106,4 +122,4 @@ public class ItemListAdapter extends ArrayAdapter<Item> {
 
 
 
-}//public class TIListAdapter extends ArrayAdapter<TI>
+}//public class ItemListAdapter extends ArrayAdapter<TI>

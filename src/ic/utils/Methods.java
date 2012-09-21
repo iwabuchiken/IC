@@ -8,6 +8,7 @@ import ic.listeners.DialogButtonOnClickListener;
 import ic.listeners.DialogButtonOnTouchListener;
 import ic.listeners.DialogListener;
 import ic.listeners.DialogOnItemClickListener;
+import ic.main.CheckActv;
 import ic.main.MainActv;
 import ic.main.R;
 
@@ -82,7 +83,10 @@ public class Methods {
 
 		// dlg_register_list.xml
 		dlg_register_list_bt_ok,
-
+		
+		// dlg_register_item.xml
+		dlg_rgstr_item_bt_ok
+		
 	}//public static enum DialogButtonTags
 	
 	public static enum DialogItemTags {
@@ -1210,6 +1214,42 @@ public class Methods {
 		
 	}//public static void dlg_register_list(Activity actv, Dialog dlg)
 
+	public static void dlg_register_item(Activity actv) {
+		/*----------------------------
+		 * Steps
+		 * 1. Get a dialog
+		 * 2. List view
+		 * 3. Set listener => list
+		 * 9. Show dialog
+			----------------------------*/
+		 
+		Dialog dlg = dlg_template_okCancel(
+						actv, R.layout.dlg_register_item,
+						R.string.dlg_rgstr_item_title,
+						
+						R.id.dlg_rgstr_item_btn_ok,
+						R.id.dlg_rgstr_item_btn_cancel,
+						
+						Methods.DialogButtonTags.dlg_rgstr_item_bt_ok,
+						Methods.DialogButtonTags.dlg_generic_dismiss
+						);
+		
+		/*----------------------------
+		 * 2. List view
+		 * 	1. Get view
+		 * 	1-2. Set tag to view
+		 * 
+		 * 	2. Prepare list data
+		 * 	3. Prepare adapter
+		 * 	4. Set adapter
+			----------------------------*/
+		/*----------------------------
+		 * 9. Show dialog
+			----------------------------*/
+		dlg.show();
+		
+	}//public static void dlg_register_item(Activity actv)
+
 	private static List<String> get_genre_list(Activity actv) {
 		/*********************************
 		 * 1. db
@@ -1403,6 +1443,136 @@ public class Methods {
 		
 		
 	}//public static void register_list(Activity actv, Dialog dlg, Dialog dlg2)
+
+	public static void register_item(Activity actv, Dialog dlg) {
+		/*********************************
+		 * 1. Get text
+		 * 2. Get serial number
+		 * 
+		 * 3. Setup db
+		 * 
+		 * 4. Insert data
+		 * 
+		 * 9. Close db
+		 * 
+		 * 10. Dismiss dialog
+		 * 
+		 *********************************/
+		EditText et_text = (EditText) dlg.findViewById(R.id.dlg_rgstr_item_et_text);
+		
+		String text = et_text.getText().toString();
+		
+		/*********************************
+		 * 2. Get serial number
+		 *********************************/
+		EditText et_order = (EditText) dlg.findViewById(R.id.dlg_rgstr_item_et_order);
+		
+		int serial_num;
+		
+		if (et_order.getText().toString().equals("")) {
+			
+			serial_num = 
+					Methods.get_num_of_entries_items(actv, CheckActv.clList.getDb_id()) + 1;
+			
+		} else {//if (serial_num.equals(""))
+			
+			serial_num = Integer.parseInt(et_order.getText().toString());
+			
+		}//if (serial_num.equals(""))
+		
+		/*********************************
+		 * 3. Setup db
+		 *********************************/
+		DBUtils dbu = new DBUtils(actv, MainActv.dbName);
+		
+		SQLiteDatabase wdb = dbu.getWritableDatabase();
+		
+		/*********************************
+		 * 4. Insert data
+		 *********************************/
+		Object[] data = {text, serial_num, CheckActv.clList.getDb_id()};
+		boolean res = dbu.insertData_item(wdb, data);
+		
+		// Log
+		Log.d("Methods.java" + "["
+				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ "]", "res: " + res + "(" + (String) text + ")");
+		
+		/*********************************
+		 * 9. Close db
+		 *********************************/
+		wdb.close();
+		
+		/*********************************
+		 * 10. Dismiss dialog
+		 *********************************/
+		if (res == true) {
+
+			dlg.dismiss();
+			
+			// debug
+			Toast.makeText(actv, "Data stored", Toast.LENGTH_SHORT).show();
+
+			Methods.refresh_item_list(actv);
+			
+			return;
+			
+		} else {//if (res == true)
+			
+			// debug
+			Toast.makeText(actv, "Store data => Failed", 200).show();
+
+			return;
+			
+		}//if (res == true)
+		
+		
+		
+	}//public static void register_item(Activity actv, Dialog dlg)
+
+	/**********************************************
+	 * <Return>
+	 * -1	=> Exception in querying
+	 * >=0	=> Num of entries
+	 * @param list_id 
+	 **********************************************/
+	private static int get_num_of_entries_items(Activity actv, long list_id) {
+		/*********************************
+		 * memo
+		 *********************************/
+		DBUtils dbu = new DBUtils(actv, MainActv.dbName);
+		
+		SQLiteDatabase rdb = dbu.getReadableDatabase();
+
+		//=> source: http://stackoverflow.com/questions/4681744/android-get-list-of-tables : "Just had to do the same. This seems to work:"
+		String q = "SELECT * FROM " + MainActv.tableName_items +
+				" WHERE " + MainActv.cols_items[2] + "='" + list_id + "'";;
+		
+		Cursor c = null;
+		
+		try {
+			c = rdb.rawQuery(q, null);
+			
+			int num_of_entries = c.getCount();
+			
+			rdb.close();
+			
+			return num_of_entries;
+			
+		} catch (Exception e) {
+			// Log
+			Log.d("Methods.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "Exception => " + e.toString());
+			
+			rdb.close();
+			
+			return -1;
+			
+		}
+		
+//		return 0;
+	}//private static int get_num_of_entries_items(Activity actv)
 
 	/**********************************************
 	 * get_genre_id_from_genre_name(Activity actv, String genre_name)
@@ -1686,6 +1856,11 @@ public class Methods {
 		
 	}//public static select_all_from_table(Activity actv, String tableName)
 
+	/**********************************************
+	 * <Return>
+	 * 	null	=> Query exception
+	 * 			=> No entry
+	 **********************************************/
 	public static List<Item> get_item_list_from_check_list(
 					Activity actv, long list_id) {
 		/*********************************
@@ -1708,8 +1883,9 @@ public class Methods {
 		 * 2. Query
 		 *********************************/
 		String sql = "SELECT * FROM " + MainActv.tableName_items + 
-					" WHERE " + MainActv.cols_items[5] + "='" + list_id + "'";
-		
+//					" WHERE " + MainActv.cols_items[5] + "='" + list_id + "'";
+				" WHERE " + MainActv.cols_items[2] + "='" + list_id + "'";
+
 		Cursor c = null;
 		
 		try {
@@ -1765,6 +1941,7 @@ public class Methods {
 					c.getLong(2)
 					));
 			
+			c.moveToNext();
 			
 		}//for (int i = 0; i < c.getCount(); i++)
 		
@@ -1779,5 +1956,86 @@ public class Methods {
 		return iList;
 		
 	}//public static List<Item> get_item_list_from_check_list
+
+	private static boolean refresh_item_list(Activity actv) {
+		/*********************************
+		 * 1. Build list
+		 * 
+		 * 2. Notify adapter
+		 * 
+		 * 3. Return
+		 *********************************/
+		/*********************************
+		 * 1.2. Build list
+		 *********************************/
+		if (CheckActv.iList != null) {
+		
+			CheckActv.iList.clear();
+			
+			// Log
+			Log.d("Methods.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "CheckActv.iList => Cleared");
+			
+		}//if (CheckActv.iList != null)
+		
+		CheckActv.iList.addAll(
+			Methods.get_item_list_from_check_list(
+					actv, 
+					CheckActv.clList.getDb_id()));
+
+		// Log
+		if (CheckActv.iList == null) {
+
+			Log.d("CheckActv.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "CheckActv.iList => Null");
+			
+			// debug
+			Toast.makeText(actv,
+					"Query exception, or, no items " +
+					"for this check list, yet",
+					Toast.LENGTH_SHORT).show();
+
+			return false;
+
+		} else {//if (CheckActv.iList == null)
+			
+			// Log
+			Log.d("CheckActv.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "CheckActv.iList.size(): " + CheckActv.iList.size());
+			
+		}//if (CheckActv.iList == null)
+		
+		/*********************************
+		 * 2. Notify adapter
+		 *********************************/
+		CheckActv.ilAdp = new ItemListAdapter(
+				actv,
+				R.layout.list_row_item_list,
+				CheckActv.iList
+				);
+		
+		((ListActivity) actv).setListAdapter(CheckActv.ilAdp);
+		
+		// Log
+		Log.d("Methods.java" + "["
+				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ "]", "Adapter => Re-set");
+		
+//		CheckActv.ilAdp.notifyDataSetChanged();
+//
+//		// Log
+//		Log.d("Methods.java" + "["
+//				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+//				+ "]", "CheckActv.ilAdp => Notified");
+		
+		/*********************************
+		 * 3. Return
+		 *********************************/
+		return true;
+
+	}//private void refresh_item_list()
 	
 }//public class Methods

@@ -92,6 +92,9 @@ public class MainActv extends ListActivity {
         //debug
         create_tables();
         
+        //debug
+//        drop_table(MainActv.tableName_items);
+        
         show_list();
         
         /*********************************
@@ -100,6 +103,35 @@ public class MainActv extends ListActivity {
         mainActv = this;
         
     }//public void onCreate(Bundle savedInstanceState)
+
+    private void drop_table(String tableName) {
+    	// Setup db
+		DBUtils dbu = new DBUtils(this, MainActv.dbName);
+		
+		SQLiteDatabase wdb = dbu.getWritableDatabase();
+		
+		boolean res = 
+				dbu.dropTable(this, wdb, tableName);
+		
+		if (res == true) {
+			// Log
+			Log.d("MainActv.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "Table dropped: " + tableName);
+		} else {//if (res == true)
+
+			// Log
+			Log.d("MainActv.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "Drop table => Failed: " + tableName);
+			
+		}//if (res == true)
+		
+		
+		wdb.close();
+		
+		
+	}//private void drop_table(String tableName)
 
 	private void show_list() {
 		/********************************

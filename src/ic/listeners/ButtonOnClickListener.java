@@ -68,8 +68,10 @@ public class ButtonOnClickListener implements OnClickListener {
 		switch (tag) {
 		case actv_check_bt_add://---------------------------------------------------------
 		
-			// debug
-			Toast.makeText(actv, "ADD", Toast.LENGTH_SHORT).show();
+			Methods.dlg_register_item(actv);
+			
+//			// debug
+//			Toast.makeText(actv, "ADD", Toast.LENGTH_SHORT).show();
 			
 			break;// case actv_check_bt_add
 			

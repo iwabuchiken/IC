@@ -96,10 +96,50 @@ public class DialogButtonOnClickListener implements OnClickListener {
 			
 			break;// case dlg_register_list_bt_ok
 
+		case dlg_rgstr_item_bt_ok://------------------------------------------------
+			
+			register_item_bt_ok();
+			
+			break;// case dlg_rgstr_item_bt_ok
+
 		default: // ----------------------------------------------------
 			break;
 		}//switch (tag_name)
 	}
+
+	private void register_item_bt_ok() {
+		/*********************************
+		 * dlg	=> dlg_register.xml
+		 * dlg2	=> dlg_register_genre.xml
+		 * 
+		 * 1. Vibrate
+		 * 2. Input empty?
+		 * 
+		 * 3. Register
+		 *********************************/
+		vib.vibrate(Methods.vibLength_click);
+		
+		/*********************************
+		 * 2. Input empty?
+		 *********************************/
+		EditText et = 
+			(EditText) dlg.findViewById(R.id.dlg_rgstr_item_et_text);
+		
+		if (et.getText().toString().equals("")) {
+			
+			// debug
+			Toast.makeText(actv, "No input!", 2000).show();
+			
+			return;
+			
+		}//if (!et.getText().toString().equals(""))
+		
+		/*********************************
+		 * 3. Register
+		 *********************************/
+		Methods.register_item(actv, dlg);
+	
+	}//private void register_item_bt_ok()
 
 	private void register_list_bt_ok() {
 		/*********************************
