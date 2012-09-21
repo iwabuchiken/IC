@@ -42,6 +42,7 @@ public class DialogButtonOnTouchListener implements OnTouchListener {
 			case dlg_register_genre_bt_ok:
 			case dlg_register_list_bt_ok:
 			case dlg_rgstr_item_bt_ok:
+			case dlg_checkactv_change_serial_num_btn_ok:
 				
 				//
 				v.setBackgroundColor(Color.GRAY);
@@ -59,6 +60,7 @@ public class DialogButtonOnTouchListener implements OnTouchListener {
 			case dlg_register_genre_bt_ok:
 			case dlg_register_list_bt_ok:
 			case dlg_rgstr_item_bt_ok:
+			case dlg_checkactv_change_serial_num_btn_ok:
 				
 				//
 				v.setBackgroundColor(Color.WHITE);

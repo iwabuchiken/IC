@@ -1,6 +1,9 @@
 package ic.listeners;
 
 
+import ic.items.Item;
+import ic.utils.Methods;
+
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
@@ -73,7 +76,7 @@ public class CustomOnItemLongClickListener implements OnItemLongClickListener {
 			----------------------------*/
 		
 		//
-//		Methods.ListTags tag = (Methods.ListTags) parent.getTag();
+		Methods.ListTags tag = (Methods.ListTags) parent.getTag();
 		
 //		// Log
 //		Log.d("CustomOnItemLongClickListener.java" + "["
@@ -84,10 +87,20 @@ public class CustomOnItemLongClickListener implements OnItemLongClickListener {
 //		vib.vibrate(400);
 		vib.vibrate(40);
 		
-//		switch (tag) {
-//		
-//		
-//		}//switch (tag)
+		switch (tag) {
+		
+		case actv_check_lv://-----------------------------------------
+			
+			Item item = (Item) parent.getItemAtPosition(position);
+			
+			Methods.dlg_checkactv_long_click(actv);
+			
+//			// debug
+//			Toast.makeText(actv, item.getText(), Toast.LENGTH_SHORT).show(); 
+			
+			break;// case actv_check_lv
+		
+		}//switch (tag)
 		
 		
 //		return false;
@@ -95,4 +108,4 @@ public class CustomOnItemLongClickListener implements OnItemLongClickListener {
 		
 	}//public boolean onItemLongClick()
 
-}
+}//public class CustomOnItemLongClickListener implements OnItemLongClickListener

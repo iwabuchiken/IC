@@ -65,6 +65,31 @@ public class DialogOnItemClickListener implements OnItemClickListener {
 			register_switching(item);
 			
 			break;// case dlg_register_lv
+
+		case dlg_checkactv_long_click_lv://------------------------------
+			/*********************************
+			 * 1. Get item
+			 * 2. Switching
+			 *********************************/
+			item = (String) parent.getItemAtPosition(position);
+			
+			/*********************************
+			 * 2. Switching
+			 *********************************/
+			if (item.equals(actv.getString(R.string.dlg_checkactv_long_click_lv_edit))) {
+
+				
+				
+			} else if (item.equals(actv.getString(
+								R.string.dlg_checkactv_long_click_lv_change_serial_num))) {
+			
+				Methods.dlg_checkactv_long_click_lv_change_serial_num(actv, dlg);
+				
+			}//if (item.equals(actv.getString(R.string.dlg_checkactv_long_click_lv_edit)))
+			
+			
+			
+			break;// case dlg_checkactv_long_click_lv
 			
 		}//switch (tag)
 		

@@ -7,6 +7,7 @@ import ic.items.CL;
 import ic.items.Item;
 import ic.listeners.ButtonOnClickListener;
 import ic.listeners.ButtonOnTouchListener;
+import ic.listeners.CustomOnItemLongClickListener;
 import ic.utils.DBUtils;
 import ic.utils.ItemListAdapter;
 import ic.utils.MainListAdapter;
@@ -171,7 +172,11 @@ public class CheckActv extends ListActivity {
 
 	private void set_listeners() {
 		/*********************************
-		 * 
+		 * 1. Button => "Add"
+		 * 2. Long click
+		 *********************************/
+		/*********************************
+		 * 1. Button => "Add"
 		 *********************************/
 		Button bt_add = (Button) findViewById(R.id.actv_check_bt_add);
 		
@@ -180,6 +185,14 @@ public class CheckActv extends ListActivity {
 		bt_add.setOnTouchListener(new ButtonOnTouchListener(this));
 		bt_add.setOnClickListener(new ButtonOnClickListener(this));
 
+		/*********************************
+		 * 2. Long click
+		 *********************************/
+		ListView lv = this.getListView();
+		
+		lv.setTag(Methods.ListTags.actv_check_lv);
+		
+		lv.setOnItemLongClickListener(new CustomOnItemLongClickListener(this));
 		
 	}//private void set_listeners()
 

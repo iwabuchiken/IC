@@ -85,13 +85,20 @@ public class Methods {
 		dlg_register_list_bt_ok,
 		
 		// dlg_register_item.xml
-		dlg_rgstr_item_bt_ok
+		dlg_rgstr_item_bt_ok,
+
+		// dlg_checkactv_change_serial_num_btn_ok.xml
+		dlg_checkactv_change_serial_num_btn_ok,
+		
 		
 	}//public static enum DialogButtonTags
 	
 	public static enum DialogItemTags {
 		// dlg_register.xml
 		dlg_register_lv,
+		
+		// dlg_checkactv_long_click.xml
+		dlg_checkactv_long_click_lv,
 		
 	}//public static enum DialogItemTags
 	
@@ -155,7 +162,10 @@ public class Methods {
 	public static enum ListTags {
 		// MainActivity.java
 		actv_main_lv,
-		
+
+		// CheckActv.java
+		actv_check_lv,
+
 	}//public static enum ListTags
 
 	public static enum LongClickTags {
@@ -2104,6 +2114,131 @@ public class Methods {
 
 		
 	}//public static void change_item_status(Activity actv, Item item)s
+
+	
+	public static void dlg_checkactv_long_click(Activity actv) {
+		/*********************************
+		 * 1. Dialog
+		 * 2. List view
+		 * 3. Show dialog
+		 *********************************/
+		Dialog dlg = dlg_template_cancel(actv, 
+				R.layout.dlg_checkactv_long_click, R.string.dlg_checkactv_long_click_title,
+				R.id.dlg_checkactv_long_click_bt_cancel,
+				Methods.DialogButtonTags.dlg_generic_dismiss);
+
+		/*----------------------------
+		 * 2. List view
+		 * 	1. Get view
+		 * 	1-2. Set tag to view
+		 * 
+		 * 	2. Prepare list data
+		 * 	3. Prepare adapter
+		 * 	4. Set adapter
+			----------------------------*/
+		ListView lv = (ListView) dlg.findViewById(R.id.dlg_checkactv_long_click_lv);
+		
+		lv.setTag(Methods.DialogItemTags.dlg_checkactv_long_click_lv);
+		
+		/*----------------------------
+		 * 2.2. Prepare list data
+			----------------------------*/
+		List<String> long_click_items = new ArrayList<String>();
+		
+		long_click_items.add(actv.getString(R.string.dlg_checkactv_long_click_lv_edit));
+		long_click_items.add(actv.getString(R.string.dlg_checkactv_long_click_lv_change_serial_num));
+		
+		ArrayAdapter<String> adp = new ArrayAdapter<String>(
+		
+				actv,
+				android.R.layout.simple_list_item_1,
+				long_click_items
+		);
+		
+		/*----------------------------
+		 * 2.4. Set adapter
+			----------------------------*/
+		lv.setAdapter(adp);
+		
+		/*----------------------------
+		 * 3. Set listener => list
+			----------------------------*/
+		lv.setOnItemClickListener(
+						new DialogOnItemClickListener(
+								actv, 
+								dlg));
+		
+		/*********************************
+		 * 3. Show dialog
+		 *********************************/
+		dlg.show();
+		
+	}//public static void dlg_checkactv_long_click(Activity actv)
+
+	public static void dlg_checkactv_long_click_lv_change_serial_num(
+			Activity actv, Dialog dlg) {
+		/*********************************
+		 * memo
+		 *********************************/
+		Dialog dlg2 = new Dialog(actv);
+		
+		//
+		dlg2.setContentView(R.layout.dlg_checkactv_change_serial_num);
+		
+		// Title
+		dlg2.setTitle(R.string.dlg_checkactv_change_serial_num_title);
+
+		/*********************************
+		 * Get views
+		 *********************************/
+		//
+		Button btn_ok = 
+			(Button) dlg2.findViewById(R.id.dlg_checkactv_change_serial_num_btn_ok);
+		
+		Button btn_cancel = 
+				(Button) dlg2.findViewById(R.id.dlg_checkactv_change_serial_num_btn_cancel);
+		
+		/*********************************
+		 * Set tags
+		 *********************************/
+		//
+		btn_ok.setTag(
+				Methods.DialogButtonTags.dlg_checkactv_change_serial_num_btn_ok);
+		
+		btn_cancel.setTag(
+				Methods.DialogButtonTags.dlg_generic_dismiss_second_dialog);
+		
+		/*----------------------------
+		* 2. Add listeners => OnTouch
+		----------------------------*/
+		//
+		btn_ok.setOnTouchListener(new DialogButtonOnTouchListener(actv, dlg));
+		btn_cancel.setOnTouchListener(new DialogButtonOnTouchListener(actv, dlg));
+		
+		/*----------------------------
+		* 3. Add listeners => OnClick
+		----------------------------*/
+		//
+		btn_ok.setOnClickListener(new DialogButtonOnClickListener(actv, dlg, dlg2));
+		btn_cancel.setOnClickListener(new DialogButtonOnClickListener(actv, dlg, dlg2));
+		
+
+//		Dialog dlg2 = dlg_template_okCancel(
+//				actv, R.layout.dlg_checkactv_change_serial_num,
+//				R.string.dlg_checkactv_change_serial_num_title,
+//				
+//				R.id.dlg_checkactv_change_serial_num_btn_ok,
+//				R.id.dlg_checkactv_change_serial_num_btn_cancel,
+//
+//				Methods.DialogButtonTags.dlg_checkactv_change_serial_num_btn_ok,
+//				Methods.DialogButtonTags.dlg_generic_dismiss_second_dialog
+//				);
+
+
+		dlg2.show();
+
+		
+	}//public static void dlg_checkactv_long_click_lv_change_serial_num
 
 
 	

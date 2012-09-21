@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:id="@+id/dlg_checkactv_change_serial_num_LL_root"
+    >
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TableRow
+            android:id="@+id/dlg_checkactv_change_serial_num_tr_current"
+            
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            
+			android:layout_marginLeft="5dp"
+			android:layout_marginRight="5dp"
+			android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
+			
+            >
+
+            <TextView
+                android:id="@+id/dlg_checkactv_change_serial_num_tv_current"
+                
+                android:minWidth="100dp"
+                android:layout_height="wrap_content"
+
+	            android:gravity="center"
+	            
+                android:text="@string/dlg_checkactv_change_serial_num_current"
+                android:textSize="25dp" 
+                />
+
+            <TextView
+                android:id="@+id/dlg_checkactv_change_serial_num_tv_current_num"
+                
+                android:minWidth="70dp"
+                android:layout_height="wrap_content"
+                
+                android:layout_gravity="right"
+                
+                android:layout_marginLeft="5dp"
+	            android:layout_marginRight="5dp"
+	            android:layout_marginBottom="5dp"
+	            android:layout_marginTop="5dp"
+                
+                
+                android:text="XX" 
+                android:textSize="25dp"
+                
+                android:background="@color/white"
+                android:textColor="@color/blue1"
+                />
+
+            <TextView
+                android:id="@+id/dlg_checkactv_change_serial_num_tv_current_unit"
+                
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                
+                android:text="@string/dlg_checkactv_change_serial_num_unit" 
+                android:textSize="25dp"
+                />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/dlg_checkactv_change_serial_num_tr_new"
+            
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            
+			android:layout_marginLeft="5dp"
+			android:layout_marginRight="5dp"
+			android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
+            >
+
+            <TextView
+                android:id="@+id/dlg_checkactv_change_serial_num_tv_new"
+                
+                android:minWidth="100dp"
+                android:layout_height="wrap_content"
+                
+                android:gravity="center"
+                
+                android:text="@string/dlg_checkactv_change_serial_num_new" 
+                android:textSize="25dp"
+                />
+
+            <EditText
+                android:id="@+id/dlg_checkactv_change_serial_num_et_new"
+                android:minWidth="70dp"
+                android:layout_height="wrap_content"
+                
+                android:inputType="number" 
+                android:textSize="25dp"
+                >
+
+                <requestFocus />
+            </EditText>
+
+            <TextView
+                android:id="@+id/dlg_checkactv_change_serial_num_tv_new_unit"
+                
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                
+                android:text="@string/dlg_checkactv_change_serial_num_unit" 
+                android:textSize="25dp"
+                
+                />
+
+        </TableRow>
+    </TableLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        
+         
+        android:id="@+id/dlg_checkactv_change_serial_num_LL_buttons"
+        >
+
+        <Button
+            android:id="@+id/dlg_checkactv_change_serial_num_btn_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            
+            android:minWidth="160dp"
+            
+            android:textSize="25dp"
+            android:text="@string/generic_bt_ok"
+            android:textColor="@color/blue1"
+            
+            android:layout_weight="1"
+            
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="2dp"
+            android:layout_marginBottom="5dp"
+            
+            android:background="@color/white"
+            
+            />
+
+        <Button
+            android:id="@+id/dlg_checkactv_change_serial_num_btn_cancel"
+            
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            
+            android:minWidth="160dp"
+            
+            android:textSize="25dp"
+            android:text="@string/generic_bt_cancel"
+            android:textColor="@color/red"
+            
+            android:layout_weight="1"
+            
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            
+            android:background="@color/white"
+            
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

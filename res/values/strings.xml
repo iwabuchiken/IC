@@ -44,5 +44,18 @@
     	<string name="opt_menu_actv_check_clear_status">Clear status</string>
     	<string name="opt_menu_actv_check_sort_list_by_status">Sort list</string>
     	
+    <!-- dlg_checkactv_long_click.xml -->
+    	<string name="dlg_checkactv_long_click_title">アイテム</string>
+    	<string name="dlg_checkactv_long_click_lv_edit">本文変更</string>
+    	<string name="dlg_checkactv_long_click_lv_change_serial_num">順番変更</string>
+    
+    
+    <!-- dlg_checkactv_change_serial_num.xml -->
+    	<string name="dlg_checkactv_change_serial_num_title">順番変更</string>
+    	<string name="dlg_checkactv_change_serial_num_current">現在</string>
+    	<string name="dlg_checkactv_change_serial_num_unit">番</string>
+    	<string name="dlg_checkactv_change_serial_num_new">新</string>
+    	
+    
     	
 </resources>
