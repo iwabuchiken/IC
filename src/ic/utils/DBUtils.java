@@ -569,6 +569,61 @@ public class DBUtils extends SQLiteOpenHelper{
 		
 	}//public boolean insertData_list
 
+	public boolean insertData_item(SQLiteDatabase wdb, Object[] data) {
+		/*----------------------------
+		* 1. Insert data
+		----------------------------*/
+		long created_at = Methods.getMillSeconds_now();
+		long modified_at = Methods.getMillSeconds_now();
+
+//		"text", "serial_num",	"list_id"
+		
+		try {
+			// Start transaction
+			wdb.beginTransaction();
+			
+			// ContentValues
+			ContentValues val = new ContentValues();
+			
+			// Put values
+			val.put("created_at", created_at);		// 
+			val.put("modified_at", modified_at);		//
+			
+			val.put(MainActv.cols_items[0], (String) data[0]);	// 
+			val.put(MainActv.cols_items[1], (Integer) data[1]);	//
+			val.put(MainActv.cols_items[2], (Long) data[2]);	//
+			
+			// Insert data
+			wdb.insert(MainActv.tableName_items, null, val);
+			
+			// Set as successful
+			wdb.setTransactionSuccessful();
+			
+			// End transaction
+			wdb.endTransaction();
+			
+			// Log
+			Log.d("DBUtils.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "Transaction => Ends");
+			
+			
+			return true;
+		
+		} catch (Exception e) {
+			// Log
+			Log.e("DBUtils.java" + "["
+			+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+			+ "]", "Exception! => " + e.toString());
+			
+			return false;
+		}//try
+		
+		////debug
+		//return false;
+		
+	}//public boolean insertData_item
+	
 	public boolean updateData(SQLiteDatabase wdb, String tableName) {
 		/*----------------------------
 		* 1. Insert data

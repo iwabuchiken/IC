@@ -41,6 +41,8 @@ public class DialogButtonOnTouchListener implements OnTouchListener {
 			case dlg_generic_dismiss_second_dialog:
 			case dlg_register_genre_bt_ok:
 			case dlg_register_list_bt_ok:
+			case dlg_rgstr_item_bt_ok:
+				
 				//
 				v.setBackgroundColor(Color.GRAY);
 				
@@ -56,6 +58,7 @@ public class DialogButtonOnTouchListener implements OnTouchListener {
 			case dlg_generic_dismiss_second_dialog:
 			case dlg_register_genre_bt_ok:
 			case dlg_register_list_bt_ok:
+			case dlg_rgstr_item_bt_ok:
 				
 				//
 				v.setBackgroundColor(Color.WHITE);

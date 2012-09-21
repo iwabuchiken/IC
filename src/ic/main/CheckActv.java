@@ -1,5 +1,6 @@
 package ic.main;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ic.items.CL;
@@ -8,6 +9,7 @@ import ic.listeners.ButtonOnClickListener;
 import ic.listeners.ButtonOnTouchListener;
 import ic.utils.DBUtils;
 import ic.utils.ItemListAdapter;
+import ic.utils.MainListAdapter;
 import ic.utils.Methods;
 import android.app.ListActivity;
 import android.content.Intent;
@@ -26,17 +28,19 @@ public class CheckActv extends ListActivity {
 	/*********************************
 	 * List-related
 	 *********************************/
-	static ItemListAdapter ilAdp;
+	public static ItemListAdapter ilAdp;
 	
-	static List<Item> iList;
+	public static List<Item> iList;
 
-	static CL clList;
+	public static CL clList;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		/********************************
 		 * 1. set_up_1
 		 * 2. Set listeners
+		 * 
+		 * 3. Initialise vars
 		 ********************************/
 		/*********************************
 		 * 1. Set up
@@ -50,7 +54,112 @@ public class CheckActv extends ListActivity {
 		 *********************************/
 		set_listeners();
 		
+		set_up_2_show_list();
+		
+		/*********************************
+		 * 3. Initialise vars
+		 *********************************/
+		iList = new ArrayList<Item>();
+		
 	}//public void onCreate(Bundle savedInstanceState)
+
+	/**********************************************
+	 * <Ret>
+	 * 	false	=> iList == null
+	 **********************************************/
+	private boolean set_up_2_show_list() {
+		/*********************************
+		 * 1. Get item list
+		 * 	1. Query
+		 * 	2. Build list
+		 * 
+		 * 2. Setup adapter
+		 * 
+		 * 3. Set adapter
+		 * 
+		 * 4. Return
+		 *********************************/
+//		/*********************************
+//		 * 1.1. Query
+//		 *********************************/
+//		DBUtils dbu = new DBUtils(this, MainActv.dbName);
+//		
+//		SQLiteDatabase rdb = dbu.getReadableDatabase();
+
+//		Cursor c = Methods.select_all_from_table(this, rdb, MainActv.tableName_items);
+//		
+//		if (c.getCount() < 1) {
+//			
+//			// debug
+//			Toast.makeText(this, "No data yet", Toast.LENGTH_SHORT).show();
+//			
+//			/********************************
+//			 * 3. Close db
+//			 ********************************/
+//			rdb.close();
+//
+//			return;
+//		}//if (c.getCount() < 1)
+		
+		/*********************************
+		 * 1.2. Build list
+		 *********************************/
+		iList = Methods.get_item_list_from_check_list(this, clList.getDb_id());
+
+		// Log
+		if (iList == null) {
+
+			Log.d("CheckActv.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "iList => Null");
+			
+			// debug
+			Toast.makeText(this,
+					"Query exception, or, no items " +
+					"for this check list, yet",
+					Toast.LENGTH_SHORT).show();
+			
+//			/********************************
+//			 * 3. Close db
+//			 ********************************/
+//			rdb.close();
+
+			return false;
+
+		} else {//if (iList == null)
+			
+			// Log
+			Log.d("CheckActv.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "iList.size(): " + iList.size());
+			
+		}//if (iList == null)
+		
+//			Log.d("CheckActv.java" + "["
+//					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+//					+ "]", "iList.size(): " + iList.size());
+			
+		/*********************************
+		 * 2. Setup adapter
+		 *********************************/
+		ilAdp = new ItemListAdapter(
+				this,
+				R.layout.list_row_item_list,
+				iList
+				);
+
+		/*********************************
+		 * 3. Set adapter
+		 *********************************/
+		setListAdapter(ilAdp);
+		
+		/*********************************
+		 * 4. Return
+		 *********************************/
+		return true;
+
+	}//private void set_up_2_show_list()
+
 
 	private void set_listeners() {
 		/*********************************
@@ -139,48 +248,6 @@ public class CheckActv extends ListActivity {
 			
 		}
 		
-		/*********************************
-		 * 5. Get item list
-		 * 	1. Query
-		 * 	2. Build list
-		 *********************************/
-		/*********************************
-		 * 5.1. Query
-		 *********************************/
-		DBUtils dbu = new DBUtils(this, MainActv.dbName);
-		
-		SQLiteDatabase rdb = dbu.getReadableDatabase();
-
-		Cursor c = Methods.select_all_from_table(this, rdb, MainActv.tableName_items);
-		
-		if (c.getCount() < 1) {
-			
-			// debug
-			Toast.makeText(this, "No data yet", Toast.LENGTH_SHORT).show();
-			
-			/********************************
-			 * 3. Close db
-			 ********************************/
-			rdb.close();
-
-			return;
-		}//if (c.getCount() < 1)
-		
-		/*********************************
-		 * 5.2. Build list
-		 *********************************/
-		iList = Methods.get_item_list_from_check_list(this, clList.getDb_id());
-		
-		// Log
-		Log.d("Methods.java" + "["
-				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
-				+ "]", "iList.size(): " + iList.size());
-		
-		
-		/*********************************
-		 * 6. Close db
-		 *********************************/
-		rdb.close();
 		
 	}//private void set_up_1()
 	
