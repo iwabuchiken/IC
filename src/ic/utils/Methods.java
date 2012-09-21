@@ -2037,5 +2037,29 @@ public class Methods {
 		return true;
 
 	}//private void refresh_item_list()
+
+	public static void change_item_status(Activity actv, Item item) {
+		// Log
+		Log.d("Methods.java" + "["
+				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ "]", "item.getStatus(): " + item.getStatus());
+		
+		int status = item.getStatus();
+		
+		if (status == 5) {
+			
+			item.setStatus(0);
+			
+		} else {//if (status == 5)
+		
+			item.setStatus(status + 1);
+			
+		}//if (status == 5)
+		
+		CheckActv.ilAdp.notifyDataSetChanged();
+
+		
+	}//public static void change_item_status(Activity actv, Item item)s
+
 	
 }//public class Methods

@@ -19,7 +19,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -293,5 +295,22 @@ public class CheckActv extends ListActivity {
 		// TODO 自動生成されたメソッド・スタブ
 		super.onStop();
 	}
-	
+
+	@Override
+	protected void onListItemClick(
+					ListView l, View v, int position, long id) {
+		/*********************************
+		 * 1. Get item
+		 * 
+		 * 2. Change status
+		 * 
+		 *********************************/
+		Item item = (Item) l.getItemAtPosition(position);
+
+		Methods.change_item_status(this, item);
+		
+		super.onListItemClick(l, v, position, id);
+		
+	}//protected void onListItemClick(ListView l, View v, int position, long id)
+
 }//public class CheckActv extends ListActivity
