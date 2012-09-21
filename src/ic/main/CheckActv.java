@@ -282,45 +282,48 @@ public class CheckActv extends ListActivity {
 		
 		case R.id.opt_menu_actv_check_clear_status://---------------
 			
-			// Log
-			Log.d("CheckActv.java" + "["
-					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
-					+ "]", "iList.size(): " + iList.size());
+			opt_menu_actv_check_clear_status();
 			
-			for (Item i : CheckActv.iList) {
-				
-				i.setStatus(0);
-				
-			}
+			break;// case R.id.opt_menu_actv_check_clear_status
+
+		case R.id.opt_menu_actv_check_sort_list_by_status://------------
 			
-			//debug
-			String temp = "";
-			
-			for (Item i : CheckActv.iList) {
-				
-				temp += "[" + i.getDb_id() + " => " + "status=" + i.getStatus() + "]";
-				
-			}
-			
-//			// Log
-//			Log.d("CheckActv.java" + "["
-//					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
-//					+ "]", "temp=" + temp);
+			boolean res = Methods.sort_item_list_by_status(this);
 			
 			ilAdp.notifyDataSetChanged();
 			
-//			// Log
-//			Log.d("CheckActv.java" + "["
-//					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
-//					+ "]", "Adapter notified");
-			
-			break;// case R.id.opt_menu_actv_check_clear_status
+			break;
 			
 		}//switch (item.getItemId())
 		
 		return super.onOptionsItemSelected(item);
 		
 	}//public boolean onOptionsItemSelected(MenuItem item)
+
+	private void opt_menu_actv_check_clear_status() {
+		// Log
+		Log.d("CheckActv.java" + "["
+				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ "]", "iList.size(): " + iList.size());
+		
+		for (Item i : CheckActv.iList) {
+			
+			i.setStatus(0);
+			
+		}
+		
+		//debug
+		String temp = "";
+		
+		for (Item i : CheckActv.iList) {
+			
+			temp += "[" + i.getDb_id() + " => " + "status=" + i.getStatus() + "]";
+			
+		}
+		
+		ilAdp.notifyDataSetChanged();
+		
+	}//private void opt_menu_actv_check_clear_status()
 
 	@Override
 	protected void onPause() {

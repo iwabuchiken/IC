@@ -68,6 +68,7 @@ public final class R {
         public static final int main_opt_menu_register=0x7f080025;
         public static final int main_tv=0x7f080024;
         public static final int opt_menu_actv_check_clear_status=0x7f080026;
+        public static final int opt_menu_actv_check_sort_list_by_status=0x7f080027;
     }
     public static final class layout {
         public static final int actv_check=0x7f030000;
@@ -125,6 +126,7 @@ public final class R {
         /**  menu_actv_check.xml 
          */
         public static final int opt_menu_actv_check_clear_status=0x7f050018;
+        public static final int opt_menu_actv_check_sort_list_by_status=0x7f050019;
     }
     public static final class style {
         /**  <style name="v1_ib"> 

@@ -265,7 +265,7 @@ public class Methods {
 					
 				}//if (condition)
 				
-			}//public int compare(CL c1, CL c2)
+			}//public int compare(CL i1, CL i2)
 			
 		};//Comparator<CL> comp
 		
@@ -281,6 +281,50 @@ public class Methods {
 		
 		return true;
 	}//public static boolean sort_list_CLList(Activity actv, List<CL> cLList)
+
+	public static boolean sort_item_list_by_status(Activity actv) {
+		/*********************************
+		 * 1. Comaparator
+		 * 2. Sort
+		 *********************************/
+		actv_methods = actv;
+		
+		/*********************************
+		 * 1. Comaparator
+		 *********************************/
+		Comparator<Item> comp = new Comparator<Item>(){
+
+			public int compare(Item i1, Item i2) {
+				/*********************************
+				 * 1. Get genre name
+				 * 2. Null?
+				 * 
+				 * 3. Genre names => Not equal?
+				 * 4. Genre names => Equal?
+				 *********************************/
+				int i1_status = i1.getStatus();
+				int i2_status = i2.getStatus();
+				
+				return i1_status - i2_status;
+//				return -(i1_status - i2_status);
+				
+			}//public int compare(Item i1, Item i2)
+			
+		};//Comparator<CL> comp
+		
+		/*********************************
+		 * 2. Sort
+		 *********************************/
+		Collections.sort(CheckActv.iList, comp);
+		
+		// Log
+		Log.d("Methods.java" + "["
+				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ "]", "Sort done: " + CheckActv.iList.toString());
+		
+		return true;
+		
+	}//public static boolean sort_item_list_by_status(Activity actv)
 
 	/****************************************
 	 *
@@ -2060,5 +2104,8 @@ public class Methods {
 
 		
 	}//public static void change_item_status(Activity actv, Item item)s
+
+
 	
 }//public class Methods
+

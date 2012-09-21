@@ -42,6 +42,7 @@
     
     <!-- menu_actv_check.xml -->
     	<string name="opt_menu_actv_check_clear_status">Clear status</string>
+    	<string name="opt_menu_actv_check_sort_list_by_status">Sort list</string>
     	
     	
 </resources>

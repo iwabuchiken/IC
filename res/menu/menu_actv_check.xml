@@ -7,5 +7,11 @@
 	    
 	</item>
 
-
+	<item 
+	    android:id="@+id/opt_menu_actv_check_sort_list_by_status" 
+	    android:title="@string/opt_menu_actv_check_sort_list_by_status" 
+	    android:icon="@android:drawable/ic_menu_agenda">
+	    
+	</item>
+	
 </menu>
