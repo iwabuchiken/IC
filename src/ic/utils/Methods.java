@@ -2060,6 +2060,5 @@ public class Methods {
 
 		
 	}//public static void change_item_status(Activity actv, Item item)s
-
 	
 }//public class Methods
