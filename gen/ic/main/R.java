@@ -67,6 +67,7 @@ public final class R {
         public static final int list_row_main_tv_list_name=0x7f080021;
         public static final int main_opt_menu_register=0x7f080025;
         public static final int main_tv=0x7f080024;
+        public static final int opt_menu_actv_check_clear_status=0x7f080026;
     }
     public static final class layout {
         public static final int actv_check=0x7f030000;
@@ -80,6 +81,7 @@ public final class R {
     }
     public static final class menu {
         public static final int main_menu=0x7f070000;
+        public static final int menu_actv_check=0x7f070001;
     }
     public static final class string {
         public static final int actv_check_bt_add=0x7f050013;
@@ -120,6 +122,9 @@ public final class R {
         /**  main.xml 
          */
         public static final int main_title=0x7f05000a;
+        /**  menu_actv_check.xml 
+         */
+        public static final int opt_menu_actv_check_clear_status=0x7f050018;
     }
     public static final class style {
         /**  <style name="v1_ib"> 

@@ -18,6 +18,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -50,7 +51,12 @@ public class CheckActv extends ListActivity {
 		super.onCreate(savedInstanceState);
 
 		set_up_1();
-		
+
+		/*********************************
+		 * 3. Initialise vars
+		 *********************************/
+		iList = new ArrayList<Item>();
+
 		/*********************************
 		 * 2. Set listeners
 		 *********************************/
@@ -58,10 +64,10 @@ public class CheckActv extends ListActivity {
 		
 		set_up_2_show_list();
 		
-		/*********************************
-		 * 3. Initialise vars
-		 *********************************/
-		iList = new ArrayList<Item>();
+//		/*********************************
+//		 * 3. Initialise vars
+//		 *********************************/
+//		iList = new ArrayList<Item>();
 		
 	}//public void onCreate(Bundle savedInstanceState)
 
@@ -256,7 +262,10 @@ public class CheckActv extends ListActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// TODO 自動生成されたメソッド・スタブ
+
+		MenuInflater mi = getMenuInflater();
+		mi.inflate(R.menu.menu_actv_check, menu);
+
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -268,9 +277,50 @@ public class CheckActv extends ListActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO 自動生成されたメソッド・スタブ
+
+		switch (item.getItemId()) {
+		
+		case R.id.opt_menu_actv_check_clear_status://---------------
+			
+			// Log
+			Log.d("CheckActv.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "iList.size(): " + iList.size());
+			
+			for (Item i : CheckActv.iList) {
+				
+				i.setStatus(0);
+				
+			}
+			
+			//debug
+			String temp = "";
+			
+			for (Item i : CheckActv.iList) {
+				
+				temp += "[" + i.getDb_id() + " => " + "status=" + i.getStatus() + "]";
+				
+			}
+			
+//			// Log
+//			Log.d("CheckActv.java" + "["
+//					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+//					+ "]", "temp=" + temp);
+			
+			ilAdp.notifyDataSetChanged();
+			
+//			// Log
+//			Log.d("CheckActv.java" + "["
+//					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+//					+ "]", "Adapter notified");
+			
+			break;// case R.id.opt_menu_actv_check_clear_status
+			
+		}//switch (item.getItemId())
+		
 		return super.onOptionsItemSelected(item);
-	}
+		
+	}//public boolean onOptionsItemSelected(MenuItem item)
 
 	@Override
 	protected void onPause() {

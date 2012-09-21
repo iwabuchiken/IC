@@ -40,4 +40,8 @@
     	<string name="dlg_rgstr_item_text">テキスト</string>
     	<string name="dlg_rgstr_item_order">順番</string>
     
+    <!-- menu_actv_check.xml -->
+    	<string name="opt_menu_actv_check_clear_status">Clear status</string>
+    	
+    	
 </resources>
