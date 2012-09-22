@@ -2116,7 +2116,7 @@ public class Methods {
 	}//public static void change_item_status(Activity actv, Item item)s
 
 	
-	public static void dlg_checkactv_long_click(Activity actv) {
+	public static void dlg_checkactv_long_click(Activity actv, int item_position) {
 		/*********************************
 		 * 1. Dialog
 		 * 2. List view
@@ -2166,7 +2166,7 @@ public class Methods {
 		lv.setOnItemClickListener(
 						new DialogOnItemClickListener(
 								actv, 
-								dlg));
+								dlg, item_position));
 		
 		/*********************************
 		 * 3. Show dialog
@@ -2176,7 +2176,7 @@ public class Methods {
 	}//public static void dlg_checkactv_long_click(Activity actv)
 
 	public static void dlg_checkactv_long_click_lv_change_serial_num(
-			Activity actv, Dialog dlg) {
+			Activity actv, Dialog dlg, int item_position) {
 		/*********************************
 		 * memo
 		 *********************************/
@@ -2220,7 +2220,8 @@ public class Methods {
 		----------------------------*/
 		//
 		btn_ok.setOnClickListener(new DialogButtonOnClickListener(actv, dlg, dlg2));
-		btn_cancel.setOnClickListener(new DialogButtonOnClickListener(actv, dlg, dlg2));
+		btn_cancel.setOnClickListener(
+					new DialogButtonOnClickListener(actv, dlg, dlg2, item_position));
 		
 
 //		Dialog dlg2 = dlg_template_okCancel(
@@ -2240,7 +2241,21 @@ public class Methods {
 		
 	}//public static void dlg_checkactv_long_click_lv_change_serial_num
 
+	public static boolean is_numeric(String num_string) {
+		
+//		return num_string.matches("((-|\\+)?[0-9]+(\\.[0-9]+)?)+ ");
+		return num_string.matches("((-|\\+)?[0-9]+(\\.[0-9]+)?)+");
 
+	}//public static boolean is_numeric(String num_string)
+
+	public static void checkactv_change_order(Activity actv, Dialog dlg,
+			Dialog dlg2, int item_position) {
+		/*********************************
+		 * memo
+		 *********************************/
+		aaa
+		
+	}//public static void checkactv_change_order()
 	
 }//public class Methods
 

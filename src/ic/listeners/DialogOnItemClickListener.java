@@ -19,6 +19,8 @@ public class DialogOnItemClickListener implements OnItemClickListener {
 	Activity actv;
 	Dialog dlg;
 	Dialog dlg2;
+	
+	int item_position;
 	//
 	Vibrator vib;
 	
@@ -29,6 +31,17 @@ public class DialogOnItemClickListener implements OnItemClickListener {
 		// 
 		this.actv = actv;
 		this.dlg = dlg;
+		
+		vib = (Vibrator) actv.getSystemService(Context.VIBRATOR_SERVICE);
+		
+	}//public DialogOnItemClickListener(Activity actv, Dialog dlg)
+
+	public DialogOnItemClickListener(Activity actv, Dialog dlg, int item_position) {
+		// 
+		this.actv = actv;
+		this.dlg = dlg;
+		
+		this.item_position = item_position;
 		
 		vib = (Vibrator) actv.getSystemService(Context.VIBRATOR_SERVICE);
 		
@@ -83,7 +96,7 @@ public class DialogOnItemClickListener implements OnItemClickListener {
 			} else if (item.equals(actv.getString(
 								R.string.dlg_checkactv_long_click_lv_change_serial_num))) {
 			
-				Methods.dlg_checkactv_long_click_lv_change_serial_num(actv, dlg);
+				Methods.dlg_checkactv_long_click_lv_change_serial_num(actv, dlg, item_position);
 				
 			}//if (item.equals(actv.getString(R.string.dlg_checkactv_long_click_lv_edit)))
 			

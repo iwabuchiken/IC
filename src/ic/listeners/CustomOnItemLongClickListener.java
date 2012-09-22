@@ -93,7 +93,7 @@ public class CustomOnItemLongClickListener implements OnItemLongClickListener {
 			
 			Item item = (Item) parent.getItemAtPosition(position);
 			
-			Methods.dlg_checkactv_long_click(actv);
+			Methods.dlg_checkactv_long_click(actv, position);
 			
 //			// debug
 //			Toast.makeText(actv, item.getText(), Toast.LENGTH_SHORT).show(); 
