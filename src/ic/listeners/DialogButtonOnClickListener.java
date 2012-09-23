@@ -119,6 +119,12 @@ public class DialogButtonOnClickListener implements OnClickListener {
 
 		case dlg_checkactv_change_serial_num_btn_ok://-----------------------------
 			
+			// Log
+			Log.d("DialogButtonOnClickListener.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "item_position: " + item_position);
+
+			
 			dlg_checkactv_change_serial_num_btn_ok();
 			
 //			EditText et = (EditText) dlg2.findViewById(R.id.dlg_checkactv_change_serial_num_et_new);

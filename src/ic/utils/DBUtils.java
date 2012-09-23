@@ -6,6 +6,8 @@ package ic.utils;
 import ic.main.MainActv;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
 
 import android.app.Activity;
 import android.content.ContentResolver;
@@ -826,6 +828,113 @@ public class DBUtils extends SQLiteOpenHelper{
 		}
 		
 	}//public void updateData_memos
+
+	public static boolean updateData_items(Activity actv, String dbName,
+			String tableName, HashMap<Long,Integer> data) {
+		/*********************************
+		 * 1. Set up db
+		 * 2. Exec query
+		 * 
+		 * 3. Close db
+		 * 
+		 * 4. Return
+		 *********************************/
+		DBUtils dbu = new DBUtils(actv, dbName);
+		
+		SQLiteDatabase wdb = dbu.getWritableDatabase();
+
+		Set<Long> keys = data.keySet();
+		
+//		StringBuilder sb = new StringBuilder();
+//		
+//		sb.append("UPDATE " + tableName + " SET ");
+		
+		for (Long k : keys) {
+			// Sql
+			StringBuilder sb = new StringBuilder();
+			
+			sb.append("UPDATE " + tableName + " SET ");
+			
+			sb.append(MainActv.cols_items[1] + "='" + data.get(k) + "'");
+			
+			sb.append(" WHERE " + android.provider.BaseColumns._ID + "='" + k + "'");
+			
+			String sql = sb.toString();
+			
+			// Exec
+			try {
+				
+				wdb.execSQL(sql);
+				
+				// Log
+				Log.d("DBUtils.java" + "["
+				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ "]", "sql => Done: " + sql);
+				
+		//		Methods.toastAndLog(actv, "Data updated", 2000);
+				
+//							return true;
+			
+			
+			} catch (SQLException e) {
+
+				Log.e("DBUtils.java" + "["
+				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ "]", "Exception => " + e.toString() + " / " + "sql: " + sql);
+			
+			}
+
+		}//for (Long k : keys)
+		
+		/*********************************
+		 * 3. Close db
+		 *********************************/
+		wdb.close();
+		
+		/*********************************
+		 * 4. Return
+		 *********************************/
+		return true;
+		
+		
+//		for (int i = 0; i < data.size(); i++) {
+//			
+//			sb.append(MainActv.cols_items[1] + "='" + )
+//			
+////			sb.append(android.provider.BaseColumns._ID + "='")
+//			
+//		}//for (int i = 0; i < data.size(); i++)
+		
+//			"file_name='" + fi.getFile_name() + "', " +
+//			"file_path='" + fi.getFile_path() + "', " +
+//			
+//			
+//			" WHERE file_name = '" + fi.getFile_name() + "'";
+	
+//		try {
+//		
+//	//		wdb.execSQL(sql);
+//			
+//	//		// Log
+//	//		Log.d("DBUtils.java" + "["
+//	//		+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+//	//		+ "]", "sql => Done: " + sql);
+//			
+//	//		Methods.toastAndLog(actv, "Data updated", 2000);
+//			
+//			return true;
+//		
+//		
+//		} catch (SQLException e) {
+//			// Log
+//	//		Log.d("DBUtils.java" + "["
+//	//		+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+//	//		+ "]", "Exception => " + e.toString() + " / " + "sql: " + sql);
+//			
+//			return false;
+//		}
+		
+	}//public static boolean updateData_items()
 
 }//public class DBUtils
 

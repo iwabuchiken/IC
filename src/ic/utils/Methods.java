@@ -336,6 +336,50 @@ public class Methods {
 		
 	}//public static boolean sort_item_list_by_status(Activity actv)
 
+	public static boolean sort_item_list_by_serial_num(Activity actv) {
+		/*********************************
+		 * 1. Comaparator
+		 * 2. Sort
+		 *********************************/
+		actv_methods = actv;
+		
+		/*********************************
+		 * 1. Comaparator
+		 *********************************/
+		Comparator<Item> comp = new Comparator<Item>(){
+
+			public int compare(Item i1, Item i2) {
+				/*********************************
+				 * 1. Get genre name
+				 * 2. Null?
+				 * 
+				 * 3. Genre names => Not equal?
+				 * 4. Genre names => Equal?
+				 *********************************/
+				int i1_status = i1.getSerial_num();
+				int i2_status = i2.getSerial_num();
+				
+				return i1_status - i2_status;
+//				return -(i1_status - i2_status);
+				
+			}//public int compare(Item i1, Item i2)
+			
+		};//Comparator<CL> comp
+		
+		/*********************************
+		 * 2. Sort
+		 *********************************/
+		Collections.sort(CheckActv.iList, comp);
+		
+		// Log
+		Log.d("Methods.java" + "["
+				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ "]", "Sort done: " + CheckActv.iList.toString());
+		
+		return true;
+		
+	}//public static boolean sort_item_list_by_serial_num(Activity actv)
+
 	/****************************************
 	 *
 	 * 
@@ -2163,6 +2207,12 @@ public class Methods {
 		/*----------------------------
 		 * 3. Set listener => list
 			----------------------------*/
+		// Log
+		Log.d("Methods.java" + "["
+				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ "]", "item_position: " + item_position);
+
+		
 		lv.setOnItemClickListener(
 						new DialogOnItemClickListener(
 								actv, 
@@ -2180,6 +2230,12 @@ public class Methods {
 		/*********************************
 		 * memo
 		 *********************************/
+		// Log
+		Log.d("Methods.java" + "["
+				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ "]", "item_position: " + item_position);
+
+		
 		Dialog dlg2 = new Dialog(actv);
 		
 		//
@@ -2219,9 +2275,9 @@ public class Methods {
 		* 3. Add listeners => OnClick
 		----------------------------*/
 		//
-		btn_ok.setOnClickListener(new DialogButtonOnClickListener(actv, dlg, dlg2));
+		btn_ok.setOnClickListener(new DialogButtonOnClickListener(actv, dlg, dlg2, item_position));
 		btn_cancel.setOnClickListener(
-					new DialogButtonOnClickListener(actv, dlg, dlg2, item_position));
+					new DialogButtonOnClickListener(actv, dlg, dlg2));
 		
 
 //		Dialog dlg2 = dlg_template_okCancel(
@@ -2251,11 +2307,230 @@ public class Methods {
 	public static void checkactv_change_order(Activity actv, Dialog dlg,
 			Dialog dlg2, int item_position) {
 		/*********************************
-		 * memo
+		 * 1. Get new position
+		 * 2. Change order
+		 * 
+		 * 3. Sort list
+		 * 4. Notify adapter
+		 * 
+		 * 5. Dismiss dialogues
+		 * 
+		 * 6. Update db
 		 *********************************/
-		aaa
+		
+		checkactv_change_order_1_change_order(actv, dlg, dlg2, item_position);
+		
+		checkactv_change_order_2_update_data(actv, dlg, dlg2, item_position);
+		
+//		/*********************************
+//		 * 1. Get new position
+//		 *********************************/
+//		// Log
+//		Log.d("Methods.java" + "["
+//				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+//				+ "]", "item_position: " + item_position);
+//		
+//		EditText et = (EditText) dlg2.findViewById(R.id.dlg_checkactv_change_serial_num_et_new);
+//		
+////		// debug
+////		Toast.makeText(actv, et.getText().toString(), Toast.LENGTH_SHORT).show();
+//		
+//		int new_position = Integer.parseInt(et.getText().toString());
+//		
+//		/*********************************
+//		 * 2. Change order
+//		 *********************************/
+//		if (new_position >= item_position) {
+//			
+//			int i;
+//			
+//			// Items before the target
+////			for (i = item_position + 1; i <= new_position; i++) {
+//			for (i = item_position + 1; i < new_position; i++) {
+//				
+//				CheckActv.iList.get(i).setSerial_num(
+//								CheckActv.iList.get(i).getSerial_num() - 1);
+//				
+//			}//for (int i = item_position + 1; i < new_position; i++)
+//			
+//			// Target
+//			CheckActv.iList.get(item_position).setSerial_num(new_position);
+//			
+//			// Increment
+////			i += 1;
+//			
+////			// Items before the target
+////			for (; i < CheckActv.iList.size(); i++) {
+////				
+////				CheckActv.iList.get(i).setSerial_num(
+////								CheckActv.iList.get(i).getSerial_num() + 1);
+////				
+////			}//for (int i = item_position + 1; i < new_position; i++)
+//			
+//		} else if (new_position < item_position) {//if (new_position >= item_position)
+//
+//			int i;
+//			
+//			for (i = new_position ; i < item_position; i++) {
+//				
+//				CheckActv.iList.get(i).setSerial_num(
+//								CheckActv.iList.get(i).getSerial_num() + 1);
+//				
+//			}//for (int i = item_position + 1; i < new_position; i++)
+//			
+//			// Target
+////			CheckActv.iList.get(item_position).setSerial_num(new_position);
+//			CheckActv.iList.get(item_position).setSerial_num(new_position + 1);
+//			
+//		} else {//if (new_position >= item_position)
+//			
+//			
+//			
+//		}//if (new_position >= item_position)
+//		
+//		/*********************************
+//		 * 3. Sort list
+//		 *********************************/
+//		sort_item_list_by_serial_num(actv);
+//		
+//		/*********************************
+//		 * 4. Notify adapter
+//		 *********************************/
+//		CheckActv.ilAdp.notifyDataSetChanged();
+//		
+//		/*********************************
+//		 * 5. Dismiss dialogues
+//		 *********************************/
+//		dlg.dismiss();
+//		dlg2.dismiss();
 		
 	}//public static void checkactv_change_order()
-	
+
+	public static void checkactv_change_order_1_change_order(Activity actv, Dialog dlg,
+			Dialog dlg2, int item_position) {
+		/*********************************
+		 * 1. Get new position
+		 * 2. Change order
+		 * 
+		 * 3. Sort list
+		 * 4. Notify adapter
+		 * 
+		 * 5. Dismiss dialogues
+		 * 
+		 * 6. Update db
+		 *********************************/
+		
+		/*********************************
+		 * 1. Get new position
+		 *********************************/
+		// Log
+		Log.d("Methods.java" + "["
+				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ "]", "item_position: " + item_position);
+		
+		EditText et = (EditText) dlg2.findViewById(R.id.dlg_checkactv_change_serial_num_et_new);
+		
+//		// debug
+//		Toast.makeText(actv, et.getText().toString(), Toast.LENGTH_SHORT).show();
+		
+		int new_position = Integer.parseInt(et.getText().toString());
+		
+		/*********************************
+		 * 2. Change order
+		 *********************************/
+		if (new_position >= item_position) {
+			
+			int i;
+			
+			// Items before the target
+			for (i = item_position + 1; i <= new_position; i++) {
+//			for (i = item_position + 1; i < new_position; i++) {
+				
+				CheckActv.iList.get(i).setSerial_num(
+								CheckActv.iList.get(i).getSerial_num() - 1);
+				
+			}//for (int i = item_position + 1; i < new_position; i++)
+			
+			// Target
+//			CheckActv.iList.get(item_position).setSerial_num(new_position);
+			CheckActv.iList.get(item_position).setSerial_num(new_position + 1);
+			
+			// Increment
+//			i += 1;
+			
+//			// Items before the target
+//			for (; i < CheckActv.iList.size(); i++) {
+//				
+//				CheckActv.iList.get(i).setSerial_num(
+//								CheckActv.iList.get(i).getSerial_num() + 1);
+//				
+//			}//for (int i = item_position + 1; i < new_position; i++)
+			
+		} else if (new_position < item_position) {//if (new_position >= item_position)
+
+			int i;
+			
+			for (i = new_position ; i < item_position; i++) {
+				
+				CheckActv.iList.get(i).setSerial_num(
+								CheckActv.iList.get(i).getSerial_num() + 1);
+				
+			}//for (int i = item_position + 1; i < new_position; i++)
+			
+			// Target
+//			CheckActv.iList.get(item_position).setSerial_num(new_position);
+			CheckActv.iList.get(item_position).setSerial_num(new_position + 1);
+			
+		} else {//if (new_position >= item_position)
+			
+			
+			
+		}//if (new_position >= item_position)
+		
+		/*********************************
+		 * 3. Sort list
+		 *********************************/
+		sort_item_list_by_serial_num(actv);
+		
+		/*********************************
+		 * 4. Notify adapter
+		 *********************************/
+		CheckActv.ilAdp.notifyDataSetChanged();
+		
+		/*********************************
+		 * 5. Dismiss dialogues
+		 *********************************/
+		dlg.dismiss();
+		dlg2.dismiss();
+		
+	}//public static void checkactv_change_order()
+
+	public static void checkactv_change_order_2_update_data(Activity actv, Dialog dlg,
+			Dialog dlg2, int item_position) {
+		/*********************************
+		 * 6. Update db
+		 *********************************/
+
+		// Log
+		Log.d("Methods.java" + "["
+				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ "]", "checkactv_change_order_2_update_data => Starts");
+		/*********************************
+		 * 6. Update db
+		 *********************************/
+		HashMap<Long, Integer> data = new HashMap<Long, Integer>();
+		
+		for (int i = 0; i < CheckActv.iList.size(); i++) {
+			
+			data.put(CheckActv.iList.get(i).getDb_id(), CheckActv.iList.get(i).getSerial_num());
+			
+		}//for (int i = 0; i < CheckActv.iList.size(); i++)
+		
+		boolean res = DBUtils.updateData_items(
+							actv, MainActv.dbName, MainActv.tableName_items, data);
+		
+		
+	}//public static void checkactv_change_order()
+
 }//public class Methods
 

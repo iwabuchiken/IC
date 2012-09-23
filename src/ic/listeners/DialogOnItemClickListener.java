@@ -86,6 +86,11 @@ public class DialogOnItemClickListener implements OnItemClickListener {
 			 *********************************/
 			item = (String) parent.getItemAtPosition(position);
 			
+			// Log
+			Log.d("Methods.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "item_position: " + item_position);
+
 			/*********************************
 			 * 2. Switching
 			 *********************************/

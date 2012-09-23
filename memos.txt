@@ -3,6 +3,8 @@ cd C:\WORKS\WS\WS_Android~\IC
 C:\WORKS\PROGRAMS\FreeMind\FreeMind.exe C:\WORKS\WS\WS_Android~\FM\IC\IC.mm
 gitk
 
+javac ic\utils\Experiments.java
+java ic.utils.Experiments
 
 C:\WORKS\WORKSPACES_ANDROID\FM\a
 

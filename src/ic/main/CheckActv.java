@@ -81,6 +81,7 @@ public class CheckActv extends ListActivity {
 		 * 1. Get item list
 		 * 	1. Query
 		 * 	2. Build list
+		 * 	3. Sort list
 		 * 
 		 * 2. Setup adapter
 		 * 
@@ -147,7 +148,18 @@ public class CheckActv extends ListActivity {
 //			Log.d("CheckActv.java" + "["
 //					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
 //					+ "]", "iList.size(): " + iList.size());
-			
+		
+		/*********************************
+		 * 1.3. Sort list
+		 *********************************/
+		boolean res = Methods.sort_item_list_by_serial_num(this);
+		
+		// Log
+		Log.d("CheckActv.java" + "["
+				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ "]", "res: " + res);
+		
+		
 		/*********************************
 		 * 2. Setup adapter
 		 *********************************/
