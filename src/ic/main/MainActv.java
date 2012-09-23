@@ -60,6 +60,17 @@ public class MainActv extends ListActivity {
 	
 	public static String[] col_types_genres = 	{"TEXT"};
 
+	// Backup
+	public static String dirPath_db = "/data/data/ic.main/databases";
+	
+	public static String dirName_ExternalStorage = "/mnt/sdcard-ext";
+	
+	public static String dirPath_db_backup = dirName_ExternalStorage + "/IC_backup";
+	
+	public static String fileName_db_backup_trunk = "ic_backup";
+	
+	public static String fileName_db_backup_ext = ".bk";
+	
 	/*********************************
 	 * Intents
 	 *********************************/
@@ -360,6 +371,12 @@ public class MainActv extends ListActivity {
 			Methods.dlg_register(this);
 			
 			break;// case R.id.opt_menu_main_actv_register
+			
+		case R.id.main_opt_menu_backup_db://---------------
+			
+			Methods.db_backup(this);
+			
+			break;// case R.id.main_opt_menu_backup_db
 		
 		}//switch (item.getItemId())
 
