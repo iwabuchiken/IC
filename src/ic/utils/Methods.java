@@ -284,10 +284,10 @@ public class Methods {
 		 *********************************/
 		Collections.sort(cLList, comp);
 		
-		// Log
-		Log.d("Methods.java" + "["
-				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
-				+ "]", "Sort done: " + cLList.toString());
+//		// Log
+//		Log.d("Methods.java" + "["
+//				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+//				+ "]", "Sort done: " + cLList.toString());
 		
 		return true;
 	}//public static boolean sort_list_CLList(Activity actv, List<CL> cLList)
@@ -2074,6 +2074,10 @@ public class Methods {
 			Log.d("Methods.java" + "["
 					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
 					+ "]", "CheckActv.iList => Cleared");
+			
+		} else {//if (CheckActv.iList != null)
+			
+			CheckActv.iList = new ArrayList<Item>();
 			
 		}//if (CheckActv.iList != null)
 		

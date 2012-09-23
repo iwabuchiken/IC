@@ -232,7 +232,7 @@ public class CheckActv extends ListActivity {
 		/*********************************
 		 * 1.2. Initialise vars
 		 *********************************/
-		
+//		iList = new ArrayList<Item>();
 		
 		
 		/*********************************
