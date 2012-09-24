@@ -2812,5 +2812,118 @@ public class Methods {
 		
 	}//public static void update_item_text(Activity actv, Dialog dlg, Dialog dlg2)
 
+	
+	public static void update_item_all_status(Activity actv, 
+								String dbName, String tableName) {
+		/*********************************
+		 * 1. Set up db
+		 * 
+		 *********************************/
+		boolean res;
+		
+		for (Item item : CheckActv.iList) {
+			
+			res = DBUtils.updateData_items_status(
+						actv, dbName, tableName, 
+						item.getDb_id(), item.getStatus());
+			
+		}//for (Item item : CheckActv.iList)
+		
+	}//public static void update_item_all_status()
+
+	/**********************************************
+	 * <Return>
+	 * 	false	=> Column exists
+	 **********************************************/
+	public static boolean add_column_to_table(Activity actv, String dbName,
+			String tableName, String column_name, String data_type) {
+		/*********************************
+		 * 1. Column already exists?
+		 * 2. db setup
+		 * 
+		 * 3. Build sql
+		 * 4. Exec sql
+		 *********************************/
+		/*********************************
+		 * 1. Column already exists?
+		 *********************************/
+		String[] cols = Methods.get_column_list(actv, dbName, tableName);
+		
+		//debug
+		for (String col_name : cols) {
+
+			// Log
+			Log.d("Methods.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "col: " + col_name);
+			
+		}//for (String col_name : cols)
+
+		
+		for (String col_name : cols) {
+			
+			if (col_name.equals(column_name)) {
+				
+				// debug
+				Toast.makeText(actv, "Column exists: " + column_name, Toast.LENGTH_SHORT).show();
+				
+				// Log
+				Log.d("Methods.java"
+						+ "["
+						+ Thread.currentThread().getStackTrace()[2]
+								.getLineNumber() + "]", "Column exists: " + column_name);
+				
+				return false;
+				
+			}
+			
+		}//for (String col_name : cols)
+		
+		// debug
+		Toast.makeText(actv, "Column doesn't exist: " + column_name, Toast.LENGTH_SHORT).show();
+		
+		/*********************************
+		 * 2. db setup
+		 *********************************/
+		DBUtils dbu = new DBUtils(actv, dbName);
+		
+		SQLiteDatabase wdb = dbu.getWritableDatabase();
+		
+		/*********************************
+		 * 3. Build sql
+		 *********************************/
+		String sql = "ALTER TABLE " + tableName + 
+					" ADD COLUMN " + column_name + 
+					" " + data_type;
+		
+		/*********************************
+		 * 4. Exec sql
+		 *********************************/
+		try {
+//			db.execSQL(sql);
+			wdb.execSQL(sql);
+			
+			// Log
+			Log.d(actv.getClass().getName() + 
+					"["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "Column added => " + column_name);
+			
+			
+			return true;
+			
+		} catch (SQLException e) {
+			// Log
+			Log.d(actv.getClass().getName() + 
+					"[" + Thread.currentThread().getStackTrace()[2].getLineNumber() + "]", 
+					"Exception => " + e.toString());
+			
+			return false;
+		}//try
+
+
+		
+	}//public static boolean add_column_to_table()
+
 }//public class Methods
 

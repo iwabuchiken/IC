@@ -44,6 +44,7 @@
     <!-- menu_actv_check.xml -->
     	<string name="opt_menu_actv_check_clear_status">Clear status</string>
     	<string name="opt_menu_actv_check_sort_list_by_status">Sort list</string>
+    	<string name="opt_menu_actv_check_save_status_data">Save status</string>
     	
     <!-- dlg_checkactv_long_click.xml -->
     	<string name="dlg_checkactv_long_click_title">アイテム</string>

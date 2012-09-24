@@ -998,5 +998,63 @@ public class DBUtils extends SQLiteOpenHelper{
 		
 	}//public static boolean updateData_items_text()
 
+	
+	public static boolean updateData_items_status(Activity actv, String dbName,
+			String tableName, long db_id, int status_num) {
+		/*********************************
+		 * 1. Set up db
+		 * 1-2. Build sql
+		 * 
+		 * 2. Exec query
+		 * 
+		 * 3. Close db
+		 * 
+		 * 4. Return
+		 *********************************/
+		DBUtils dbu = new DBUtils(actv, dbName);
+		
+		SQLiteDatabase wdb = dbu.getWritableDatabase();
+		
+		/*********************************
+		 * 1-2. Build sql
+		 *********************************/
+		// Sql
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("UPDATE " + tableName + " SET ");
+		
+//		sb.append(MainActv.cols_items[0] + "='" + new_text + "'");
+//		
+//		sb.append(" WHERE " + android.provider.BaseColumns._ID + "='" + item_id + "'");
+		
+		String sql = sb.toString();
+		
+		// Exec
+		try {
+			
+			wdb.execSQL(sql);
+			
+			// Log
+			Log.d("DBUtils.java" + "["
+			+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+			+ "]", "sql => Done: " + sql);
+			
+		} catch (SQLException e) {
+
+			Log.e("DBUtils.java" + "["
+			+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+			+ "]", "Exception => " + e.toString() + " / " + "sql: " + sql);
+			
+			wdb.close();
+			
+			return false;
+		
+		}
+		
+		
+		return true;
+		
+	}//public boolean updateData_items_status()
+
 }//public class DBUtils
 

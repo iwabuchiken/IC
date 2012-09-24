@@ -39,6 +39,9 @@ public class CheckActv extends ListActivity {
 	public static CL clList;
 	
 	public static ListView checkactv_lv;
+
+	static long list_id;
+	
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -267,7 +270,7 @@ public class CheckActv extends ListActivity {
 		 *********************************/
 		Intent i = this.getIntent();
 		
-		long list_id = i.getLongExtra(MainActv.intent_list_id, -1);
+		list_id = i.getLongExtra(MainActv.intent_list_id, -1);
 		
 		if (list_id == -1) {
 			
@@ -344,13 +347,37 @@ public class CheckActv extends ListActivity {
 			
 			ilAdp.notifyDataSetChanged();
 			
-			break;
+			break;// case R.id.opt_menu_actv_check_sort_list_by_status
+			
+		case R.id.opt_menu_actv_check_save_status_data://------------
+			
+			temp_add_column_status_to_table_items();
+			
+//			Methods.update_item_all_status(this, MainActv.dbName, MainActv.tableName_items);
+			
+			break;// case R.id.opt_menu_actv_check_save_status_data
 			
 		}//switch (item.getItemId())
 		
 		return super.onOptionsItemSelected(item);
 		
 	}//public boolean onOptionsItemSelected(MenuItem item)
+
+	private void temp_add_column_status_to_table_items() {
+		// REF=> http://stackoverflow.com/questions/8291673/how-to-add-new-column-to-android-sqlite-database
+		/*********************************
+		 * memo
+		 *********************************/
+		Methods.add_column_to_table(this, 
+						MainActv.dbName, MainActv.tableName_items, "status", "INTEGER");
+		
+//		DBUtils dbu = new DBUtils(actv, dbName);
+//		
+//		SQLiteDatabase wdb = dbu.getWritableDatabase();
+
+		
+		
+	}//private void temp_add_column_status_to_table_items()
 
 	private void opt_menu_actv_check_clear_status() {
 		// Log
