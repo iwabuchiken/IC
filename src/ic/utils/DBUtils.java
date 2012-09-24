@@ -1023,9 +1023,9 @@ public class DBUtils extends SQLiteOpenHelper{
 		
 		sb.append("UPDATE " + tableName + " SET ");
 		
-//		sb.append(MainActv.cols_items[0] + "='" + new_text + "'");
-//		
-//		sb.append(" WHERE " + android.provider.BaseColumns._ID + "='" + item_id + "'");
+		sb.append(MainActv.cols_items[3] + "='" + status_num + "'");
+		
+		sb.append(" WHERE " + android.provider.BaseColumns._ID + "='" + db_id + "'");
 		
 		String sql = sb.toString();
 		
@@ -1034,10 +1034,10 @@ public class DBUtils extends SQLiteOpenHelper{
 			
 			wdb.execSQL(sql);
 			
-			// Log
-			Log.d("DBUtils.java" + "["
-			+ Thread.currentThread().getStackTrace()[2].getLineNumber()
-			+ "]", "sql => Done: " + sql);
+//			// Log
+//			Log.d("DBUtils.java" + "["
+//			+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+//			+ "]", "sql => Done: " + sql);
 			
 		} catch (SQLException e) {
 

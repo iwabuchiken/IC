@@ -34,6 +34,23 @@ public class Item {
 
 	}//public Items(String text, int serial_num, long list_id)
 
+	public Item(
+			String text, int serial_num, 
+			long list_id, int status,
+			
+			long db_id, long created_at, long modified_at) {
+
+		this.text = text;
+		this.serial_num = serial_num;
+		this.list_id = list_id;
+		this.status = status;
+		
+		this.db_id = db_id;
+		this.created_at = created_at;
+		this.modified_at = modified_at;
+	
+	}//public Items(String text, int serial_num, long list_id)
+
 	
 	public int getStatus() {
 		return status;

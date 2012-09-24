@@ -376,7 +376,8 @@ public class Methods {
 		// Log
 		Log.d("Methods.java" + "["
 				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
-				+ "]", "Sort done: " + CheckActv.iList.toString());
+//				+ "]", "Sort done: " + CheckActv.iList.toString());
+				+ "]", "Sort done: ");
 		
 		return true;
 		
@@ -2036,6 +2037,8 @@ public class Methods {
 					c.getInt(4),
 					c.getLong(5),
 					
+					c.getInt(6),	// status
+					
 					c.getLong(0),
 					c.getLong(1),
 					c.getLong(2)
@@ -2813,23 +2816,29 @@ public class Methods {
 	}//public static void update_item_text(Activity actv, Dialog dlg, Dialog dlg2)
 
 	
-	public static void update_item_all_status(Activity actv, 
+	public static boolean update_item_all_status(Activity actv, 
 								String dbName, String tableName) {
 		/*********************************
 		 * 1. Set up db
 		 * 
 		 *********************************/
-		boolean res;
+		boolean res = true;
 		
 		for (Item item : CheckActv.iList) {
 			
-			res = DBUtils.updateData_items_status(
+			boolean local_res = DBUtils.updateData_items_status(
 						actv, dbName, tableName, 
 						item.getDb_id(), item.getStatus());
 			
+			if (local_res == false) {
+				
+				res = false;
+			}
 		}//for (Item item : CheckActv.iList)
 		
-	}//public static void update_item_all_status()
+		return res;
+		
+	}//public static boolean update_item_all_status()
 
 	/**********************************************
 	 * <Return>

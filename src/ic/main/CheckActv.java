@@ -333,6 +333,8 @@ public class CheckActv extends ListActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
+		boolean result;
+		
 		switch (item.getItemId()) {
 		
 		case R.id.opt_menu_actv_check_clear_status://---------------
@@ -351,9 +353,22 @@ public class CheckActv extends ListActivity {
 			
 		case R.id.opt_menu_actv_check_save_status_data://------------
 			
-			temp_add_column_status_to_table_items();
+//			temp_add_column_status_to_table_items();
 			
-//			Methods.update_item_all_status(this, MainActv.dbName, MainActv.tableName_items);
+			result = Methods.update_item_all_status(this, MainActv.dbName, MainActv.tableName_items);
+			
+			if (result == true) {
+				
+				// debug
+				Toast.makeText(this, "Status saved", Toast.LENGTH_SHORT).show();
+				
+			} else {//if (result == true)
+				
+				// debug
+				Toast.makeText(this, "Save status => Error occurred (See log)", Toast.LENGTH_SHORT).show();
+				
+			}//if (result == true)
+			
 			
 			break;// case R.id.opt_menu_actv_check_save_status_data
 			
