@@ -90,6 +90,8 @@ public class Methods {
 		// dlg_checkactv_change_serial_num_btn_ok.xml
 		dlg_checkactv_change_serial_num_btn_ok,
 		
+		// dlg_checkactv_edit_item_text_btn_ok.xml
+		dlg_checkactv_edit_item_text_btn_ok,
 		
 	}//public static enum DialogButtonTags
 	
@@ -284,10 +286,10 @@ public class Methods {
 		 *********************************/
 		Collections.sort(cLList, comp);
 		
-		// Log
-		Log.d("Methods.java" + "["
-				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
-				+ "]", "Sort done: " + cLList.toString());
+//		// Log
+//		Log.d("Methods.java" + "["
+//				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+//				+ "]", "Sort done: " + cLList.toString());
 		
 		return true;
 	}//public static boolean sort_list_CLList(Activity actv, List<CL> cLList)
@@ -2075,6 +2077,10 @@ public class Methods {
 					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
 					+ "]", "CheckActv.iList => Cleared");
 			
+		} else {//if (CheckActv.iList != null)
+			
+			CheckActv.iList = new ArrayList<Item>();
+			
 		}//if (CheckActv.iList != null)
 		
 		CheckActv.iList.addAll(
@@ -2531,6 +2537,188 @@ public class Methods {
 		
 		
 	}//public static void checkactv_change_order()
+
+	
+	public static void dlg_checkactv_long_click_lv_edit_item_text(
+			Activity actv, Dialog dlg, int item_position) {
+		/*********************************
+		 * 1. Dialog setup
+		 * 2. Get views
+		 * 3. Set tags
+		 * 
+		 * 3-2. Set current text
+		 * 
+		 * 4. Add listeners => OnTouch
+		 * 5. Add listeners => OnClick
+		 * 
+		 * 6. Show dialog
+		 *********************************/
+		
+		Dialog dlg2 = new Dialog(actv);
+		
+		//
+		dlg2.setContentView(R.layout.dlg_checkactv_edit_item_text);
+		
+		// Title
+		dlg2.setTitle(R.string.dlg_checkactv_edit_item_text_title);
+
+		/*********************************
+		 * 2. Get views
+		 *********************************/
+		//
+		Button btn_ok = 
+			(Button) dlg2.findViewById(R.id.dlg_checkactv_edit_item_text_btn_ok);
+		
+		Button btn_cancel = 
+				(Button) dlg2.findViewById(R.id.dlg_checkactv_edit_item_text_btn_cancel);
+		
+		/*********************************
+		 * 3. Set tags
+		 *********************************/
+		//
+		btn_ok.setTag(
+				Methods.DialogButtonTags.dlg_checkactv_edit_item_text_btn_ok);
+		
+		btn_cancel.setTag(
+				Methods.DialogButtonTags.dlg_generic_dismiss_second_dialog);
+		
+		/*********************************
+		 * 3-2. Set current text
+		 *********************************/
+		EditText et = (EditText) dlg2.findViewById(R.id.dlg_checkactv_edit_item_text_et);
+		
+		String text;
+		
+		if (CheckActv.iList.get(item_position) != null && 
+				CheckActv.iList.get(item_position).getText() != null) {
+			
+			text = CheckActv.iList.get(item_position).getText().toString();
+			
+		} else {
+			
+			text = "";
+			
+		}
+		
+//		String text = CheckActv.iList.get(item_position).getText().toString();
+		
+		et.setText(text);
+		
+//		et.setSelection(0);
+		
+		et.setSelection(text.length());
+		
+		/*********************************
+		 * 4. Add listeners => OnTouch
+		 *********************************/
+		//
+		btn_ok.setOnTouchListener(new DialogButtonOnTouchListener(actv, dlg));
+		btn_cancel.setOnTouchListener(new DialogButtonOnTouchListener(actv, dlg));
+		
+		/*********************************
+		 * 5. Add listeners => OnClick
+		 *********************************/
+		//
+		btn_ok.setOnClickListener(new DialogButtonOnClickListener(actv, dlg, dlg2, item_position));
+		btn_cancel.setOnClickListener(
+					new DialogButtonOnClickListener(actv, dlg, dlg2));
+		
+		/*********************************
+		 * 6. Show dialog
+		 *********************************/
+		dlg2.show();
+		
+	}//public static void dlg_checkactv_long_click_lv_edit_item_text
+
+	public static void update_item_text(Activity actv, Dialog dlg, Dialog dlg2, int item_position) {
+		/*********************************
+		 * 1. Get => New text
+		 * 2. Get => Item id
+		 * 3. Update data
+		 *********************************/
+		/*********************************
+		 * 1. Get => New text
+		 *********************************/
+		EditText et = (EditText) dlg2.findViewById(R.id.dlg_checkactv_edit_item_text_et);
+
+		String new_text = "";
+		
+		if (et != null && et.getText() != null) {
+			
+			new_text = et.getText().toString();
+			
+		}
+		
+		/*********************************
+		 * 2. Get => Item id
+		 *********************************/
+		long item_id;
+		
+		if (CheckActv.iList != null && CheckActv.iList.get(item_position) != null) {
+			
+			item_id = CheckActv.iList.get(item_position).getDb_id();
+			
+		} else {
+			
+			// debug
+			Toast.makeText(actv, 
+					"Error: Something wrong with CheckActv.iList", 
+					Toast.LENGTH_LONG).show();
+			
+			// Log
+			Log.d("Methods.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "Error: Something wrong with CheckActv.iList");
+			
+			return;
+		}
+		
+//		long item_id = CheckActv.iList.get(item_position).getDb_id();
+		
+		/*********************************
+		 * 3. Update data
+		 *********************************/
+		boolean res = DBUtils.updateData_items_text(
+									actv, MainActv.dbName, 
+									MainActv.tableName_items, 
+									item_id, new_text);
+		
+		if (res == true) {
+			
+			// debug
+			Toast.makeText(actv, "Text updated", Toast.LENGTH_SHORT).show();
+			
+			// Log
+			Log.d("Methods.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "Text updated");
+			
+			dlg.dismiss();
+			dlg2.dismiss();
+			
+			/*********************************
+			 * Refresh item list
+			 *********************************/
+			Methods.refresh_item_list(actv);
+			
+			return;
+			
+		} else {//if (res == true)
+
+			// debug
+			Toast.makeText(actv, "Text update => Failed", Toast.LENGTH_SHORT).show();
+			
+			// Log
+			Log.d("Methods.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "Text update => Failed");
+			
+			return;
+			
+		}//if (res == true)
+		
+		
+	}//public static void update_item_text(Activity actv, Dialog dlg, Dialog dlg2)
 
 }//public class Methods
 

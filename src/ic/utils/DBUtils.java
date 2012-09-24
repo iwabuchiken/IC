@@ -789,9 +789,7 @@ public class DBUtils extends SQLiteOpenHelper{
 	 * 
 	 * <Steps> 1.
 	 ****************************************/
-	public boolean updateData_memos(SQLiteDatabase wdb, 
-//																String tableName, FileItem fi) {
-																String tableName) {
+	public boolean updateData_memos(SQLiteDatabase wdb, String tableName) {
 		/*----------------------------
 		* Steps
 		* 1. 
@@ -935,6 +933,70 @@ public class DBUtils extends SQLiteOpenHelper{
 //		}
 		
 	}//public static boolean updateData_items()
+
+	public static boolean updateData_items_text(Activity actv, String dbName,
+			String tableName, long item_id, String new_text) {
+		/*********************************
+		 * 1. Set up db
+		 * 1-2. Build sql
+		 * 
+		 * 2. Exec query
+		 * 
+		 * 3. Close db
+		 * 
+		 * 4. Return
+		 *********************************/
+		DBUtils dbu = new DBUtils(actv, dbName);
+		
+		SQLiteDatabase wdb = dbu.getWritableDatabase();
+		
+		/*********************************
+		 * 1-2. Build sql
+		 *********************************/
+		// Sql
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("UPDATE " + tableName + " SET ");
+		
+		sb.append(MainActv.cols_items[0] + "='" + new_text + "'");
+		
+		sb.append(" WHERE " + android.provider.BaseColumns._ID + "='" + item_id + "'");
+		
+		String sql = sb.toString();
+		
+		// Exec
+		try {
+			
+			wdb.execSQL(sql);
+			
+			// Log
+			Log.d("DBUtils.java" + "["
+			+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+			+ "]", "sql => Done: " + sql);
+			
+		} catch (SQLException e) {
+
+			Log.e("DBUtils.java" + "["
+			+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+			+ "]", "Exception => " + e.toString() + " / " + "sql: " + sql);
+			
+			wdb.close();
+			
+			return false;
+		
+		}
+		
+		/*********************************
+		 * 3. Close db
+		 *********************************/
+		wdb.close();
+		
+		/*********************************
+		 * 4. Return
+		 *********************************/
+		return true;
+		
+	}//public static boolean updateData_items_text()
 
 }//public class DBUtils
 

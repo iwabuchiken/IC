@@ -153,6 +153,21 @@ public class DialogButtonOnClickListener implements OnClickListener {
 			
 			break;// case dlg_checkactv_change_serial_num_btn_ok
 			
+		case dlg_checkactv_edit_item_text_btn_ok://---------------------------------
+			
+			Methods.update_item_text(actv, dlg, dlg2, item_position);
+			
+//			// Log
+//			Log.d("DialogButtonOnClickListener.java" + "["
+//					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+//					+ "]", "case dlg_checkactv_edit_item_text_btn_ok");
+			
+//			// debug
+//			Toast.makeText(actv, 
+//					"position: " + item_position, Toast.LENGTH_SHORT).show();
+			
+			break;
+			
 		default: // ----------------------------------------------------
 			break;
 		}//switch (tag_name)

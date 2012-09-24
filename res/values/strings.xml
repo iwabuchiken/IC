@@ -56,6 +56,7 @@
     	<string name="dlg_checkactv_change_serial_num_unit">番</string>
     	<string name="dlg_checkactv_change_serial_num_new">新</string>
     	
-    
+    <!-- dlg_checkactv_edit_item_text.xml -->
+    	<string name="dlg_checkactv_edit_item_text_title">本文変更</string>
     	
 </resources>

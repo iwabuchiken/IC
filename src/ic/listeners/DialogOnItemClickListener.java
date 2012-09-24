@@ -96,7 +96,7 @@ public class DialogOnItemClickListener implements OnItemClickListener {
 			 *********************************/
 			if (item.equals(actv.getString(R.string.dlg_checkactv_long_click_lv_edit))) {
 
-				
+				Methods.dlg_checkactv_long_click_lv_edit_item_text(actv, dlg, item_position);
 				
 			} else if (item.equals(actv.getString(
 								R.string.dlg_checkactv_long_click_lv_change_serial_num))) {
