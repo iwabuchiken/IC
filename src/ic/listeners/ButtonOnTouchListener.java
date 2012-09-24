@@ -39,7 +39,11 @@ public class ButtonOnTouchListener implements OnTouchListener {
 			switch (tag) {
 			
 			case actv_check_bt_add:
+			case actv_check_bt_top:
+			case actv_check_bt_bottom:
+				
 				v.setBackgroundColor(Color.GRAY);
+				
 				break;
 			}//switch (tag)
 			
@@ -48,6 +52,8 @@ public class ButtonOnTouchListener implements OnTouchListener {
 		case MotionEvent.ACTION_UP:
 			switch (tag) {
 			case actv_check_bt_add:
+			case actv_check_bt_top:
+			case actv_check_bt_bottom:
 				
 				v.setBackgroundColor(Color.WHITE);
 				break;

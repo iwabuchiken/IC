@@ -123,7 +123,7 @@ public class Methods {
 		tilist_cb,
 
 		// actv_check.xml
-		actv_check_bt_add,
+		actv_check_bt_add, actv_check_bt_top, actv_check_bt_bottom,
 		
 		
 	}//public static enum ButtonTags

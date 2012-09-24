@@ -38,6 +38,8 @@ public class CheckActv extends ListActivity {
 
 	public static CL clList;
 	
+	public static ListView checkactv_lv;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		/********************************
@@ -65,9 +67,11 @@ public class CheckActv extends ListActivity {
 		
 		set_up_2_show_list();
 		
-//		/*********************************
-//		 * 3. Initialise vars
-//		 *********************************/
+		/*********************************
+		 * 3. Initialise vars
+		 *********************************/
+		checkactv_lv = this.getListView();
+		
 //		iList = new ArrayList<Item>();
 		
 	}//public void onCreate(Bundle savedInstanceState)
@@ -186,6 +190,9 @@ public class CheckActv extends ListActivity {
 		/*********************************
 		 * 1. Button => "Add"
 		 * 2. Long click
+		 * 
+		 * 3. Button => "T"
+		 * 4. Button => "B"
 		 *********************************/
 		/*********************************
 		 * 1. Button => "Add"
@@ -205,6 +212,26 @@ public class CheckActv extends ListActivity {
 		lv.setTag(Methods.ListTags.actv_check_lv);
 		
 		lv.setOnItemLongClickListener(new CustomOnItemLongClickListener(this));
+		
+		/*********************************
+		 * 3. Button => "T"
+		 *********************************/
+		Button bt_top = (Button) findViewById(R.id.actv_check_bt_top);
+		
+		bt_top.setTag(Methods.ButtonTags.actv_check_bt_top);
+		
+		bt_top.setOnTouchListener(new ButtonOnTouchListener(this));
+		bt_top.setOnClickListener(new ButtonOnClickListener(this));
+		
+		/*********************************
+		 * 4. Button => "B"
+		 *********************************/
+		Button bt_bottom = (Button) findViewById(R.id.actv_check_bt_bottom);
+		
+		bt_bottom.setTag(Methods.ButtonTags.actv_check_bt_bottom);
+		
+		bt_bottom.setOnTouchListener(new ButtonOnTouchListener(this));
+		bt_bottom.setOnClickListener(new ButtonOnClickListener(this));
 		
 	}//private void set_listeners()
 
