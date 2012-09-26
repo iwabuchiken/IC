@@ -2934,5 +2934,15 @@ public class Methods {
 		
 	}//public static boolean add_column_to_table()
 
+	public static boolean write_log(
+						Activity actv, 
+						String text, 
+						String file_name, String line_num) {
+		
+		
+		return false;
+		
+	}//public static boolean write_log
+	
 }//public class Methods
 

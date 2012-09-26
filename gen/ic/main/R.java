@@ -88,6 +88,7 @@ public final class R {
         public static final int main_opt_menu_register=0x7f080038;
         public static final int main_tv=0x7f080037;
         public static final int opt_menu_actv_check_clear_status=0x7f08003a;
+        public static final int opt_menu_actv_check_reset_serial_num=0x7f08003d;
         public static final int opt_menu_actv_check_save_status_data=0x7f08003c;
         public static final int opt_menu_actv_check_sort_list_by_status=0x7f08003b;
     }
@@ -115,20 +116,20 @@ public final class R {
          */
         public static final int actv_check_bt_top=0x7f050013;
         public static final int app_name=0x7f050001;
-        public static final int dlg_checkactv_change_serial_num_current=0x7f050020;
-        public static final int dlg_checkactv_change_serial_num_new=0x7f050022;
+        public static final int dlg_checkactv_change_serial_num_current=0x7f050021;
+        public static final int dlg_checkactv_change_serial_num_new=0x7f050023;
         /**  dlg_checkactv_change_serial_num.xml 
          */
-        public static final int dlg_checkactv_change_serial_num_title=0x7f05001f;
-        public static final int dlg_checkactv_change_serial_num_unit=0x7f050021;
+        public static final int dlg_checkactv_change_serial_num_title=0x7f050020;
+        public static final int dlg_checkactv_change_serial_num_unit=0x7f050022;
         /**  dlg_checkactv_edit_item_text.xml 
          */
-        public static final int dlg_checkactv_edit_item_text_title=0x7f050023;
-        public static final int dlg_checkactv_long_click_lv_change_serial_num=0x7f05001e;
-        public static final int dlg_checkactv_long_click_lv_edit=0x7f05001d;
+        public static final int dlg_checkactv_edit_item_text_title=0x7f050024;
+        public static final int dlg_checkactv_long_click_lv_change_serial_num=0x7f05001f;
+        public static final int dlg_checkactv_long_click_lv_edit=0x7f05001e;
         /**  dlg_checkactv_long_click.xml 
          */
-        public static final int dlg_checkactv_long_click_title=0x7f05001c;
+        public static final int dlg_checkactv_long_click_title=0x7f05001d;
         public static final int dlg_register_genre_prompt_genre =0x7f05000f;
         /**  dlg_register_genre.xml 
          */
@@ -165,6 +166,7 @@ public final class R {
         /**  menu_actv_check.xml 
          */
         public static final int opt_menu_actv_check_clear_status=0x7f050019;
+        public static final int opt_menu_actv_check_reset_serial_num=0x7f05001c;
         public static final int opt_menu_actv_check_save_status_data=0x7f05001b;
         public static final int opt_menu_actv_check_sort_list_by_status=0x7f05001a;
     }

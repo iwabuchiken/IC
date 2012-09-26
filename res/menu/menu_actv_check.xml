@@ -20,5 +20,12 @@
 	    android:icon="@android:drawable/ic_menu_save">
 	    
 	</item>
-		
+
+	<item 
+	    android:id="@+id/opt_menu_actv_check_reset_serial_num" 
+	    android:title="@string/opt_menu_actv_check_reset_serial_num" 
+	    android:icon="@android:drawable/ic_menu_call">
+	    
+	</item>
+
 </menu>

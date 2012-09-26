@@ -355,28 +355,73 @@ public class CheckActv extends ListActivity {
 			
 //			temp_add_column_status_to_table_items();
 			
-			result = Methods.update_item_all_status(this, MainActv.dbName, MainActv.tableName_items);
+			opt_menu_actv_check_save_status_data();
 			
-			if (result == true) {
-				
-				// debug
-				Toast.makeText(this, "Status saved", Toast.LENGTH_SHORT).show();
-				
-			} else {//if (result == true)
-				
-				// debug
-				Toast.makeText(this, "Save status => Error occurred (See log)", Toast.LENGTH_SHORT).show();
-				
-			}//if (result == true)
-			
+//			result = Methods.update_item_all_status(this, MainActv.dbName, MainActv.tableName_items);
+//			
+//			if (result == true) {
+//				
+//				// debug
+//				Toast.makeText(this, "Status saved", Toast.LENGTH_SHORT).show();
+//				
+//			} else {//if (result == true)
+//				
+//				// debug
+//				Toast.makeText(this, "Save status => Error occurred (See log)", Toast.LENGTH_SHORT).show();
+//				
+//			}//if (result == true)
 			
 			break;// case R.id.opt_menu_actv_check_save_status_data
+
+		case R.id.opt_menu_actv_check_reset_serial_num:
 			
+			opt_menu_actv_check_reset_serial_num();
+			
+			break;
+
 		}//switch (item.getItemId())
-		
+
 		return super.onOptionsItemSelected(item);
 		
 	}//public boolean onOptionsItemSelected(MenuItem item)
+
+	private void opt_menu_actv_check_reset_serial_num() {
+		/*********************************
+		 * memo
+		 *********************************/
+		for (int i = 0; i < CheckActv.iList.size(); i++) {
+			
+			CheckActv.iList.get(i).setSerial_num(i + 1);
+			
+		}//for (int i = 0; i < CheckActv.iList.size(); i++)
+		
+		CheckActv.ilAdp.notifyDataSetChanged();
+		
+		// debug
+		Toast.makeText(this, "Reset => Done", Toast.LENGTH_SHORT).show();
+		
+	}//private void opt_menu_actv_check_reset_serial_num()
+
+	private void opt_menu_actv_check_save_status_data() {
+		
+		boolean result = Methods.update_item_all_status(
+									this, 
+									MainActv.dbName,
+									MainActv.tableName_items);
+		
+		if (result == true) {
+			
+			// debug
+			Toast.makeText(this, "Status saved", Toast.LENGTH_SHORT).show();
+			
+		} else {//if (result == true)
+			
+			// debug
+			Toast.makeText(this, "Save status => Error occurred (See log)", Toast.LENGTH_SHORT).show();
+			
+		}//if (result == true)
+		
+	}//private void opt_menu_actv_check_save_status_data()
 
 	private void temp_add_column_status_to_table_items() {
 		// REF=> http://stackoverflow.com/questions/8291673/how-to-add-new-column-to-android-sqlite-database
