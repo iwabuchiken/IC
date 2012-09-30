@@ -114,6 +114,18 @@ public class MainActv extends ListActivity {
 		 *********************************/
         mainActv = this;
         
+//        //debug
+//        String[] columns = Methods.get_column_list(this, MainActv.dbName, MainActv.tableName_genres);
+//
+//        for (String col_name : columns) {
+//			
+//        	// Log
+//			Log.d("MainActv.java" + "["
+//					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+//					+ "]", "col_name=" + col_name);
+//        	
+//		}//for (String col_name : columns)
+        
     }//public void onCreate(Bundle savedInstanceState)
 
     private void drop_table(String tableName) {
@@ -378,7 +390,13 @@ public class MainActv extends ListActivity {
 			Methods.db_backup(this);
 			
 			break;// case R.id.main_opt_menu_backup_db
-		
+
+		case R.id.main_opt_menu_filter_by_genre://---------------
+			
+			Methods.dlg_filter_by_genre(this);
+			
+			break;// case R.id.main_opt_menu_filter_by_genre
+
 		}//switch (item.getItemId())
 
 		return super.onOptionsItemSelected(item);

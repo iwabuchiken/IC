@@ -7,12 +7,15 @@
     <!-- Generic items -->
 	    <string name="generic_bt_ok">OK</string>
 	    <string name="generic_bt_cancel">キャンセル</string>
+	    
 	    <string name="generic_tv_confirm">確認</string>
 	    <string name="generic_tv_menu">メニュー</string>
 	    <string name="generic_tv_register">登録</string>
 	    <string name="generic_tv_edit">編集</string>
 	    <string name="generic_tv_delete">削除</string>
 	    <string name="generic_tv_back">戻る</string>
+	    
+	    <string name="generic_label_all">ALL</string>
 
     <!-- main.xml -->
     	<string name="main_title">チェック・リスト</string>
@@ -21,6 +24,7 @@
     	<string name="main_menu_register_list">リスト</string>
     	<string name="main_menu_register_genre">ジャンル</string>
     	<string name="main_menu_backup_db">DB backup</string>
+    	<string name="main_menu_filter_by_genre">Filter</string>
     
     <!-- dlg_register_genre.xml -->
     	<string name="dlg_register_genre_title">ジャンル登録</string>
@@ -62,4 +66,7 @@
     <!-- dlg_checkactv_edit_item_text.xml -->
     	<string name="dlg_checkactv_edit_item_text_title">本文変更</string>
     
+    <!-- dlg_filter_by_genre.xml -->
+    	<string name="dlg_filter_by_genre_title">フィルター（ジャンル）</string>
+    	
 </resources>

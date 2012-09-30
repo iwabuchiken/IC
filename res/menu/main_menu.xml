@@ -13,5 +13,12 @@
 	    android:icon="@android:drawable/ic_menu_save">
 	    
 	</item>
-	
+
+	<item 
+	    android:id="@+id/main_opt_menu_filter_by_genre" 
+	    android:title="@string/main_menu_filter_by_genre" 
+	    android:icon="@android:drawable/ic_menu_edit">
+	    
+	</item>
+		
 </menu>

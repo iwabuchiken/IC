@@ -1,10 +1,17 @@
 package ic.listeners;
 
+import java.util.ArrayList;
+
+import ic.items.CL;
+import ic.main.MainActv;
 import ic.main.R;
+import ic.utils.DBUtils;
 import ic.utils.Methods;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
@@ -109,9 +116,120 @@ public class DialogOnItemClickListener implements OnItemClickListener {
 			
 			break;// case dlg_checkactv_long_click_lv
 			
+		case dlg_filter_by_genre_lv://-------------------------------
+			
+			item = (String) parent.getItemAtPosition(position);
+			
+			dlg_filter_by_genre_lv(item);
+			
+			break;// case dlg_filter_by_genre_lv
+			
 		}//switch (tag)
 		
 	}//public void onItemClick(AdapterView<?> parent, View v, int position, long id)
+
+	private void dlg_filter_by_genre_lv(String item) {
+		/*********************************
+		 * 1. Set up db
+		 * 2. Query
+		 * 
+		 * 3. Build list
+		 * 4. Notify adapter
+		 * 
+		 * 5. Dismiss dlg
+		 *********************************/
+		DBUtils dbu = new DBUtils(actv, MainActv.dbName);
+		
+		SQLiteDatabase rdb = dbu.getReadableDatabase();
+
+		/*********************************
+		 * 2. Query
+		 *********************************/
+		String q;
+		
+		if (item.equals(actv.getString(R.string.generic_label_all))) {
+			
+			q = "SELECT * FROM " + MainActv.tableName_check_lists;
+			
+		} else {//if (item.equals(actv.getString(R.string.generic_label_all))
+			
+			q = "SELECT * FROM " + MainActv.tableName_check_lists
+					+ " WHERE " + MainActv.cols_check_lists[1] + "="
+					+ Methods.get_genre_id_from_genre_name(actv, item);
+			
+		}//if (item.equals(actv.getString(R.string.generic_label_all))
+		
+		
+//		String q = "SELECT * FROM " + MainActv.tableName_check_lists+
+//				" WHERE " + MainActv.cols_check_lists[1] + "=" + Methods.get_genre_id_from_genre_name(actv, item);
+
+		Cursor c = null;
+		
+		try {
+			c = rdb.rawQuery(q, null);
+			
+			// Log
+			Log.d("Methods.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "c.getCount(): " + c.getCount());
+		
+		} catch (Exception e) {
+			// Log
+			Log.d("Methods.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "Exception => " + e.toString());
+			
+			// debug
+			Toast.makeText(actv, "Can't get check lists", Toast.LENGTH_SHORT).show();
+			
+			return;
+		}
+
+		/*********************************
+		 * 3. Build list
+		 *********************************/
+		c.moveToFirst();
+		
+		MainActv.CLList.clear();
+
+		for (int i = 0; i < c.getCount(); i++) {
+			
+			MainActv.CLList.add(new CL(
+					c.getString(3),
+					c.getInt(4),
+					
+					c.getLong(0),
+					c.getLong(1),
+					c.getLong(2)
+					));
+			
+			c.moveToNext();
+			
+		}//for (int i = 0; i < c.getCount(); i++)
+
+		// Log
+		Log.d("MainActv.java" + "["
+				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ "]", "CLList.size(): " + MainActv.CLList.size());
+		
+		/*********************************
+		 * 4-2. Sort list
+		 *********************************/
+		boolean res = Methods.sort_list_CLList(actv, MainActv.CLList);
+		
+		// Log
+		Log.d("MainActv.java" + "["
+				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ "]", "res: " + res);
+		
+		MainActv.mlAdp.notifyDataSetChanged();
+
+		/*********************************
+		 * 5. Dismiss dlg
+		 *********************************/
+		dlg.dismiss();
+		
+	}//private void dlg_filter_by_genre_lv()
 
 	private void register_switching(String item) {
 		if (item.equals(actv.getString(R.string.main_menu_register_list))) {

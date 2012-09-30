@@ -102,6 +102,9 @@ public class Methods {
 		// dlg_checkactv_long_click.xml
 		dlg_checkactv_long_click_lv,
 		
+		// dlg_filter_by_genre.xml
+		dlg_filter_by_genre_lv,
+		
 	}//public static enum DialogItemTags
 	
 	
@@ -1682,7 +1685,7 @@ public class Methods {
 	 * -1	=> Error, exception
 	 * -2	=> No entry
 	 **********************************************/
-	private static int get_genre_id_from_genre_name(Activity actv, String genre_name) {
+	public static int get_genre_id_from_genre_name(Activity actv, String genre_name) {
 		/*********************************
 		 * 1. db
 		 * 2. Query
@@ -2943,6 +2946,150 @@ public class Methods {
 		return false;
 		
 	}//public static boolean write_log
+
+	
+	public static void dlg_filter_by_genre(Activity actv) {
+		/*********************************
+		 * 1. Genre data exist?
+		 * 2. Set up dialog
+		 * 
+		 * 3. Get view
+		 * 4. Prep list
+		 * 
+		 * 5. Set up adapter
+		 *********************************/
+		List<String> genre_list = Methods.get_all_data_genres(actv);
+
+		// All data
+		genre_list.add(actv.getString(R.string.generic_label_all));
+		
+//		if (genre_list == null) {
+//			
+//			// debug
+//			Toast.makeText(actv, "No genre data", Toast.LENGTH_SHORT).show();
+//			
+//			return;
+//			
+//		}
+		
+		/*********************************
+		 * 2. Set up dialog
+		 *********************************/
+		Dialog dlg = dlg_template_cancel(actv, 
+				R.layout.dlg_filter_by_genre, R.string.dlg_filter_by_genre_title,
+				R.id.dlg_filter_by_genre_btn_cancel,
+				Methods.DialogButtonTags.dlg_generic_dismiss);
+
+		/*********************************
+		 * 3. Get view
+		 *********************************/
+		ListView lv = (ListView) dlg.findViewById(R.id.dlg_filter_by_genre_lv);
+		
+		lv.setTag(Methods.DialogItemTags.dlg_filter_by_genre_lv);
+		
+		/*********************************
+		 * 4. Prep list
+		 *********************************/
+//		List<String> genre_list = new ArrayList<String>();
+
+		
+		/*********************************
+		 * 5. Set up adapter
+		 *********************************/
+		ArrayAdapter<String> adp = new ArrayAdapter<String>(
+		
+				actv,
+				android.R.layout.simple_list_item_1,
+				genre_list
+		);
+		
+		/*----------------------------
+		 * 2.4. Set adapter
+			----------------------------*/
+		lv.setAdapter(adp);
+		
+		
+		
+		/*----------------------------
+		 * 3. Set listener => list
+			----------------------------*/
+		lv.setOnItemClickListener(
+						new DialogOnItemClickListener(
+								actv, 
+								dlg));
+		
+		/*----------------------------
+		 * 9. Show dialog
+			----------------------------*/
+		dlg.show();
+		
+		
+	}//public static void dlg_filter_by_genre(Activity actv)
+
+	private static List<String> get_all_data_genres(Activity actv) {
+		/*********************************
+		 * 1. Set up db
+		 * 2. Query
+		 * 
+		 * 3. Build list
+		 * 4. Return value
+		 * 
+		 *********************************/
+		DBUtils dbu = new DBUtils(actv, MainActv.dbName);
+		
+		SQLiteDatabase rdb = dbu.getReadableDatabase();
+
+		//=> source: http://stackoverflow.com/questions/4681744/android-get-list-of-tables : "Just had to do the same. This seems to work:"
+		String q = "SELECT * FROM " + MainActv.tableName_genres;
+		
+		Cursor c = null;
+		try {
+			
+			c = rdb.rawQuery(q, null);
+			
+			// Log
+			Log.d("Methods.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "c.getCount(): " + c.getCount());
+
+		} catch (Exception e) {
+			// Log
+			Log.d("Methods.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "Exception => " + e.toString());
+			
+			rdb.close();
+			
+			return null;
+		}
+		
+		/*********************************
+		 * 3. Build list
+		 *********************************/
+		c.moveToFirst();
+		
+//		String[] genres = new String[c.getCount()];
+		
+		List<String> genre_list = new ArrayList<String>();
+		
+		for (int i = 0; i < c.getCount(); i++) {
+			
+//			genres[i] = c.getString(3);
+			genre_list.add(c.getString(3));
+			
+			c.moveToNext();
+			
+		}//for (int i = 0; i < c.getCount(); i++)
+		
+		Collections.sort(genre_list);
+		
+		/*********************************
+		 * 4. Return value
+		 *********************************/
+		return genre_list;
+		
+	}//private static List<String> get_all_data_genres(Activity actv)
+
 	
 }//public class Methods
 
