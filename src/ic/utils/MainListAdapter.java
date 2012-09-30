@@ -35,6 +35,14 @@ public class MainListAdapter extends ArrayAdapter<CL> {
 	// Inflater
 	LayoutInflater inflater;
 
+	// Views
+	TextView tv_list_name;
+	TextView tv_created_at;
+	TextView tv_genre;	
+
+	// Colors
+	int[] colors = {R.color.green4, R.color.blue1, R.color.gold2};
+	
 	//
 	/*--------------------------------------------------------
 	 * Constructor
@@ -98,11 +106,12 @@ public class MainListAdapter extends ArrayAdapter<CL> {
     	/*----------------------------
 		 * 2. Get view
 			----------------------------*/
-		TextView tv_list_name = (TextView) v.findViewById(R.id.list_row_main_tv_list_name);
+//		TextView tv_list_name = (TextView) v.findViewById(R.id.list_row_main_tv_list_name);
+    	tv_list_name = (TextView) v.findViewById(R.id.list_row_main_tv_list_name);
+    	
+		tv_created_at = (TextView) v.findViewById(R.id.list_row_main_tv_created_at);
 		
-		TextView tv_created_at = (TextView) v.findViewById(R.id.list_row_main_tv_created_at);
-		
-		TextView tv_genre = (TextView) v.findViewById(R.id.list_row_main_tv_genre);
+		tv_genre = (TextView) v.findViewById(R.id.list_row_main_tv_genre);
 
 		/*----------------------------
 		 * 3. Get item
@@ -124,10 +133,68 @@ public class MainListAdapter extends ArrayAdapter<CL> {
 		/*----------------------------
 		 * 4. Set bg color
 			----------------------------*/
+//		set_bg_color(item);
+//		String genre_name = Methods.get_genre_name_from_genre_id(
+//								(Activity) con,
+//								item.getGenre_id());
+//		
+//		if (genre_name.equals("Daily")) {
+//			
+////			tv_genre.setBackgroundResource(colors[0]);
+//			tv_genre.setBackgroundColor(Color.GREEN);
+//			tv_genre.setTextColor(Color.WHITE);
+//			
+//			
+//		} else if (genre_name.equals("JOB")) {
+//		} else if (genre_name.equals("Meals")) {
+//		} else if (genre_name.equals("Works")) {
+//			
+//		} else {//if (genre_name.equals("Daily"))
+//			
+//		}//if (genre_name.equals("Daily"))
+		
 		
 //    	return null;
 		return v;
     }//public View getView(int position, View convertView, ViewGroup parent)
+
+
+	private void set_bg_color(CL item) {
+		// Log
+		Log.d("MainListAdapter.java" + "["
+				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ "]", "Genre id=" + item.getGenre_id());
+		
+		// TODO Auto-generated method stub
+		String genre_name = Methods.get_genre_name_from_genre_id(
+				(Activity) con,
+				item.getGenre_id());
+
+		// Log
+		Log.d("MainListAdapter.java" + "["
+				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ "]", "genre_name=" + genre_name);
+		
+		if (genre_name.equals("Daily")) {
+		
+			// Log
+			Log.d("MainListAdapter.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "genre_name.equals(\"Daily\")");
+			
+			tv_genre.setBackgroundResource(colors[0]);
+			tv_genre.setTextColor(Color.WHITE);
+		
+		
+//		} else if (genre_name.equals("JOB")) {
+//		} else if (genre_name.equals("Meals")) {
+//		} else if (genre_name.equals("Works")) {
+//		
+		} else {//if (genre_name.equals("Daily"))
+		
+		}//if (genre_name.equals("Daily"))
+
+	}
 
 
 
