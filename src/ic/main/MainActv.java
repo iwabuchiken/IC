@@ -26,6 +26,9 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
+// Apache
+
+
 public class MainActv extends ListActivity {
 
 	/********************************
@@ -107,7 +110,7 @@ public class MainActv extends ListActivity {
         //debug
 //        drop_table(MainActv.tableName_items);
         
-        show_list();
+//        show_list();
         
         /*********************************
 		 * 4. Initialise vars
@@ -245,6 +248,8 @@ public class MainActv extends ListActivity {
 				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
 				+ "]", "CLList.size(): " + CLList.size());
 		
+		rdb.close();
+		
 		/*********************************
 		 * 4-2. Sort list
 		 *********************************/
@@ -310,6 +315,8 @@ public class MainActv extends ListActivity {
 		 * 2. check_lists
 		 * 3. items
 		 * 4. genres
+		 * 
+		 * 5. Close db
 		 ********************************/
 		DBUtils dbu = new DBUtils(this, MainActv.dbName);
 		
@@ -356,6 +363,12 @@ public class MainActv extends ListActivity {
 		Log.d("MainActv.java" + "["
 				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
 				+ "]", "res(" + MainActv.tableName_genres + ": " + res);
+		
+		
+		/*********************************
+		 * 5. Close db
+		 *********************************/
+		wdb.close();
 		
 	}//private void create_tables()
 
@@ -416,9 +429,19 @@ public class MainActv extends ListActivity {
 
 	@Override
 	protected void onStart() {
-		// TODO 自動生成されたメソッド・スタブ
+		/*********************************
+		 * 1. Show list
+		 * 
+//		 * 1. Refresh list view;
+		 *********************************/
+//		/*********************************
+//		 * 1. Show list
+//		 *********************************/
+		show_list();
+		
 		super.onStart();
-	}
+		
+	}//protected void onStart()
 
 	@Override
 	protected void onStop() {
