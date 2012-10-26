@@ -134,15 +134,19 @@ public class MainListAdapter extends ArrayAdapter<CL> {
 								(Activity) con,
 								clList.getDb_id());
 
-		boolean all_checked = true;
+//		boolean all_checked = true;
+		
+		int num_of_checked_items = 0;
 		
 		for (Item item : CheckActv.iList) {
 			
-			if (item.getStatus() == 0) {
+//			if (item.getStatus() == 0) {
+			if (item.getStatus() > 0) {
 				
-				all_checked = false;
+//				all_checked = false;
+				num_of_checked_items += 1;
 				
-				break;
+//				break;
 				
 			}//if (item.getStatus() == condition)
 			
@@ -156,17 +160,25 @@ public class MainListAdapter extends ArrayAdapter<CL> {
 //				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
 //				+ "]", "all_checked=" + all_checked);
 		
-		if (all_checked == true) {
+//		if (all_checked == true) {
+		if (num_of_checked_items == 0) {
 			
+			tv_list_name.setBackgroundColor(Color.BLACK);
+			tv_list_name.setTextColor(Color.WHITE);
+			
+		} else if (num_of_checked_items < CheckActv.iList.size()) {//if (all_clear == true)
+
 			tv_list_name.setBackgroundColor(Color.BLUE);
 			tv_list_name.setTextColor(Color.WHITE);
 			
-		} else {//if (all_clear == true)
+		} else if (num_of_checked_items == CheckActv.iList.size()) {//if (all_clear == true)
 
-			tv_list_name.setBackgroundColor(Color.WHITE);
+			tv_list_name.setBackgroundColor(Color.GREEN);
 			tv_list_name.setTextColor(Color.BLACK);
+
+		} else {
 			
-		}//if (all_clear == true)
+		}
 		
 //		// Log
 //		if (CheckActv.iList != null) {
