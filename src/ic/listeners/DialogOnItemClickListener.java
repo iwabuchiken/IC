@@ -28,6 +28,8 @@ public class DialogOnItemClickListener implements OnItemClickListener {
 	Dialog dlg2;
 	
 	int item_position;
+	
+	long check_list_id;
 	//
 	Vibrator vib;
 	
@@ -55,6 +57,22 @@ public class DialogOnItemClickListener implements OnItemClickListener {
 	}//public DialogOnItemClickListener(Activity actv, Dialog dlg)
 
 //	@Override
+	public DialogOnItemClickListener(Activity actv, Dialog dlg,
+			int item_position, long check_list_id) {
+		/*********************************
+		 * memo
+		 *********************************/
+		vib = (Vibrator) actv.getSystemService(Context.VIBRATOR_SERVICE);
+
+		this.actv = actv;
+		this.dlg = dlg;
+		
+		this.item_position = item_position;
+		
+		this.check_list_id = check_list_id;
+		
+	}
+
 	public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 		/*----------------------------
 		 * Steps
@@ -123,6 +141,39 @@ public class DialogOnItemClickListener implements OnItemClickListener {
 			dlg_filter_by_genre_lv(item);
 			
 			break;// case dlg_filter_by_genre_lv
+
+		case dlg_main_actv_long_click_lv://-------------------------------
+			
+			item = (String) parent.getItemAtPosition(position);
+			
+			if (item.equals(actv.getString(
+					R.string.dlg_main_actv_long_click_lv_clear_item_status))) {
+				
+				Methods.clear_items_all_to_zero(actv, check_list_id, dlg);
+				
+			} else {//if (item == condition)
+				
+				// Log
+				Log.d("DialogOnItemClickListener.java"
+						+ "["
+						+ Thread.currentThread().getStackTrace()[2]
+								.getLineNumber() + "]", "item=" + item);
+				
+			}//if (item == condition)
+			
+//			// Log
+//			Log.d("DialogOnItemClickListener.java" + "["
+//					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+//					+ "]", "item=" + item);
+			
+//			Methods.clear_items_all()
+			
+//			// Log
+//			Log.d("DialogOnItemClickListener.java" + "["
+//					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+//					+ "]", "dlg_main_actv_long_click_lv");
+			
+			break;// case dlg_main_actv_long_click_lv
 			
 		}//switch (tag)
 		

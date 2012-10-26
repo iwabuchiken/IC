@@ -68,5 +68,9 @@
     
     <!-- dlg_filter_by_genre.xml -->
     	<string name="dlg_filter_by_genre_title">フィルター（ジャンル）</string>
-    	
+
+    <!-- dlg_main_actv_long_click.xml -->
+    	<string name="dlg_main_actv_long_click_title">チェック・リスト</string>
+    	<string name="dlg_main_actv_long_click_lv_clear_item_status">すべてのアイテムのステータスをクリアー</string>
+    	    
 </resources>

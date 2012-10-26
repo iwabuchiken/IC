@@ -105,6 +105,10 @@ public class Methods {
 		// dlg_filter_by_genre.xml
 		dlg_filter_by_genre_lv,
 		
+		// dlg_main_actv_long_click.xml
+		dlg_main_actv_long_click_lv,
+		
+
 	}//public static enum DialogItemTags
 	
 	
@@ -2237,6 +2241,71 @@ public class Methods {
 		
 	}//public static void dlg_checkactv_long_click(Activity actv)
 
+	public static void dlg_main_actv_long_click(Activity actv,
+								int item_position, long check_list_id) {
+		/*********************************
+		 * 1. Dialog
+		 * 2. List view
+		 * 3. Show dialog
+		 *********************************/
+		Dialog dlg = dlg_template_cancel(actv, 
+				R.layout.dlg_main_actv_long_click, R.string.dlg_main_actv_long_click_title,
+				R.id.dlg_main_actv_long_click_bt_cancel,
+				Methods.DialogButtonTags.dlg_generic_dismiss);
+
+		/*----------------------------
+		 * 2. List view
+		 * 	1. Get view
+		 * 	1-2. Set tag to view
+		 * 
+		 * 	2. Prepare list data
+		 * 	3. Prepare adapter
+		 * 	4. Set adapter
+			----------------------------*/
+		ListView lv = (ListView) dlg.findViewById(R.id.dlg_main_actv_long_click_lv);
+		
+		lv.setTag(Methods.DialogItemTags.dlg_main_actv_long_click_lv);
+		
+		/*----------------------------
+		 * 2.2. Prepare list data
+			----------------------------*/
+		List<String> long_click_items = new ArrayList<String>();
+		
+		long_click_items.add(actv.getString(R.string.dlg_main_actv_long_click_lv_clear_item_status));
+		
+		ArrayAdapter<String> adp = new ArrayAdapter<String>(
+		
+				actv,
+				android.R.layout.simple_list_item_1,
+				long_click_items
+		);
+		
+		/*----------------------------
+		 * 2.4. Set adapter
+			----------------------------*/
+		lv.setAdapter(adp);
+		
+		/*----------------------------
+		 * 3. Set listener => list
+			----------------------------*/
+		// Log
+		Log.d("Methods.java" + "["
+				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ "]", "item_position: " + item_position);
+
+		
+		lv.setOnItemClickListener(
+						new DialogOnItemClickListener(
+								actv, 
+								dlg, item_position, check_list_id));
+		
+		/*********************************
+		 * 3. Show dialog
+		 *********************************/
+		dlg.show();
+		
+	}//public static void dlg_main_actv_long_click(Activity actv)
+
 	public static void dlg_checkactv_long_click_lv_change_serial_num(
 			Activity actv, Dialog dlg, int item_position) {
 		/*********************************
@@ -3089,6 +3158,161 @@ public class Methods {
 		return genre_list;
 		
 	}//private static List<String> get_all_data_genres(Activity actv)
+
+	
+	public static void clear_items_all_to_zero(Activity actv, long check_list_id, Dialog dlg) {
+		/*********************************
+		 * 1. Update data
+		 * 2. If successfull
+		 * 	1. Dismiss dialog
+		 * 	2. Refresh list 
+		 *********************************/
+		// Log
+		Log.d("Methods.java" + "["
+				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ "]", "Starts => clear_items_all_to_zero()");
+		
+		boolean res = DBUtils.update_items_all_to_zero(
+					actv, MainActv.dbName, MainActv.tableName_items, check_list_id);
+		
+		if (res == true) {
+			
+			/*********************************
+			 * 2.1. Dismiss dialog
+			 *********************************/
+			dlg.dismiss();
+			
+			Methods.refresh_list_check_list(actv);
+			
+			
+		}//if (res == true)
+		
+		// Log
+		Log.d("Methods.java" + "["
+				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ "]", "res=" + res);
+		
+	}//public static void clear_items_all_to_zero(Activity actv, long check_list_id)
+
+	private static void refresh_list_check_list(Activity actv) {
+		/********************************
+		 * 1. Set up db
+		 * 2. Query
+		 * 
+		 * 3. Close db
+		 * 
+		 * 4. Build list
+		 * 4-2. Sort list
+		 * 
+		 * 5. Set list to adapter
+		 * 
+		 * 6. Set adapter to view
+		 ********************************/
+		DBUtils dbu = new DBUtils(actv, MainActv.dbName);
+		
+		SQLiteDatabase rdb = dbu.getReadableDatabase();
+		
+		/********************************
+		 * 2. Query
+		 ********************************/
+		String sql = "SELECT * FROM " + MainActv.tableName_check_lists;
+		
+		Cursor c = null;
+		
+		try {
+			
+			c = rdb.rawQuery(sql, null);
+			
+			actv.startManagingCursor(c);
+			
+		} catch (Exception e) {
+			// Log
+			Log.d("MainActv.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "Exception => " + e.toString());
+			
+			rdb.close();
+			
+			return;
+		}
+		
+		// Log
+		Log.d("MainActv.java" + "["
+				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ "]", "c.getCount() => " + c.getCount());
+
+		
+		/********************************
+		 * 4. Build list
+		 ********************************/
+		if (c.getCount() < 1) {
+			
+			// debug
+			Toast.makeText(actv, "No data yet", Toast.LENGTH_SHORT).show();
+			
+			/********************************
+			 * 3. Close db
+			 ********************************/
+			rdb.close();
+
+			return;
+		}//if (c.getCount() < 1)
+
+		c.moveToNext();
+		
+//		MainActv.CLList = new ArrayList<CL>();
+		MainActv.CLList.clear();
+
+		for (int i = 0; i < c.getCount(); i++) {
+			
+			MainActv.CLList.add(new CL(
+					c.getString(3),
+					c.getInt(4),
+					
+					c.getLong(0),
+					c.getLong(1),
+					c.getLong(2)
+					));
+			
+			c.moveToNext();
+			
+		}//for (int i = 0; i < c.getCount(); i++)
+
+		// Log
+		Log.d("MainActv.java" + "["
+				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ "]", "MainActv.CLList.size(): " + MainActv.CLList.size());
+		
+		rdb.close();
+		
+		/*********************************
+		 * 4-2. Sort list
+		 *********************************/
+		boolean res = Methods.sort_list_CLList(actv, MainActv.CLList);
+		
+		// Log
+		Log.d("MainActv.java" + "["
+				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ "]", "res: " + res);
+		
+		/********************************
+		 * 5. Set list to adapter
+		 ********************************/
+		MainActv.mlAdp.notifyDataSetChanged();
+		
+//		mlAdp = new MainListAdapter(
+//				this,
+//				R.layout.list_row_main,
+//				CLList
+//				);
+		
+		/********************************
+		 * 6. Set adapter to view
+		 ********************************/
+//		setListAdapter(mlAdp);
+
+		
+	}//private static void refresh_list_check_list(Activity actv)
 
 	
 }//public class Methods

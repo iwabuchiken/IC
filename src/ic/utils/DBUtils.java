@@ -1056,5 +1056,52 @@ public class DBUtils extends SQLiteOpenHelper{
 		
 	}//public boolean updateData_items_status()
 
+	public static boolean update_items_all_to_zero(Activity actv, String dbName,
+			String tableName, long check_list_id) {
+		/*********************************
+		 * memo
+		 *********************************/
+		DBUtils dbu = new DBUtils(actv, dbName);
+		
+		SQLiteDatabase wdb = dbu.getWritableDatabase();
+
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("UPDATE " + tableName + " SET ");
+		
+		sb.append(MainActv.cols_items[3] + "='" + 0 + "'");
+		
+		sb.append(" WHERE " + MainActv.cols_items[2] + "='" + check_list_id + "'");
+		
+		String sql = sb.toString();
+		
+		// Exec
+		try {
+			
+			wdb.execSQL(sql);
+			
+			// Log
+			Log.d("DBUtils.java" + "["
+			+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+			+ "]", "sql => Done: " + sql);
+			
+			wdb.close();
+			
+			return true;
+			
+		} catch (SQLException e) {
+
+			Log.e("DBUtils.java" + "["
+			+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+			+ "]", "Exception => " + e.toString() + " / " + "sql: " + sql);
+			
+			wdb.close();
+			
+			return false;
+			
+		}//try
+		
+	}//public static boolean update_items_all_to_zero()
+
 }//public class DBUtils
 

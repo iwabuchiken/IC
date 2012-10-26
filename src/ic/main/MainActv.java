@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ic.items.CL;
+import ic.listeners.CustomOnItemLongClickListener;
 import ic.utils.DBUtils;
 import ic.utils.MainListAdapter;
 import ic.utils.Methods;
@@ -96,6 +97,8 @@ public class MainActv extends ListActivity {
 		 * 
 		 * 3. Show list
 		 * 4. Initialise vars
+		 * 
+		 * 5. Set listeners
 		 ********************************/
     	
         super.onCreate(savedInstanceState);
@@ -128,6 +131,16 @@ public class MainActv extends ListActivity {
 //					+ "]", "col_name=" + col_name);
 //        	
 //		}//for (String col_name : columns)
+        
+        /*********************************
+		 * 5. Set listeners
+		 *********************************/
+		ListView lv = this.getListView();
+		
+//		lv.setTag(Methods.ItemTags.dir_list);
+		lv.setTag(Methods.ListTags.actv_main_lv);
+		
+		lv.setOnItemLongClickListener(new CustomOnItemLongClickListener(this));
         
     }//public void onCreate(Bundle savedInstanceState)
 

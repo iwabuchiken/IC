@@ -95,10 +95,10 @@ public class MainListAdapter extends ArrayAdapter<CL> {
 		 * 
 		 * 4. Set bg color
 			********************/
-    	// Log
-		Log.d("MainListAdapter.java" + "["
-				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
-				+ "]", "Starts => getView()");
+//    	// Log
+//		Log.d("MainListAdapter.java" + "["
+//				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+//				+ "]", "Starts => getView()");
     	/*******************************
 		 * 1. Set up
 			********************/
@@ -151,10 +151,10 @@ public class MainListAdapter extends ArrayAdapter<CL> {
 		/*********************************
 		 * 3-1-1. If all clear, set background black
 		 *********************************/
-		// Log
-		Log.d("MainListAdapter.java" + "["
-				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
-				+ "]", "all_checked=" + all_checked);
+//		// Log
+//		Log.d("MainListAdapter.java" + "["
+//				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+//				+ "]", "all_checked=" + all_checked);
 		
 		if (all_checked == true) {
 			

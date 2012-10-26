@@ -1,6 +1,7 @@
 package ic.listeners;
 
 
+import ic.items.CL;
 import ic.items.Item;
 import ic.utils.Methods;
 
@@ -104,7 +105,37 @@ public class CustomOnItemLongClickListener implements OnItemLongClickListener {
 //			Toast.makeText(actv, item.getText(), Toast.LENGTH_SHORT).show(); 
 			
 			break;// case actv_check_lv
-		
+
+		case actv_main_lv://-----------------------------------------
+			
+			CL check_list = (CL) parent.getItemAtPosition(position);
+			
+			if (check_list == null) {
+				
+				// debug
+				Toast.makeText(actv, "Check list is null", Toast.LENGTH_SHORT).show();
+				
+				return false;
+				
+			}//if (check_list == null)
+			
+			long check_list_id = check_list.getDb_id();
+			
+			
+			Methods.dlg_main_actv_long_click(actv, position, check_list_id);
+			
+//			// Log
+//			Log.d("Methods.java" + "["
+//					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+//					+ "]", "position: " + position);
+//			
+//			// Log
+//			Log.d("CustomOnItemLongClickListener.java" + "["
+//					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+//					+ "]", "check_list.getName()=" + check_list.getName());
+
+			break;// case actv_main_lv
+
 		}//switch (tag)
 		
 		
