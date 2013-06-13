@@ -137,20 +137,37 @@ public class MainListAdapter extends ArrayAdapter<CL> {
 //		boolean all_checked = true;
 		
 		int num_of_checked_items = 0;
-		
-		for (Item item : CheckActv.iList) {
+
+		if (CheckActv.iList != null) {
 			
-//			if (item.getStatus() == 0) {
-			if (item.getStatus() > 0) {
+			for (Item item : CheckActv.iList) {
 				
-//				all_checked = false;
-				num_of_checked_items += 1;
+	//			if (item.getStatus() == 0) {
+				if (item.getStatus() > 0) {
+					
+	//				all_checked = false;
+					num_of_checked_items += 1;
+					
+	//				break;
+					
+				}//if (item.getStatus() == condition)
 				
-//				break;
-				
-			}//if (item.getStatus() == condition)
+			}//for (Item item : CheckActv.iList)
 			
-		}//for (Item item : CheckActv.iList)
+		}//if (CheckActv.iList == null)
+//			for (Item item : CheckActv.iList) {
+//				
+//	//			if (item.getStatus() == 0) {
+//				if (item.getStatus() > 0) {
+//					
+//	//				all_checked = false;
+//					num_of_checked_items += 1;
+//					
+//	//				break;
+//					
+//				}//if (item.getStatus() == condition)
+//				
+//			}//for (Item item : CheckActv.iList)
 		
 		/*********************************
 		 * 3-1-1. If all clear, set background black

@@ -1,5 +1,9 @@
 a
-cd C:\WORKS\WS\WS_Android~\IC
+pushd C:\WORKS\WS\WS_Android~\IC
+
+pushd C:\WORKS\WS\WS_Android~\IC && gitk
+
+
 C:\WORKS\PROGRAMS\FreeMind\FreeMind.exe C:\WORKS\WS\WS_Android~\FM\IC\IC.mm
 gitk
 
