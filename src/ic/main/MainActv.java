@@ -9,12 +9,15 @@ import java.util.List;
 
 import ic.items.CL;
 import ic.listeners.CustomOnItemLongClickListener;
+import ic.utils.CONS;
 import ic.utils.DBUtils;
 import ic.utils.MainListAdapter;
 import ic.utils.Methods;
 import android.app.Activity;
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -303,6 +306,24 @@ public class MainActv extends ListActivity {
 		CL clList = (CL) l.getItemAtPosition(position);
 		
 		/*********************************
+		 * Register: Genre id
+		 *********************************/
+		SharedPreferences prefs = this
+						.getSharedPreferences(
+							CONS.Prefs.prefName,
+							Context.MODE_PRIVATE);
+		
+		SharedPreferences.Editor editor = prefs.edit();
+		
+		editor.putInt(CONS.Prefs.prefKey_genreId, clList.getGenre_id());
+		editor.commit();
+
+		// Log
+		Log.d("[" + "MainActv.java : "
+				+ +Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ "]", "Prefs saved => Genre id = " + clList.getGenre_id());
+		
+		/*********************************
 		 * 2. Set up for intent
 		 *********************************/
 		Intent i = new Intent();
@@ -470,7 +491,7 @@ public class MainActv extends ListActivity {
 		Methods.confirm_quit(this, keyCode);
 		
 		return super.onKeyDown(keyCode, event);
-	}
-
+		
+	}//public boolean onKeyDown(int keyCode, KeyEvent event)
     
 }//public class MainActv extends Activity

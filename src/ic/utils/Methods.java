@@ -515,11 +515,11 @@ public class Methods {
 			
 			AlertDialog.Builder dialog=new AlertDialog.Builder(actv);
 			
-	        dialog.setTitle("�A�v���̏I��");
-	        dialog.setMessage("�A�v�����I�����܂����H");
+	        dialog.setTitle("Confirmation");
+	        dialog.setMessage("Quit the app?");
 	        
-	        dialog.setPositiveButton("�I��",new DialogListener(actv, dialog, 0));
-	        dialog.setNegativeButton("�L�����Z��",new DialogListener(actv, dialog, 1));
+	        dialog.setPositiveButton("Yes",new DialogListener(actv, dialog, 0));
+	        dialog.setNegativeButton("No",new DialogListener(actv, dialog, 1));
 	        
 	        dialog.create();
 	        dialog.show();
@@ -3077,9 +3077,7 @@ public class Methods {
 		 * 2.4. Set adapter
 			----------------------------*/
 		lv.setAdapter(adp);
-		
-		
-		
+
 		/*----------------------------
 		 * 3. Set listener => list
 			----------------------------*/
@@ -3151,6 +3149,15 @@ public class Methods {
 			
 		}//for (int i = 0; i < c.getCount(); i++)
 		
+		
+		/*********************************
+		 * Close db
+		 *********************************/
+		rdb.close();
+		
+		/*********************************
+		 * Sort list
+		 *********************************/
 		Collections.sort(genre_list);
 		
 		/*********************************

@@ -233,6 +233,11 @@ public class DialogOnItemClickListener implements OnItemClickListener {
 			// debug
 			Toast.makeText(actv, "Can't get check lists", Toast.LENGTH_SHORT).show();
 			
+			/*********************************
+			 * Close db
+			 *********************************/
+			rdb.close();
+			
 			return;
 		}
 
@@ -262,7 +267,12 @@ public class DialogOnItemClickListener implements OnItemClickListener {
 		Log.d("MainActv.java" + "["
 				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
 				+ "]", "CLList.size(): " + MainActv.CLList.size());
-		
+
+		/*********************************
+		 * Close db
+		 *********************************/
+		rdb.close();
+
 		/*********************************
 		 * 4-2. Sort list
 		 *********************************/
