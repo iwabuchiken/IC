@@ -110,27 +110,10 @@ public class MainActv extends ListActivity {
         //debug
         create_tables();
         
-        //debug
-//        drop_table(MainActv.tableName_items);
-        
-//        show_list();
-        
         /*********************************
 		 * 4. Initialise vars
 		 *********************************/
         mainActv = this;
-        
-//        //debug
-//        String[] columns = Methods.get_column_list(this, MainActv.dbName, MainActv.tableName_genres);
-//
-//        for (String col_name : columns) {
-//			
-//        	// Log
-//			Log.d("MainActv.java" + "["
-//					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
-//					+ "]", "col_name=" + col_name);
-//        	
-//		}//for (String col_name : columns)
         
         /*********************************
 		 * 5. Set listeners
@@ -142,9 +125,28 @@ public class MainActv extends ListActivity {
 		
 		lv.setOnItemLongClickListener(new CustomOnItemLongClickListener(this));
         
+		/*********************************
+		 * Re-install the app
+		 *********************************/
+//		_debug_D_20_reinstall_app();
+		
     }//public void onCreate(Bundle savedInstanceState)
 
-    private void drop_table(String tableName) {
+    private void _debug_D_20_reinstall_app() {
+		
+    	String src = "/mnt/sdcard-ext/IC_backup/ic_backup_20130730_092046.bk";
+    	String dst = dirPath_db + "/" + dbName;
+    	
+    	Methods.restore_db(this, dbName, src, dst);
+    	
+    	// Log
+		Log.d("[" + "MainActv.java : "
+				+ +Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ "]", "Restore db => Done");;
+		
+	}//private void _debug_D_20_reinstall_app()
+
+	private void drop_table(String tableName) {
     	// Setup db
 		DBUtils dbu = new DBUtils(this, MainActv.dbName);
 		
@@ -396,7 +398,7 @@ public class MainActv extends ListActivity {
 
 	@Override
 	protected void onDestroy() {
-		// TODO ©“®¶¬‚³‚ê‚½ƒƒ\ƒbƒhEƒXƒ^ƒu
+		// TODO ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½ï¿½ï¿½\ï¿½bï¿½hï¿½Eï¿½Xï¿½^ï¿½u
 		super.onDestroy();
 	}
 
@@ -430,13 +432,13 @@ public class MainActv extends ListActivity {
 
 	@Override
 	protected void onPause() {
-		// TODO ©“®¶¬‚³‚ê‚½ƒƒ\ƒbƒhEƒXƒ^ƒu
+		// TODO ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½ï¿½ï¿½\ï¿½bï¿½hï¿½Eï¿½Xï¿½^ï¿½u
 		super.onPause();
 	}
 
 	@Override
 	protected void onResume() {
-		// TODO ©“®¶¬‚³‚ê‚½ƒƒ\ƒbƒhEƒXƒ^ƒu
+		// TODO ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½ï¿½ï¿½\ï¿½bï¿½hï¿½Eï¿½Xï¿½^ï¿½u
 		super.onResume();
 	}
 
@@ -458,7 +460,7 @@ public class MainActv extends ListActivity {
 
 	@Override
 	protected void onStop() {
-		// TODO ©“®¶¬‚³‚ê‚½ƒƒ\ƒbƒhEƒXƒ^ƒu
+		// TODO ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½ï¿½ï¿½\ï¿½bï¿½hï¿½Eï¿½Xï¿½^ï¿½u
 		super.onStop();
 	}
 

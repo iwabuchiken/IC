@@ -2,6 +2,7 @@ a
 pushd C:\WORKS\WS\WS_Android~\IC
 
 pushd C:\WORKS\WS\WS_Android~\IC && gitk
+a p && pushd C:\WORKS\WS\WS_Android~\IC && gitk
 
 
 C:\WORKS\PROGRAMS\FreeMind\FreeMind.exe C:\WORKS\WS\WS_Android~\FM\IC\IC.mm
@@ -51,3 +52,7 @@ svn co https://techbooster.googlecode.com/svn/trunk/ContextMenu/ ContextMenu
 
 [GIMP]
 pushd C:\WORKS\WORKSPACES_ANDROID\GIMP\Icons
+
+[adb]
+adb uninstall ic.main
+

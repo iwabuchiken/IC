@@ -62,6 +62,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import android.os.AsyncTask;
+import android.os.Looper;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -509,16 +510,16 @@ public class Methods {
 
 	public static void confirm_quit(Activity actv, int keyCode) {
 		
-		// TODO ©“®¶¬‚³‚ê‚½ƒƒ\ƒbƒhEƒXƒ^ƒu
+		// TODO ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½ï¿½ï¿½\ï¿½bï¿½hï¿½Eï¿½Xï¿½^ï¿½u
 		if (keyCode==KeyEvent.KEYCODE_BACK) {
 			
 			AlertDialog.Builder dialog=new AlertDialog.Builder(actv);
 			
-	        dialog.setTitle("ƒAƒvƒŠ‚ÌI—¹");
-	        dialog.setMessage("ƒAƒvƒŠ‚ğI—¹‚µ‚Ü‚·‚©H");
+	        dialog.setTitle("ï¿½Aï¿½vï¿½ï¿½ï¿½ÌIï¿½ï¿½");
+	        dialog.setMessage("ï¿½Aï¿½vï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½ï¿½H");
 	        
-	        dialog.setPositiveButton("I—¹",new DialogListener(actv, dialog, 0));
-	        dialog.setNegativeButton("ƒLƒƒƒ“ƒZƒ‹",new DialogListener(actv, dialog, 1));
+	        dialog.setPositiveButton("ï¿½Iï¿½ï¿½",new DialogListener(actv, dialog, 0));
+	        dialog.setNegativeButton("ï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½Zï¿½ï¿½",new DialogListener(actv, dialog, 1));
 	        
 	        dialog.create();
 	        dialog.show();
@@ -1506,7 +1507,7 @@ public class Methods {
 					+ "]", "genre_id: " + genre_id);
 			
 			// debug
-			Toast.makeText(actv, "ƒWƒƒƒ“ƒ‹‚ğæ“¾‚Å‚«‚Ü‚¹‚ñ", Toast.LENGTH_SHORT).show();
+			Toast.makeText(actv, "ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ“¾ï¿½Å‚ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½", Toast.LENGTH_SHORT).show();
 			
 		}//if (genre_id < 0)
 		
@@ -2683,7 +2684,7 @@ public class Methods {
 			oChannel.close();
 			
 			// Log
-			Log.d("ThumbnailActivity.java" + "["
+			Log.d("Methods.java" + "["
 					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
 					+ "]", "File copied");
 			
@@ -3314,6 +3315,88 @@ public class Methods {
 		
 	}//private static void refresh_list_check_list(Activity actv)
 
+	public static boolean restore_db(Activity actv, String dbName,
+			String src, String dst) {
+	/*********************************
+	 * 1. Setup db
+	 * 2. Setup: File paths
+	 * 3. Setup: File objects
+	 * 4. Copy file
+	 * 
+	 *********************************/
+	// Setup db
+	DBUtils dbu = new DBUtils(actv, dbName);
 	
+	SQLiteDatabase wdb = dbu.getWritableDatabase();
+
+	wdb.close();
+
+	/*********************************
+	 * 2. Setup: File paths
+	 *********************************/
+
+	/*********************************
+	 * 3. Setup: File objects
+	 *********************************/
+	File f_src = new File(src);
+	File f_dst = new File(dst);
+
+	/*********************************
+	 * 4. Copy file
+	 *********************************/
+	try {
+		FileChannel iChannel = new FileInputStream(src).getChannel();
+		FileChannel oChannel = new FileOutputStream(dst).getChannel();
+		iChannel.transferTo(0, iChannel.size(), oChannel);
+		iChannel.close();
+		oChannel.close();
+		
+		// Log
+		Log.d("Methods.java" + "["
+				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ "]",
+				"File copied from: " + src
+				+ "/ to: " + dst);
+		
+		// If the method is not in the context of a thread,
+		//	then, show a message
+		if (Looper.myLooper() == Looper.getMainLooper()) {
+			
+			// debug
+			Toast.makeText(actv, "DB restoration => Done", Toast.LENGTH_LONG).show();
+			
+		} else {//if (condition)
+
+			// Log
+			Log.d("Methods.java"
+					+ "["
+					+ Thread.currentThread().getStackTrace()[2]
+							.getLineNumber() + "]", "DB restoration => Done");
+			
+		}//if (condition)
+		
+		
+		return true;
+
+	} catch (FileNotFoundException e) {
+		// Log
+		Log.e("Methods.java" + "["
+				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ "]", "Exception: " + e.toString());
+		
+		return false;
+		
+	} catch (IOException e) {
+		// Log
+		Log.e("Methods.java" + "["
+				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ "]", "Exception: " + e.toString());
+		
+		return false;
+		
+	}//try
+	
+}//private boolean restore_db()
+
 }//public class Methods
 
