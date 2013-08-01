@@ -13,5 +13,7 @@ public class CONS {
 		
 		public static String prefKey_genreId = "genre_id";
 		
+		public static int prefKey_genreId_intValue = -1;
+		
 	}
 }

@@ -5,11 +5,13 @@ import java.util.ArrayList;
 import ic.items.CL;
 import ic.main.MainActv;
 import ic.main.R;
+import ic.utils.CONS;
 import ic.utils.DBUtils;
 import ic.utils.Methods;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Vibrator;
@@ -285,6 +287,37 @@ public class DialogOnItemClickListener implements OnItemClickListener {
 		
 		MainActv.mlAdp.notifyDataSetChanged();
 
+		/*********************************
+		 * Set: Preference
+		 *********************************/
+		int genreId;
+		
+		if (item.equals(actv.getString(R.string.generic_label_all))) {
+			
+			genreId = 0;
+			
+		} else {//if (item.equals(actv.getString(R.string.generic_label_all))
+			
+			genreId = Methods.get_genre_id_from_genre_name(actv, item);
+			
+		}//if (item.equals(actv.getString(R.string.generic_label_all))
+		
+		
+		SharedPreferences prefs = actv
+						.getSharedPreferences(
+							CONS.Prefs.prefName,
+							Context.MODE_PRIVATE);
+		
+		SharedPreferences.Editor editor = prefs.edit();
+		
+		editor.putInt(CONS.Prefs.prefKey_genreId, genreId);
+		editor.commit();
+
+		// Log
+		Log.d("[" + "MainActv.java : "
+				+ +Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ "]", "Prefs saved => Genre id = " + genreId);
+		
 		/*********************************
 		 * 5. Dismiss dlg
 		 *********************************/

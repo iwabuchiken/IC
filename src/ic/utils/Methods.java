@@ -3058,12 +3058,6 @@ public class Methods {
 		lv.setTag(Methods.DialogItemTags.dlg_filter_by_genre_lv);
 		
 		/*********************************
-		 * 4. Prep list
-		 *********************************/
-//		List<String> genre_list = new ArrayList<String>();
-
-		
-		/*********************************
 		 * 5. Set up adapter
 		 *********************************/
 		ArrayAdapter<String> adp = new ArrayAdapter<String>(
