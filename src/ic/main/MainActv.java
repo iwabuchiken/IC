@@ -206,6 +206,7 @@ public class MainActv extends ListActivity {
 		
 		int savedPosition = prefs.getInt(
 				CONS.Prefs.prefKey_genreId,
+
 				CONS.Prefs.prefKey_genreId_intValue);
 		
 		// Log
