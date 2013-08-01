@@ -195,11 +195,41 @@ public class MainActv extends ListActivity {
 		DBUtils dbu = new DBUtils(this, MainActv.dbName);
 		
 		SQLiteDatabase rdb = dbu.getReadableDatabase();
+
+		/*********************************
+		 * Get: Preference
+		 *********************************/
+		SharedPreferences prefs = this
+				.getSharedPreferences(
+						CONS.Prefs.prefName,
+						Context.MODE_PRIVATE);
+		
+		int savedPosition = prefs.getInt(
+				CONS.Prefs.prefKey_genreId,
+				-1);
+		
+		// Log
+		Log.d("[" + "MainActv.java : "
+				+ +Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ "]", "savedPosition=" + savedPosition);
 		
 		/********************************
 		 * 2. Query
 		 ********************************/
-		String sql = "SELECT * FROM " + MainActv.tableName_check_lists;
+		String sql;
+		
+		if (savedPosition == -1) {
+			
+			sql = "SELECT * FROM " + MainActv.tableName_check_lists;
+			
+		} else {//if (savedPosition == -1)
+			
+			sql = "SELECT * FROM " + MainActv.tableName_check_lists
+					+ " WHERE " + MainActv.cols_check_lists[1] + "="
+					+ savedPosition;
+			
+		}//if (savedPosition == -1)
+		
 		
 		Cursor c = null;
 		
@@ -305,23 +335,23 @@ public class MainActv extends ListActivity {
 		 *********************************/
 		CL clList = (CL) l.getItemAtPosition(position);
 		
-		/*********************************
-		 * Register: Genre id
-		 *********************************/
-		SharedPreferences prefs = this
-						.getSharedPreferences(
-							CONS.Prefs.prefName,
-							Context.MODE_PRIVATE);
-		
-		SharedPreferences.Editor editor = prefs.edit();
-		
-		editor.putInt(CONS.Prefs.prefKey_genreId, clList.getGenre_id());
-		editor.commit();
-
-		// Log
-		Log.d("[" + "MainActv.java : "
-				+ +Thread.currentThread().getStackTrace()[2].getLineNumber()
-				+ "]", "Prefs saved => Genre id = " + clList.getGenre_id());
+//		/*********************************
+//		 * Register: Genre id
+//		 *********************************/
+//		SharedPreferences prefs = this
+//						.getSharedPreferences(
+//							CONS.Prefs.prefName,
+//							Context.MODE_PRIVATE);
+//		
+//		SharedPreferences.Editor editor = prefs.edit();
+//		
+//		editor.putInt(CONS.Prefs.prefKey_genreId, clList.getGenre_id());
+//		editor.commit();
+//
+//		// Log
+//		Log.d("[" + "MainActv.java : "
+//				+ +Thread.currentThread().getStackTrace()[2].getLineNumber()
+//				+ "]", "Prefs saved => Genre id = " + clList.getGenre_id());
 		
 		/*********************************
 		 * 2. Set up for intent
