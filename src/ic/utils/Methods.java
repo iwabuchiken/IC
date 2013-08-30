@@ -2224,8 +2224,9 @@ public class Methods {
 		
 	}//public static void dlg_checkactv_long_click(Activity actv)
 
-	public static void dlg_main_actv_long_click(Activity actv,
-								int item_position, long check_list_id) {
+	public static void
+	dlg_main_actv_long_click
+	(Activity actv, int item_position, long check_list_id, CL check_list) {
 		/*********************************
 		 * 1. Dialog
 		 * 2. List view
@@ -2254,8 +2255,16 @@ public class Methods {
 			----------------------------*/
 		List<String> long_click_items = new ArrayList<String>();
 		
-		long_click_items.add(actv.getString(R.string.dlg_main_actv_long_click_lv_clear_item_status));
+		// Add items to the list
+		long_click_items.add(
+					actv.getString(
+							R.string.dlg_main_actv_long_click_lv_clear_item_status));
 		
+		long_click_items.add(
+				actv.getString(
+						R.string.dlg_main_actv_long_click_lv_delete_list));
+		
+		// Setup: Adapter
 		ArrayAdapter<String> adp = new ArrayAdapter<String>(
 		
 				actv,
@@ -2280,7 +2289,7 @@ public class Methods {
 		lv.setOnItemClickListener(
 						new DialogOnItemClickListener(
 								actv, 
-								dlg, item_position, check_list_id));
+								dlg, item_position, check_list_id, check_list));
 		
 		/*********************************
 		 * 3. Show dialog
@@ -3380,6 +3389,89 @@ public class Methods {
 	}//try
 	
 }//private boolean restore_db()
+
+	public static void
+	delete_list(Activity actv, long check_list_id, Dialog dlg, CL check_list) {
+		
+		boolean res = DBUtils.delete_list(actv, check_list_id, check_list);
+		
+		if (res == true) {
+			
+			/*********************************
+			 * 2.1. Dismiss dialog
+			 *********************************/
+			dlg.dismiss();
+			
+			Methods.refresh_list_check_list(actv);
+			
+			
+		}//if (res == true)
+		
+		// Log
+		Log.d("Methods.java" + "["
+				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ "]", "res=" + res);
+
+	}//delete_list(Activity actv, long check_list_id, Dialog dlg)
+
+	/*********************************
+	 * List<String> get_tableNames(Activity actv)
+	 * @return	(1) List&lt;String&gt;<br/>
+	 * 			(2) null	=> Cursor size less than 1
+	 *********************************/
+	public static
+	List<String> get_tableNames(Activity actv) {
+		/*********************************
+		 * Setup: Db
+		 *********************************/
+		DBUtils dbu = new DBUtils(actv, MainActv.dbName);
+		
+		SQLiteDatabase rdb = dbu.getReadableDatabase();
+		
+		/*********************************
+		 * Query
+		 *********************************/
+		String sql =
+				"SELECT * FROM sqlite_master WHERE type='table'";
+		
+		Cursor c = rdb.rawQuery(sql, null);
+		
+		if (c.getCount() < 1) {
+			
+			// Log
+			Log.d("["
+					+ "Methods.java : "
+					+ +Thread.currentThread().getStackTrace()[2]
+							.getLineNumber() + " : "
+					+ Thread.currentThread().getStackTrace()[2].getMethodName()
+					+ "]", "c.getCount() < 1");
+			
+			rdb.close();
+			
+			return null;
+			
+		}//if (cursor.getCount() < 1)
+
+		/*********************************
+		 * Get: Count
+		 *********************************/
+		List<String> tableNames = new ArrayList<String>();
+		
+		while(c.moveToNext()) {
+			
+//			tableNames.add(c.getString(0));	//=> Column '0' --> 'type'
+			tableNames.add(c.getString(1));
+			
+		}
+		
+		/*********************************
+		 * Return
+		 *********************************/
+		rdb.close();
+		
+		return tableNames;
+		
+	}//List<String> get_tableNames(Activity actv)
 
 }//public class Methods
 

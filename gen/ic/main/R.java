@@ -141,6 +141,7 @@ public final class R {
          */
         public static final int dlg_filter_by_genre_title=0x7f050027;
         public static final int dlg_main_actv_long_click_lv_clear_item_status=0x7f050029;
+        public static final int dlg_main_actv_long_click_lv_delete_list=0x7f05002a;
         /**  dlg_main_actv_long_click.xml 
          */
         public static final int dlg_main_actv_long_click_title=0x7f050028;

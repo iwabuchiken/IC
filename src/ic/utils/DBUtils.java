@@ -3,10 +3,12 @@ package ic.utils;
 
 
 
+import ic.items.CL;
 import ic.main.MainActv;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 
 import android.app.Activity;
@@ -51,7 +53,7 @@ public class DBUtils extends SQLiteOpenHelper{
 	SQLiteDatabase db = null;
 	
 	 // DB name
-	final static String dbName = "CM.db";
+//	final static String dbName = "CM.db";
 	
 	/*----------------------------
 	 * 2. Table names, folder names
@@ -110,7 +112,7 @@ public class DBUtils extends SQLiteOpenHelper{
 	}//public DBUtils(Context context)
 
 //	public DBUtils() {
-//		// TODO Ž©“®¶¬‚³‚ê‚½ƒRƒ“ƒXƒgƒ‰ƒNƒ^[EƒXƒ^ƒu
+//		// TODO ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½Rï¿½ï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½Nï¿½^ï¿½[ï¿½Eï¿½Xï¿½^ï¿½u
 //	}
 
 	/*******************************************************
@@ -118,13 +120,13 @@ public class DBUtils extends SQLiteOpenHelper{
 	 *******************************************************/
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		// TODO Ž©“®¶¬‚³‚ê‚½ƒƒ\ƒbƒhEƒXƒ^ƒu
+		// TODO ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½ï¿½ï¿½\ï¿½bï¿½hï¿½Eï¿½Xï¿½^ï¿½u
 		
 	}//public void onCreate(SQLiteDatabase db)
 
 	@Override
 	public void onUpgrade(SQLiteDatabase arg0, int arg1, int arg2) {
-		// TODO Ž©“®¶¬‚³‚ê‚½ƒƒ\ƒbƒhEƒXƒ^ƒu
+		// TODO ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½ï¿½ï¿½\ï¿½bï¿½hï¿½Eï¿½Xï¿½^ï¿½u
 		
 	}
 
@@ -284,7 +286,7 @@ public class DBUtils extends SQLiteOpenHelper{
 			return true;
 			
 		} catch (SQLException e) {
-			// TODO Ž©“®¶¬‚³‚ê‚½ catch ƒuƒƒbƒN
+			// TODO ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‚½ catch ï¿½uï¿½ï¿½ï¿½bï¿½N
 			// Log
 			Log.e("DBManager.java" + "["
 					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
@@ -763,10 +765,37 @@ public class DBUtils extends SQLiteOpenHelper{
 		
 	}//public boolean isInDB_long(SQLiteDatabase db, String tableName, long file_id)
 
-	public static boolean isInTable(Activity actv, SQLiteDatabase db, 
-											String tableName, String colName, String value) {
+	public static boolean
+	isInTable
+	(Activity actv, SQLiteDatabase db,
+			String tableName, String colName, String value) {
 		
 		String sql = "SELECT * FROM " + tableName + " WHERE " + colName + " = '" + value + "'";
+		
+		Cursor c = db.rawQuery(sql, null);
+		
+		actv.startManagingCursor(c);
+		
+		return c.getCount() > 0 ? true : false;
+		
+	}//public static boolean isInTable
+	
+	public static boolean
+	isInTable
+	(Activity actv, SQLiteDatabase db,
+			String tableName, String colName, long value) {
+		
+		String sql =
+				"SELECT * FROM " + tableName
+				+ " WHERE " + colName + " = '" + value + "'";
+		
+		//debug
+		// Log
+		Log.d("[" + "DBUtils.java : "
+				+ +Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ " : "
+				+ Thread.currentThread().getStackTrace()[2].getMethodName()
+				+ "]", "db.getPath()=" + db.getPath());
 		
 		Cursor c = db.rawQuery(sql, null);
 		
@@ -1102,6 +1131,256 @@ public class DBUtils extends SQLiteOpenHelper{
 		}//try
 		
 	}//public static boolean update_items_all_to_zero()
+
+	/*********************************
+	 * delete_list
+	 * @param check_list 
+	 * @return	true<br/>
+	 * 			false => (1)The check list doesn't exist in the db, or<br/>
+	 * 					(2) Deletion failed: Check list, or<br/>
+	 * 					(3) Deletion failed: Items
+	 *********************************/
+	public static boolean
+	delete_list(Activity actv, long check_list_id, CL check_list) {
+		
+//		//debug
+//		List<String> tableNames = Methods.get_tableNames(actv);
+//		
+//		if (tableNames == null) {
+//			
+//			// Log
+//			Log.d("["
+//					+ "DBUtils.java : "
+//					+ +Thread.currentThread().getStackTrace()[2]
+//							.getLineNumber() + " : "
+//					+ Thread.currentThread().getStackTrace()[2].getMethodName()
+//					+ "]", "Get table names => Returned null");
+//			
+//			return false;
+//			
+//		}//if (tableNames == null)
+//		
+//		for (String name : tableNames) {
+//			
+//			// Log
+//			Log.d("["
+//					+ "DBUtils.java : "
+//					+ +Thread.currentThread().getStackTrace()[2]
+//							.getLineNumber() + " : "
+//					+ Thread.currentThread().getStackTrace()[2].getMethodName()
+//					+ "]", "table name=" + name);
+//			
+//		}
+//		
+//		return true;
+		
+		
+		/*********************************
+		 * Setup: Db
+		 *********************************/
+		DBUtils dbu = new DBUtils(actv, MainActv.dbName);
+		
+		SQLiteDatabase wdb = dbu.getWritableDatabase();
+		
+		//debug
+		
+		
+		/*********************************
+		 * Delete: Check list
+		 *********************************/
+		boolean result = delete_list__1_check_list(actv, wdb, check_list_id);
+		
+		if (result == false) {
+			
+			wdb.close();
+			
+			return false;
+			
+		}//if (result == false)
+		
+		/*********************************
+		 * Delete: Items
+		 *********************************/
+		result = delete_list__2_items(actv, wdb, check_list_id);
+
+		if (result == false) {
+			
+			wdb.close();
+			
+			return false;
+			
+		}//if (result == false)
+		
+		wdb.close();
+		
+		/*********************************
+		 * Delete: Item in CLList
+		 *********************************/
+		result = MainActv.CLList.remove(check_list);
+		
+		if (result == false) {
+			
+			// Log
+			Log.d("["
+					+ "DBUtils.java : "
+					+ +Thread.currentThread().getStackTrace()[2]
+							.getLineNumber() + " : "
+					+ Thread.currentThread().getStackTrace()[2].getMethodName()
+					+ "]", "Remove from CLList => Failed");
+			
+			return false;
+			
+		}//if (result == false)
+		
+		/*********************************
+		 * Notify the adapter
+		 *********************************/
+		MainActv.mlAdp.notifyDataSetChanged();
+		
+		/*********************************
+		 * Return
+		 *********************************/
+		return true;
+		
+	}//delete_list(Activity actv, long check_list_id)
+
+	/*********************************
+	 * delete_list__1_items
+	 * @return	true	=> Items deleted<br/>
+	 * 			false	=> SQL exception
+	 *********************************/
+	private static boolean
+	delete_list__2_items
+	(Activity actv,SQLiteDatabase wdb, long check_list_id) {
+
+		/*********************************
+		 * Delete: Items
+		 *********************************/
+		String sql = 
+				"DELETE FROM " + MainActv.tableName_items + 
+				" WHERE " + MainActv.cols_items[2] + " = '"
+				+ String.valueOf(check_list_id) + "'";
+		
+		// Log
+		Log.d("DBUtils.java" + "["
+				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ "]", "sql=" + sql);
+		
+		try {
+			
+			wdb.execSQL(sql);
+			
+			// debug
+			Toast.makeText(actv, "Items deleted", Toast.LENGTH_LONG).show();
+			
+			// Log
+			Log.d("["
+					+ "DBUtils.java : "
+					+ +Thread.currentThread().getStackTrace()[2]
+							.getLineNumber() + " : "
+							+ Thread.currentThread().getStackTrace()[2].getMethodName()
+							+ "]", "Items deleted: " + String.valueOf(check_list_id));
+			
+			return true;
+			
+		} catch (SQLException e) {
+			// Log
+			Log.d("DBUtils.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "Exception => " + e.toString());
+			
+			return false;
+			
+		}//try
+
+	}//delete_list__1_items
+
+	/*********************************
+	 * delete_list__1_check_list
+	 * @return	true => List deleted<br/>
+	 * 			false => (1)List doesn't exist, or<br/>
+	 * 					(2)Deletion failed
+	 *********************************/
+	private static boolean
+	delete_list__1_check_list
+	(Activity actv, SQLiteDatabase wdb, long check_list_id) {
+		/*********************************
+		 * Validate: Check list exists?
+		 *********************************/
+		boolean result = DBUtils.isInTable(
+				actv,
+				wdb,
+				MainActv.tableName_check_lists,
+				android.provider.BaseColumns._ID,
+				check_list_id);
+		
+		if (result == false) {		// Result is false ==> Meaning the target data doesn't exist
+		//							in db; Hence, not executing delete op
+			
+			// debug
+			Toast.makeText(actv, 
+					"Check list doesn't exist in db: " + String.valueOf(check_list_id), 
+					Toast.LENGTH_LONG).show();
+			
+			// Log
+			Log.d("DBUtils.java" + "["
+				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ "]", 
+				"Check list doesn't exist in db: " + String.valueOf(check_list_id));
+			
+			return false;
+		
+		} else {//if (result == false)
+		
+		// Log
+		Log.d("DBUtils.java" + "["
+		+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+		+ "]", 
+		"Check list exists in db(id=" + String.valueOf(check_list_id) + ")");
+		
+		}//if (result == false)
+		
+		/*********************************
+		* Delete: Check list
+		*********************************/
+		String sql = 
+			"DELETE FROM " + MainActv.tableName_check_lists + 
+			" WHERE " + android.provider.BaseColumns._ID + " = '"
+			+ String.valueOf(check_list_id) + "'";
+		
+		// Log
+		Log.d("DBUtils.java" + "["
+			+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+			+ "]", "sql=" + sql);
+		
+		try {
+			
+			wdb.execSQL(sql);
+			
+			// debug
+			Toast.makeText(actv, "List deleted", Toast.LENGTH_LONG).show();
+			
+			// Log
+			Log.d("["
+					+ "DBUtils.java : "
+					+ +Thread.currentThread().getStackTrace()[2]
+							.getLineNumber() + " : "
+					+ Thread.currentThread().getStackTrace()[2].getMethodName()
+					+ "]", "List deleted: " + String.valueOf(check_list_id));
+			
+			return true;
+		
+		} catch (SQLException e) {
+			// Log
+			Log.d("DBUtils.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "Exception => " + e.toString());
+			
+			return false;
+		
+		}//try
+		
+	}//delete_list__1_check_list
 
 }//public class DBUtils
 

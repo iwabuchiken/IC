@@ -108,22 +108,30 @@ public class CustomOnItemLongClickListener implements OnItemLongClickListener {
 
 		case actv_main_lv://-----------------------------------------
 			
-			CL check_list = (CL) parent.getItemAtPosition(position);
+			boolean result = case_actv_main_lv(parent, position);
 			
-			if (check_list == null) {
-				
-				// debug
-				Toast.makeText(actv, "Check list is null", Toast.LENGTH_SHORT).show();
+			if (result == false) {
 				
 				return false;
 				
-			}//if (check_list == null)
+			}//if (result == false)
 			
-			long check_list_id = check_list.getDb_id();
-			
-			
-			Methods.dlg_main_actv_long_click(actv, position, check_list_id);
-			
+//			CL check_list = (CL) parent.getItemAtPosition(position);
+//			
+//			if (check_list == null) {
+//				
+//				// debug
+//				Toast.makeText(actv, "Check list is null", Toast.LENGTH_SHORT).show();
+//				
+//				return false;
+//				
+//			}//if (check_list == null)
+//			
+//			long check_list_id = check_list.getDb_id();
+//			
+//			
+//			Methods.dlg_main_actv_long_click(actv, position, check_list_id);
+//			
 //			// Log
 //			Log.d("Methods.java" + "["
 //					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
@@ -143,5 +151,27 @@ public class CustomOnItemLongClickListener implements OnItemLongClickListener {
 		return true;
 		
 	}//public boolean onItemLongClick()
+
+	private boolean
+	case_actv_main_lv(AdapterView<?> parent, int position) {
+		// TODO Auto-generated method stub
+		CL check_list = (CL) parent.getItemAtPosition(position);
+		
+		if (check_list == null) {
+			
+			// debug
+			Toast.makeText(actv, "Check list is null", Toast.LENGTH_SHORT).show();
+			
+			return false;
+			
+		}//if (check_list == null)
+		
+		long check_list_id = check_list.getDb_id();
+		
+		Methods.dlg_main_actv_long_click(actv, position, check_list_id, check_list);
+		
+		return true;
+		
+	}//case_actv_main_lv(AdapterView<?> parent, int position)
 
 }//public class CustomOnItemLongClickListener implements OnItemLongClickListener

@@ -57,7 +57,11 @@ public class MainActv extends ListActivity {
 	public static String tableName_items = "items";
 	
 //	public static String[] cols_items =			{"text", "serial_num",	"list_id"};
-	public static String[] cols_items =			{"text", "serial_num",	"list_id", "status"};
+	
+	public static String[] cols_items =
+					// Array  0		1				2		3
+					// Total  3		4				5		6
+						{"text", "serial_num",	"list_id", "status"};
 	
 	public static String[] col_types_items = {"TEXT", 	 "INTEGER",		"INTEGER"};
 

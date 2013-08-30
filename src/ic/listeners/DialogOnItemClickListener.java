@@ -32,6 +32,9 @@ public class DialogOnItemClickListener implements OnItemClickListener {
 	int item_position;
 	
 	long check_list_id;
+	
+	CL check_list;
+	
 	//
 	Vibrator vib;
 	
@@ -73,6 +76,25 @@ public class DialogOnItemClickListener implements OnItemClickListener {
 		
 		this.check_list_id = check_list_id;
 		
+	}
+
+	public DialogOnItemClickListener(Activity actv, Dialog dlg,
+			int item_position, long check_list_id, CL check_list) {
+
+		/*********************************
+		 * memo
+		 *********************************/
+		vib = (Vibrator) actv.getSystemService(Context.VIBRATOR_SERVICE);
+		
+		this.actv = actv;
+		this.dlg = dlg;
+		
+		this.item_position = item_position;
+		
+		this.check_list_id = check_list_id;
+		
+		this.check_list = check_list;
+
 	}
 
 	public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
@@ -146,40 +168,58 @@ public class DialogOnItemClickListener implements OnItemClickListener {
 
 		case dlg_main_actv_long_click_lv://-------------------------------
 			
-			item = (String) parent.getItemAtPosition(position);
+			case_dlg_main_actv_long_click_lv(parent, position);
 			
-			if (item.equals(actv.getString(
-					R.string.dlg_main_actv_long_click_lv_clear_item_status))) {
-				
-				Methods.clear_items_all_to_zero(actv, check_list_id, dlg);
-				
-			} else {//if (item == condition)
-				
-				// Log
-				Log.d("DialogOnItemClickListener.java"
-						+ "["
-						+ Thread.currentThread().getStackTrace()[2]
-								.getLineNumber() + "]", "item=" + item);
-				
-			}//if (item == condition)
-			
-//			// Log
-//			Log.d("DialogOnItemClickListener.java" + "["
-//					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
-//					+ "]", "item=" + item);
-			
-//			Methods.clear_items_all()
-			
-//			// Log
-//			Log.d("DialogOnItemClickListener.java" + "["
-//					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
-//					+ "]", "dlg_main_actv_long_click_lv");
+//			item = (String) parent.getItemAtPosition(position);
+//			
+//			if (item.equals(actv.getString(
+//					R.string.dlg_main_actv_long_click_lv_clear_item_status))) {
+//				
+//				Methods.clear_items_all_to_zero(actv, check_list_id, dlg);
+//				
+//			} else {//if (item == condition)
+//				
+//				// Log
+//				Log.d("DialogOnItemClickListener.java"
+//						+ "["
+//						+ Thread.currentThread().getStackTrace()[2]
+//								.getLineNumber() + "]", "item=" + item);
+//				
+//			}//if (item == condition)
 			
 			break;// case dlg_main_actv_long_click_lv
 			
 		}//switch (tag)
 		
 	}//public void onItemClick(AdapterView<?> parent, View v, int position, long id)
+
+	private void
+	case_dlg_main_actv_long_click_lv
+	(AdapterView<?> parent, int position) {
+		// TODO Auto-generated method stub
+		String item = (String) parent.getItemAtPosition(position);
+		
+		if (item.equals(actv.getString(
+				R.string.dlg_main_actv_long_click_lv_clear_item_status))) {
+			
+			Methods.clear_items_all_to_zero(actv, check_list_id, dlg);
+			
+		} else if (item.equals(actv.getString(
+				R.string.dlg_main_actv_long_click_lv_delete_list))) {
+
+			Methods.delete_list(actv, check_list_id, dlg, check_list);
+			
+		} else {//if (item == condition)
+			
+			// Log
+			Log.d("DialogOnItemClickListener.java"
+					+ "["
+					+ Thread.currentThread().getStackTrace()[2]
+							.getLineNumber() + "]", "item=" + item);
+			
+		}//if (item == condition)
+
+	}//case_dlg_main_actv_long_click_lv
 
 	private void dlg_filter_by_genre_lv(String item) {
 		/*********************************
