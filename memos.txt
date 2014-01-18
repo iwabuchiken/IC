@@ -1,8 +1,10 @@
-a
+# a p + gitk
+a p && pushd C:\WORKS\WS\WS_Android~\IC && gitk
+
+# Gitk / no 'a p'
 pushd C:\WORKS\WS\WS_Android~\IC
 
 pushd C:\WORKS\WS\WS_Android~\IC && gitk
-a p && pushd C:\WORKS\WS\WS_Android~\IC && gitk
 
 
 C:\WORKS\PROGRAMS\FreeMind\FreeMind.exe C:\WORKS\WS\WS_Android~\FM\IC\IC.mm

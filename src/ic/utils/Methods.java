@@ -4,10 +4,10 @@ package ic.utils;
 
 import ic.items.CL;
 import ic.items.Item;
-import ic.listeners.DialogButtonOnClickListener;
-import ic.listeners.DialogButtonOnTouchListener;
-import ic.listeners.DialogListener;
-import ic.listeners.DialogOnItemClickListener;
+import ic.listeners.dialog.DialogButtonOnClickListener;
+import ic.listeners.dialog.DialogButtonOnTouchListener;
+import ic.listeners.dialog.DialogListener;
+import ic.listeners.dialog.DialogOnItemClickListener;
 import ic.main.CheckActv;
 import ic.main.MainActv;
 import ic.main.R;
