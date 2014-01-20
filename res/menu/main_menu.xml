@@ -21,4 +21,11 @@
 	    
 	</item>
 		
+	<item 
+	    android:id="@+id/main_opt_menu_sort_list" 
+	    android:title="@string/main_menu_sort_list" 
+	    android:icon="@android:drawable/ic_menu_sort_alphabetically">
+	    
+	</item>
+		
 </menu>

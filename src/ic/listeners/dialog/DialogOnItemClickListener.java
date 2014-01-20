@@ -8,6 +8,7 @@ import ic.main.R;
 import ic.utils.CONS;
 import ic.utils.DBUtils;
 import ic.utils.Methods;
+import ic.utils.Methods_ic;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -180,9 +181,46 @@ public class DialogOnItemClickListener implements OnItemClickListener {
 			
 			break;// case dlg_main_actv_long_click_lv
 		
+		case dlg_sort_list_lv://-------------------------------
+			
+			choice = (String) parent.getItemAtPosition(position);
+			
+			case_Dlg_sort_list_lv(choice);
+			
+			break;// case dlg_main_actv_long_click_lv
+			
 		}//switch (tag)
 		
 	}//public void onItemClick(AdapterView<?> parent, View v, int position, long id)
+
+	private void
+	case_Dlg_sort_list_lv(String choice) {
+		
+		if (choice.equals(actv.getString(
+				R.string.dlg_sort_list_item_name))) {
+			
+//			case_dlg_sort_list_ItemName();
+			
+			Methods_ic.sort_CheckList_ItemName(actv);
+			
+			MainActv.mlAdp.notifyDataSetChanged();
+			
+			dlg.dismiss();
+			
+		} else if (choice.equals(actv.getString(
+				R.string.dlg_sort_list_genre_item_name))) {
+
+
+		} else if (choice.equals(actv.getString(
+				R.string.dlg_sort_list_store))) {
+
+			// debug
+			Toast.makeText(actv, "Store", Toast.LENGTH_LONG).show();
+
+		}
+		
+	}//case_Dlg_sort_list_lv(String choice)
+	
 
 	private void
 	case_dlg_db_admin_lv(String choice) {

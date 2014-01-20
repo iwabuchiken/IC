@@ -137,4 +137,64 @@ public class Methods_dlg {
 	
 	}//public static Dialog dlg_template_okCancel()
 
-}
+	public static void dlg_SortList(Activity actv) {
+		// TODO Auto-generated method stub
+		Dialog dlg = Methods_dlg.dlg_template_cancel(
+				actv,
+				R.layout.dlg_db_admin, 
+				R.string.dlg_sort_list_title, 
+				R.id.dlg_db_admin_bt_cancel, 
+				Methods.DialogButtonTags.dlg_generic_dismiss);
+
+		/*----------------------------
+		* 2. Prep => List
+		----------------------------*/
+		String[] choices = {
+					actv.getString(R.string.dlg_sort_list_item_name)
+//					actv.getString(R.string.dlg_sort_list_item_name),
+//					actv.getString(R.string.dlg_sort_list_genre_item_name),
+//					actv.getString(R.string.dlg_sort_list_store_item_name),
+//					actv.getString(R.string.dlg_sort_list_store_genre_item_name),
+		};
+		
+		List<String> list = new ArrayList<String>();
+		
+		for (String item : choices) {
+		
+			list.add(item);
+		
+		}
+		
+		/*----------------------------
+		* 3. Adapter
+		----------------------------*/
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+				actv,
+				//R.layout.dlg_db_admin,
+				android.R.layout.simple_list_item_1,
+				list
+		);
+		
+		/*----------------------------
+		* 4. Set adapter
+		----------------------------*/
+		ListView lv = (ListView) dlg.findViewById(R.id.dlg_db_admin_lv);
+		
+		lv.setAdapter(adapter);
+		
+		/*----------------------------
+		* 5. Set listener to list
+		----------------------------*/
+		lv.setTag(Methods.DialogItemTags.dlg_sort_list_lv);
+//		lv.setTag(Tags.DialogTags.dlg_sort_list_lv);
+		
+		lv.setOnItemClickListener(new DialogOnItemClickListener(actv, dlg));
+		
+		/*----------------------------
+		* 6. Show dialog
+		----------------------------*/
+		dlg.show();
+
+	}//public static void dlg_SortList(Activity actv)
+
+}//public class Methods_dlg

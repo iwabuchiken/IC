@@ -92,6 +92,8 @@ public class Methods {
 		dlg_main_actv_long_click_lv,
 		
 		dlg_db_admin_lv,
+		
+		dlg_sort_list_lv,
 
 	}//public static enum DialogItemTags
 	

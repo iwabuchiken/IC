@@ -25,6 +25,7 @@
     	<string name="main_menu_register_genre">ジャンル</string>
     	<string name="main_menu_db">DB</string>
     	<string name="main_menu_filter_by_genre">Filter</string>
+    	<string name="main_menu_sort_list">Sort list</string>
     
     <!-- dlg_register_genre.xml -->
     	<string name="dlg_register_genre_title">ジャンル登録</string>
@@ -83,5 +84,15 @@
 	    <string name="dlg_db_admin_item_restore_db">Restore db</string>
 	    <string name="dlg_db_admin_item_get_yomi">Get Yomi data</string>
 	    <string name="dlg_db_admin_item_post_data">Post data</string>
-    	
+    
+	<!-- dlg_sort_list.xml -->
+		<string name="dlg_sort_list_title">Sort by</string>
+		<string name="dlg_sort_list_item_name">Item name</string>
+		<string name="dlg_sort_list_genre">Genre</string>
+		<string name="dlg_sort_list_store">Store</string>
+		
+		<string name="dlg_sort_list_genre_item_name">Genre/Item name</string>
+		<string name="dlg_sort_list_store_item_name">Store/Item name</string>
+		<string name="dlg_sort_list_store_genre_item_name">Store/Genre/Item name</string>
+	    
 </resources>

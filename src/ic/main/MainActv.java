@@ -549,6 +549,12 @@ public class MainActv extends ListActivity {
 			
 			break;// case R.id.main_opt_menu_filter_by_genre
 
+		case R.id.main_opt_menu_sort_list://---------------
+			
+			Methods_dlg.dlg_SortList(this);
+			
+			break;// case R.id.main_opt_menu_filter_by_genre
+			
 		}//switch (item.getItemId())
 
 		return super.onOptionsItemSelected(item);
