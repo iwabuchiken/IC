@@ -91,6 +91,7 @@ public class Methods {
 		// dlg_main_actv_long_click.xml
 		dlg_main_actv_long_click_lv,
 		
+		dlg_db_admin_lv,
 
 	}//public static enum DialogItemTags
 	
@@ -3309,86 +3310,86 @@ public class Methods {
 
 	public static boolean restore_db(Activity actv, String dbName,
 			String src, String dst) {
-	/*********************************
-	 * 1. Setup db
-	 * 2. Setup: File paths
-	 * 3. Setup: File objects
-	 * 4. Copy file
-	 * 
-	 *********************************/
-	// Setup db
-	DBUtils dbu = new DBUtils(actv, dbName);
+		/*********************************
+		 * 1. Setup db
+		 * 2. Setup: File paths
+		 * 3. Setup: File objects
+		 * 4. Copy file
+		 * 
+		 *********************************/
+		// Setup db
+		DBUtils dbu = new DBUtils(actv, dbName);
+		
+		SQLiteDatabase wdb = dbu.getWritableDatabase();
 	
-	SQLiteDatabase wdb = dbu.getWritableDatabase();
-
-	wdb.close();
-
-	/*********************************
-	 * 2. Setup: File paths
-	 *********************************/
-
-	/*********************************
-	 * 3. Setup: File objects
-	 *********************************/
-	File f_src = new File(src);
-	File f_dst = new File(dst);
-
-	/*********************************
-	 * 4. Copy file
-	 *********************************/
-	try {
-		FileChannel iChannel = new FileInputStream(src).getChannel();
-		FileChannel oChannel = new FileOutputStream(dst).getChannel();
-		iChannel.transferTo(0, iChannel.size(), oChannel);
-		iChannel.close();
-		oChannel.close();
-		
-		// Log
-		Log.d("Methods.java" + "["
-				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
-				+ "]",
-				"File copied from: " + src
-				+ "/ to: " + dst);
-		
-		// If the method is not in the context of a thread,
-		//	then, show a message
-		if (Looper.myLooper() == Looper.getMainLooper()) {
+		wdb.close();
+	
+		/*********************************
+		 * 2. Setup: File paths
+		 *********************************/
+	
+		/*********************************
+		 * 3. Setup: File objects
+		 *********************************/
+		File f_src = new File(src);
+		File f_dst = new File(dst);
+	
+		/*********************************
+		 * 4. Copy file
+		 *********************************/
+		try {
+			FileChannel iChannel = new FileInputStream(src).getChannel();
+			FileChannel oChannel = new FileOutputStream(dst).getChannel();
+			iChannel.transferTo(0, iChannel.size(), oChannel);
+			iChannel.close();
+			oChannel.close();
 			
-			// debug
-			Toast.makeText(actv, "DB restoration => Done", Toast.LENGTH_LONG).show();
-			
-		} else {//if (condition)
-
 			// Log
-			Log.d("Methods.java"
-					+ "["
-					+ Thread.currentThread().getStackTrace()[2]
-							.getLineNumber() + "]", "DB restoration => Done");
+			Log.d("Methods.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]",
+					"File copied from: " + src
+					+ "/ to: " + dst);
 			
-		}//if (condition)
-		
-		
-		return true;
-
-	} catch (FileNotFoundException e) {
-		// Log
-		Log.e("Methods.java" + "["
-				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
-				+ "]", "Exception: " + e.toString());
-		
-		return false;
-		
-	} catch (IOException e) {
-		// Log
-		Log.e("Methods.java" + "["
-				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
-				+ "]", "Exception: " + e.toString());
-		
-		return false;
-		
-	}//try
+			// If the method is not in the context of a thread,
+			//	then, show a message
+			if (Looper.myLooper() == Looper.getMainLooper()) {
+				
+				// debug
+				Toast.makeText(actv, "DB restoration => Done", Toast.LENGTH_LONG).show();
+				
+			} else {//if (condition)
 	
-}//private boolean restore_db()
+				// Log
+				Log.d("Methods.java"
+						+ "["
+						+ Thread.currentThread().getStackTrace()[2]
+								.getLineNumber() + "]", "DB restoration => Done");
+				
+			}//if (condition)
+			
+			
+			return true;
+	
+		} catch (FileNotFoundException e) {
+			// Log
+			Log.e("Methods.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "Exception: " + e.toString());
+			
+			return false;
+			
+		} catch (IOException e) {
+			// Log
+			Log.e("Methods.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "Exception: " + e.toString());
+			
+			return false;
+			
+		}//try
+		
+	}//private boolean restore_db()
 
 	public static void
 	delete_list(Activity actv, long check_list_id, Dialog dlg, CL check_list) {
@@ -3472,6 +3473,72 @@ public class Methods {
 		return tableNames;
 		
 	}//List<String> get_tableNames(Activity actv)
+
+	public static void restore_db(Activity actv) {
+		// TODO Auto-generated method stub
+
+		String src_dir = CONS.DBAdmin.dirPath_db_backup;
+		
+		File f_dir = new File(src_dir);
+		
+		File[] src_dir_files = f_dir.listFiles();
+		
+		// If no files in the src dir, quit the method
+		if (src_dir_files.length < 1) {
+			
+			// Log
+			Log.d("DialogOnItemClickListener.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "No files in the dir: " + src_dir);
+			
+			return;
+			
+		}//if (src_dir_files.length == condition)
+
+		File f_src_latest = src_dir_files[0];
+		
+		
+		for (File file : src_dir_files) {
+			
+			if (f_src_latest.lastModified() < file.lastModified()) {
+						
+				f_src_latest = file;
+				
+			}//if (variable == condition)
+			
+		}//for (File file : src_dir_files)
+		
+		// Show the path of the latest file
+		// Log
+		Log.d("Methods.java" + "["
+				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ "]", "f_src_latest=" + f_src_latest.getAbsolutePath());
+		
+		/*********************************
+		 * Restore file
+		 *********************************/
+		String src = f_src_latest.getAbsolutePath();
+
+		
+		String dst = StringUtils.join(
+						new String[]{
+								CONS.DBAdmin.dirPath_db,
+								CONS.DBAdmin.dbName},
+						File.separator);
+
+		// Log
+		Log.d("DialogOnItemClickListener.java" + "["
+				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ ":"
+				+ Thread.currentThread().getStackTrace()[2].getMethodName()
+				+ "]",
+				"src=" + src
+				+ "|"
+				+ "dst=" + dst);
+
+		boolean res = Methods.restore_db(actv, CONS.DBAdmin.dbName, src, dst);
+
+	}//public static void restore_db()
 
 }//public class Methods
 

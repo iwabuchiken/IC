@@ -170,28 +170,51 @@ public class DialogOnItemClickListener implements OnItemClickListener {
 			
 			case_dlg_main_actv_long_click_lv(parent, position);
 			
-//			item = (String) parent.getItemAtPosition(position);
-//			
-//			if (item.equals(actv.getString(
-//					R.string.dlg_main_actv_long_click_lv_clear_item_status))) {
-//				
-//				Methods.clear_items_all_to_zero(actv, check_list_id, dlg);
-//				
-//			} else {//if (item == condition)
-//				
-//				// Log
-//				Log.d("DialogOnItemClickListener.java"
-//						+ "["
-//						+ Thread.currentThread().getStackTrace()[2]
-//								.getLineNumber() + "]", "item=" + item);
-//				
-//			}//if (item == condition)
+			break;// case dlg_main_actv_long_click_lv
+		
+		case dlg_db_admin_lv://-------------------------------
+			
+			String choice = (String) parent.getItemAtPosition(position);
+			
+			case_dlg_db_admin_lv(choice);
 			
 			break;// case dlg_main_actv_long_click_lv
-			
+		
 		}//switch (tag)
 		
 	}//public void onItemClick(AdapterView<?> parent, View v, int position, long id)
+
+	private void
+	case_dlg_db_admin_lv(String choice) {
+		
+		if (choice.equals(actv.getString(
+				R.string.dlg_db_admin_item_backup_db))) {
+	
+			return;
+			
+		} else if (choice.equals(actv.getString(
+				R.string.dlg_db_admin_item_refatcor_db))) {
+		
+			return;
+			
+		} else if (choice.equals(actv.getString(
+				R.string.dlg_db_admin_item_restore_db))) {
+			
+			Methods.restore_db(actv);
+		
+		} else if (choice.equals(actv.getString(
+					R.string.dlg_db_admin_item_get_yomi))) {
+				
+				
+		} else if (choice.equals(actv.getString(
+				R.string.dlg_db_admin_item_post_data))) {
+			
+			
+		}//if
+
+		
+		
+	}//case_dlg_db_admin_lv(AdapterView<?> parent, int position)
 
 	private void
 	case_dlg_main_actv_long_click_lv

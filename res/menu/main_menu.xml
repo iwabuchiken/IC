@@ -8,8 +8,8 @@
 	</item>
 
 	<item 
-	    android:id="@+id/main_opt_menu_backup_db" 
-	    android:title="@string/main_menu_backup_db" 
+	    android:id="@+id/main_opt_menu_db" 
+	    android:title="@string/main_menu_db" 
 	    android:icon="@android:drawable/ic_menu_save">
 	    
 	</item>

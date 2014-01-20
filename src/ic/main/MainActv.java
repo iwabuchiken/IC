@@ -4,6 +4,7 @@
  *********************************/
 package ic.main;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import ic.utils.CONS;
 import ic.utils.DBUtils;
 import ic.utils.MainListAdapter;
 import ic.utils.Methods;
+import ic.utils.Methods_dlg;
 import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
@@ -115,7 +117,8 @@ public class MainActv extends ListActivity {
         this.setTitle(this.getClass().getName());
     
         //debug
-        create_tables();
+        do_debugs();
+//        create_tables();
         
         /*********************************
 		 * 4. Initialise vars
@@ -139,7 +142,48 @@ public class MainActv extends ListActivity {
 		
     }//public void onCreate(Bundle savedInstanceState)
 
-    private void _debug_D_20_reinstall_app() {
+    private void do_debugs() {
+		// TODO Auto-generated method stub
+		debug_D_24_v_1_0();
+	}
+
+	private void debug_D_24_v_1_0() {
+		// TODO Auto-generated method stub
+		File f = new File(CONS.DBAdmin.dirPath_db);
+		
+		String[] fnames = f.list();
+		
+		if (fnames.length < 1) {
+			
+			// Log
+			Log.d("["
+					+ "MainActv.java : "
+					+ +Thread.currentThread().getStackTrace()[2]
+							.getLineNumber() + " : "
+					+ Thread.currentThread().getStackTrace()[2].getMethodName()
+					+ "]", "No db files (" + CONS.DBAdmin.dirPath_db + ")");
+			
+		} else {//if (fnames.length < 1)
+			
+			for (String name : fnames) {
+				
+				// Log
+				Log.d("["
+						+ "MainActv.java : "
+						+ +Thread.currentThread().getStackTrace()[2]
+								.getLineNumber()
+						+ " : "
+						+ Thread.currentThread().getStackTrace()[2]
+								.getMethodName() + "]", "file=" + name);
+				
+			}
+			
+			
+		}//if (fnames.length < 1)
+		
+	}//private void debug_D_24_v_1_0()
+
+	private void _debug_D_20_reinstall_app() {
 		
     	String src = "/mnt/sdcard-ext/IC_backup/ic_backup_20130730_092046.bk";
     	String dst = dirPath_db + "/" + dbName;
@@ -492,9 +536,10 @@ public class MainActv extends ListActivity {
 			
 			break;// case R.id.opt_menu_main_actv_register
 			
-		case R.id.main_opt_menu_backup_db://---------------
+		case R.id.main_opt_menu_db://---------------
 			
-			Methods.db_backup(this);
+			Methods_dlg.dlg_db_activity(this);
+//			Methods.db_backup(this);
 			
 			break;// case R.id.main_opt_menu_backup_db
 
