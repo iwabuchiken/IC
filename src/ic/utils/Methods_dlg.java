@@ -32,7 +32,7 @@ public class Methods_dlg {
 									R.layout.dlg_db_admin, 
 									R.string.dlg_db_admin_title, 
 									R.id.dlg_db_admin_bt_cancel, 
-									Tags.DialogTags.dlg_generic_dismiss);
+									Methods.DialogButtonTags.dlg_generic_dismiss);
 		
 		/*----------------------------
 		 * 2. Prep => List
@@ -88,8 +88,13 @@ public class Methods_dlg {
 		
 	}//public static void dlg_db_activity(Activity actv)
 
-	public static Dialog dlg_template_cancel(Activity actv, int layoutId, int titleStringId,
-			int cancelButtonId, DialogTags cancelTag) {
+	public static Dialog
+	dlg_template_cancel
+	(Activity actv,
+			
+			int layoutId, int titleStringId,
+			
+			int cancelButtonId, Methods.DialogButtonTags cancelTag) {
 		/*----------------------------
 		* Steps
 		* 1. Set up
