@@ -2,6 +2,8 @@ package ic.listeners.dialog;
 
 import java.util.ArrayList;
 
+import tasks.Task_GetYomi;
+
 import ic.items.CL;
 import ic.main.MainActv;
 import ic.main.R;
@@ -227,6 +229,8 @@ public class DialogOnItemClickListener implements OnItemClickListener {
 		
 		if (choice.equals(actv.getString(
 				R.string.dlg_db_admin_item_backup_db))) {
+			
+			dlg_db_admin_lv_backupDb();
 	
 			return;
 			
@@ -242,10 +246,14 @@ public class DialogOnItemClickListener implements OnItemClickListener {
 		
 		} else if (choice.equals(actv.getString(
 					R.string.dlg_db_admin_item_get_yomi))) {
-				
+			
+			Task_GetYomi task = new Task_GetYomi(actv);
+			
+			task.execute("Start");
 				
 		} else if (choice.equals(actv.getString(
 				R.string.dlg_db_admin_item_post_data))) {
+			
 			
 			
 		}//if
@@ -446,5 +454,71 @@ public class DialogOnItemClickListener implements OnItemClickListener {
 		}//if (item.equals(actv.getString(R.string.main_menu_register_list)))
 		
 	}//private void register_switching(String item)
-	
+
+	private void dlg_db_admin_lv_backupDb() {
+		// TODO Auto-generated method stub
+		int res = Methods.backupDb(
+				actv, CONS.DBAdmin.dbName, CONS.DBAdmin.dirPath_db_backup);
+
+		if (res == CONS.RetVal.DB_DOESNT_EXIST) {
+			
+			// Log
+			Log.d("DialogOnItemClickListener.java"
+					+ "["
+					+ Thread.currentThread().getStackTrace()[2]
+							.getLineNumber()
+					+ ":"
+					+ Thread.currentThread().getStackTrace()[2]
+							.getMethodName() + "]", "DB file doesn't exist: " + res);
+			
+		} else if (res == CONS.RetVal.DB_FILE_COPY_EXCEPTION) {//if (res == CONS.DB_DOESNT_EXIST)
+		
+			// Log
+			Log.d("DialogOnItemClickListener.java"
+					+ "["
+					+ Thread.currentThread().getStackTrace()[2]
+							.getLineNumber()
+					+ ":"
+					+ Thread.currentThread().getStackTrace()[2]
+							.getMethodName() + "]",
+					"Copying file => Failed: " + res);
+		
+		} else if (res == CONS.RetVal.DB_CANT_CREATE_FOLDER) {//if (res == CONS.DB_DOESNT_EXIST)
+		
+			// Log
+			Log.d("DialogOnItemClickListener.java"
+					+ "["
+					+ Thread.currentThread().getStackTrace()[2]
+							.getLineNumber()
+					+ ":"
+					+ Thread.currentThread().getStackTrace()[2]
+							.getMethodName() + "]",
+					"Can't create a backup folder: " + res);
+		
+		} else if (res == CONS.RetVal.DB_BACKUP_SUCCESSFUL) {//if (res == CONS.DB_DOESNT_EXIST)
+		
+			// Log
+			Log.d("DialogOnItemClickListener.java"
+					+ "["
+					+ Thread.currentThread().getStackTrace()[2]
+							.getLineNumber()
+					+ ":"
+					+ Thread.currentThread().getStackTrace()[2]
+							.getMethodName() + "]",
+					"Backup successful: " + res);
+		
+			// debug
+			Toast.makeText(actv,
+					"DB backup => Done",
+					Toast.LENGTH_LONG).show();
+			
+			/*********************************
+			 * If successful, dismiss the dialog
+			 *********************************/
+			dlg.dismiss();
+		
+		}//if (res == CONS.DB_DOESNT_EXIST)
+		
+	}//private void dlg_db_admin_lv_backupDb()
+
 }//DialogOnItemClickListener

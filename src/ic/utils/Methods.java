@@ -3542,5 +3542,166 @@ public class Methods {
 
 	}//public static void restore_db()
 
+	public static int backupDb(Activity actv,
+			String dbName, String dirPathBk) {
+		/*----------------------------
+		* 1. Prep => File names
+		* 2. Prep => Files
+		* 2-2. Folder exists?
+		* 3. Copy
+		----------------------------*/
+		//String time_label = Methods.get_TimeLabel(Methods.getMillSeconds_now());
+		String timeLabel = Methods.getTimeLabel(Methods.getMillSeconds_now());
+		
+		String db_src = StringUtils.join(
+					new String[]{
+							CONS.DBAdmin.dirPath_db,
+							dbName},
+					File.separator);
+		
+		String db_dst = StringUtils.join(
+					new String[]{
+							dirPathBk,
+							CONS.DBAdmin.fileName_db_backup_trunk},
+					File.separator);
+		
+		db_dst = db_dst + "_" + timeLabel + CONS.DBAdmin.fileName_db_backup_ext;
+		
+		// Log
+		Log.d("Methods.java" + "["
+			+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+			+ "]", "db_src: " + db_src + " * " + "db_dst: " + db_dst);
+		
+		/*----------------------------
+		* 2. Prep => Files
+		----------------------------*/
+		File src = new File(db_src);
+		File dst = new File(db_dst);
+		
+		/*********************************
+		* DB file exists?
+		*********************************/
+		File f = new File(db_src);
+		
+		if (f.exists()) {
+			// Log
+			Log.d("Methods.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ ":"
+					+ Thread.currentThread().getStackTrace()[2].getMethodName()
+					+ "]", "DB file exists=" + f.getAbsolutePath());
+		} else {//if (f.exists())
+		
+			// Log
+			Log.d("Methods.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ ":"
+					+ Thread.currentThread().getStackTrace()[2].getMethodName()
+					+ "]", "File doesn't exist=");
+			
+			return CONS.RetVal.DB_DOESNT_EXIST;
+		
+		}//if (f.exists())
+		
+		/*----------------------------
+		* 2-2. Folder exists?
+		----------------------------*/
+		File db_backup = new File(dirPathBk);
+		
+		if (!db_backup.exists()) {
+		
+		try {
+			db_backup.mkdir();
+		
+			// Log
+			Log.d("Methods.java"
+					+ "["
+					+ Thread.currentThread().getStackTrace()[2]
+							.getLineNumber()
+					+ ":"
+					+ Thread.currentThread().getStackTrace()[2]
+							.getMethodName() + "]",
+					"Folder created: " + db_backup.getAbsolutePath());
+			
+		} catch (Exception e) {
+			
+			// Log
+			Log.d("Methods.java"
+					+ "["
+					+ Thread.currentThread().getStackTrace()[2]
+							.getLineNumber()
+					+ ":"
+					+ Thread.currentThread().getStackTrace()[2]
+							.getMethodName() + "]",
+					"Create folder => Failed");
+			
+			return CONS.RetVal.DB_CANT_CREATE_FOLDER;
+			
+		}
+		
+		} else {//if (!db_backup.exists())
+		
+			// Log
+			Log.d("Methods.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ ":"
+					+ Thread.currentThread().getStackTrace()[2].getMethodName()
+					+ "]", "Folder exists: " + db_backup.getAbsolutePath());
+		
+		}//if (!db_backup.exists())
+		
+		/*----------------------------
+		* 3. Copy
+		----------------------------*/
+		try {
+			FileChannel iChannel = new FileInputStream(src).getChannel();
+			FileChannel oChannel = new FileOutputStream(dst).getChannel();
+			iChannel.transferTo(0, iChannel.size(), oChannel);
+			iChannel.close();
+			oChannel.close();
+			
+			// Log
+			Log.d("Methods.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ ":"
+					+ Thread.currentThread().getStackTrace()[2].getMethodName()
+					+ "]", "File copied");
+			
+			return CONS.RetVal.DB_BACKUP_SUCCESSFUL;
+		
+		} catch (FileNotFoundException e) {
+		
+			// Log
+			Log.d("Methods.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ ":"
+					+ Thread.currentThread().getStackTrace()[2].getMethodName()
+					+ "]", "Exception: " + e.toString());
+			
+			return CONS.RetVal.DB_FILE_COPY_EXCEPTION;
+		
+		} catch (IOException e) {
+		
+			// Log
+			Log.d("Methods.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ ":"
+					+ Thread.currentThread().getStackTrace()[2].getMethodName()
+					+ "]", "Exception: " + e.toString());
+			
+			return CONS.RetVal.DB_FILE_COPY_EXCEPTION;
+		
+		}//try
+	
+	}//public static void backupDb()
+
+	public static String getTimeLabel(long millSec) {
+		
+		 SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMdd_HHmmss");
+		 
+		return sdf1.format(new Date(millSec));
+		
+	}//public static String get_TimeLabel(long millSec)
+
 }//public class Methods
 

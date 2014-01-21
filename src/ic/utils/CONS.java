@@ -36,5 +36,24 @@ public class CONS {
 
 		
 	}//public static class DBAdmin
-	
+
+	public static class RetVal {
+		/*********************************
+		 * Successful
+		 *********************************/
+		public static final int DB_BACKUP_SUCCESSFUL	= 10;
+		
+		
+		/*********************************
+		 * Errors
+		 *********************************/
+		public static final int DB_DOESNT_EXIST	= -10;
+		
+		public static final int DB_FILE_COPY_EXCEPTION	= -11;
+		
+		public static final int DB_CANT_CREATE_FOLDER	= -12;
+		
+		
+		
+	}
 }
