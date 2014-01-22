@@ -144,9 +144,29 @@ public class MainActv extends ListActivity {
     }//public void onCreate(Bundle savedInstanceState)
 
     private void do_debugs() {
-		// TODO Auto-generated method stub
-		debug_D_24_v_1_0();
-	}
+    	
+//    	_debug_D_25_v_2_0();
+    	
+//		debug_D_24_v_1_0();
+	}//private void do_debugs()
+
+	private void _debug_D_25_v_2_0() {
+		
+		boolean res = Methods.add_column_to_table(this,
+							CONS.DBAdmin.dbName,
+							CONS.DBAdmin.tname_CheckLists,
+							CONS.DBAdmin.cols_check_lists[2],
+							CONS.DBAdmin.SQLiteDataTypes.TEXT.toString());
+		
+		// Log
+		Log.d("[" + "MainActv.java : "
+				+ +Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ " : "
+				+ Thread.currentThread().getStackTrace()[2].getMethodName()
+				+ "]", "res => " + res);
+		
+		
+	}//private void _debug_D_25_v_2_0()
 
 	private void debug_D_24_v_1_0() {
 		// TODO Auto-generated method stub

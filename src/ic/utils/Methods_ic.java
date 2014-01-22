@@ -10,7 +10,7 @@ import android.app.Activity;
 
 public class Methods_ic {
 
-	public static void
+	public static boolean
 	sort_CheckList_ItemName(Activity actv) {
 		// TODO Auto-generated method stub
 		Collections.sort(MainActv.CLList, new Comparator<CL>(){
@@ -24,6 +24,8 @@ public class Methods_ic {
 			
 		});//Collections.sort()
 
+		return true;
+		
 	}//sort_CheckList_ItemName(Activity actv)
 
 }//public class Methods_ic

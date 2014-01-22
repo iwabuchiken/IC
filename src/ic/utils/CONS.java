@@ -34,6 +34,31 @@ public class CONS {
 		public static String dirPath_db_backup = 
 						dirName_ExternalStorage + "/IC_backup";
 
+		/*********************************
+		 * Columns
+		 *********************************/
+		public static String[] cols_check_lists
+										= {"name",	"genre_id", "yomi"};
+		
+		public static String[] cols_check_lists_FULL
+		= {
+			android.provider.BaseColumns._ID,
+			"created_at", "modified_at",
+			"name",	"genre_id", "yomi"};
+		
+		/*********************************
+		 * Tables
+		 *********************************/
+		public static final String tname_CheckLists = "check_lists";
+		
+		/*********************************
+		 * SQLite
+		 *********************************/
+		public static enum SQLiteDataTypes {
+			
+			TEXT,
+			
+		}
 		
 	}//public static class DBAdmin
 
@@ -45,13 +70,15 @@ public class CONS {
 		
 		
 		/*********************************
-		 * Errors
+		 * Errors: DB
 		 *********************************/
 		public static final int DB_DOESNT_EXIST	= -10;
 		
 		public static final int DB_FILE_COPY_EXCEPTION	= -11;
 		
 		public static final int DB_CANT_CREATE_FOLDER	= -12;
+		
+		public static final int GETYOMI_NO_ENTRY		= -13;
 		
 		
 		

@@ -387,7 +387,8 @@ public class DialogOnItemClickListener implements OnItemClickListener {
 		/*********************************
 		 * 4-2. Sort list
 		 *********************************/
-		boolean res = Methods.sort_list_CLList(actv, MainActv.CLList);
+//		boolean res = Methods.sort_list_CLList(actv, MainActv.CLList);
+		boolean res = Methods_ic.sort_CheckList_ItemName(actv);
 		
 		// Log
 		Log.d("MainActv.java" + "["

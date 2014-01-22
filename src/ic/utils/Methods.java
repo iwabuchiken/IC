@@ -2911,8 +2911,11 @@ public class Methods {
 	 * <Return>
 	 * 	false	=> Column exists
 	 **********************************************/
-	public static boolean add_column_to_table(Activity actv, String dbName,
-			String tableName, String column_name, String data_type) {
+	public static boolean
+	add_column_to_table
+	(Activity actv,
+			String dbName, String tableName,
+			String column_name, String data_type) {
 		/*********************************
 		 * 1. Column already exists?
 		 * 2. db setup
@@ -2984,7 +2987,8 @@ public class Methods {
 					"["
 					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
 					+ "]", "Column added => " + column_name);
-			
+
+			wdb.close();
 			
 			return true;
 			
@@ -2993,6 +2997,8 @@ public class Methods {
 			Log.d(actv.getClass().getName() + 
 					"[" + Thread.currentThread().getStackTrace()[2].getLineNumber() + "]", 
 					"Exception => " + e.toString());
+			
+			wdb.close();
 			
 			return false;
 		}//try
@@ -3702,6 +3708,26 @@ public class Methods {
 		return sdf1.format(new Date(millSec));
 		
 	}//public static String get_TimeLabel(long millSec)
+
+	public static int
+	getArrayIndex
+	(String[] targetArray, String targetString) {
+		int index = -1;
+		
+		for (int i = 0; i < targetArray.length; i++) {
+			
+			if (targetArray[i].equals(targetString)) {
+				
+				index = i;
+				
+				break;
+				
+			}//if (targetArray[i] == )
+			
+		}//for (int i = 0; i < targetArray.length; i++)
+		
+		return index;
+	}//public static int getArrayIndex(String[] targetArray, String targetString)
 
 }//public class Methods
 
