@@ -1228,6 +1228,13 @@ public class YahooFurigana {
 		
 //		this.getFurigana(true);
 		
+		// Log
+		Log.d("[" + "YahooFurigana.java : "
+				+ +Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ " : "
+				+ Thread.currentThread().getStackTrace()[2].getMethodName()
+				+ "]", "Calling => getFurigana(flag)");
+		
 		return this.getFurigana(flag);
 //		return this.getFurigana_B18_v_5_0_e_1_t_1(flag);
 		

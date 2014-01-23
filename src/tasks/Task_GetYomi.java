@@ -6,6 +6,7 @@ import ic.utils.CONS;
 import ic.utils.DBUtils;
 import ic.utils.Methods;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -13,6 +14,7 @@ import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -73,6 +75,24 @@ public class Task_GetYomi extends AsyncTask<String, Integer, Integer> {
 		
 		List<Word> wordList = _doInBackground__GetWordList();
 		
+		/*********************************
+		 * Null check
+		 *********************************/
+		if (wordList == null) {
+			
+			// Log
+			Log.d("["
+					+ "Task_GetYomi.java : "
+					+ +Thread.currentThread().getStackTrace()[2]
+							.getLineNumber() + " : "
+					+ Thread.currentThread().getStackTrace()[2].getMethodName()
+					+ "]", "wordList => null");
+			
+			return CONS.RetVal.GetWordList_Failed;
+			
+		}
+		
+		
 		/***************************************
 		 * If no more entries to process, quit the task
 		 ***************************************/
@@ -94,11 +114,29 @@ public class Task_GetYomi extends AsyncTask<String, Integer, Integer> {
 				+ Thread.currentThread().getStackTrace()[2].getMethodName()
 				+ "]", "wordList.size()=" + wordList.size());
 
-		return null;
+		/***************************************
+		 * Convert combo into yomi (i.e. all-hiragana)
+		 ***************************************/
+		_doInBackground___ConvertCombo2Yomi(wordList);
+		
+		/***************************************
+		 * Update table
+		 ***************************************/
+		String res = _doInBackground__UpdateTable(wordList);
+		
+		int retVal = CONS.RetVal.MAGINITUDE_ONE
+						+ Integer.parseInt(res.split(File.separator)[1]);
+		
+		return retVal;
 		
 	}//protected Integer doInBackground(String... arg0) {
 
-	
+	/*********************************
+	 * @return (1) null => 1. Table doesn't exist<br>
+	 * 					2. Raw query failed<br><br>
+	 * 			(2) List{@literal<Word>}
+	 *********************************/
+	//REF {@literal} http://stackoverflow.com/questions/647195/how-do-you-escape-curly-braces-in-javadoc-inline-tags-such-as-the-code-tag answered Oct 29 '13 at 12:18
 	private List<Word> _doInBackground__GetWordList() {
 		
 		DBUtils dbu = new DBUtils(actv, CONS.DBAdmin.dbName);
@@ -121,7 +159,7 @@ public class Task_GetYomi extends AsyncTask<String, Integer, Integer> {
 			Log.d("Task_GetYomi.java" + "["
 					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
 					+ "]",
-					"getAllData() => Table doesn't exist: "
+					"Table doesn't exist: "
 							+ CONS.DBAdmin.tname_CheckLists);
 			
 			rdb.close();
@@ -171,7 +209,8 @@ public class Task_GetYomi extends AsyncTask<String, Integer, Integer> {
 		
 		c.moveToFirst();
 		
-		int numOfSamples = 10;
+		int numOfSamples = 5;
+//		int numOfSamples = 10;
 		
 		/***************************************
 		 * Counter: Count 1 each time when a new entry 
@@ -262,8 +301,12 @@ public class Task_GetYomi extends AsyncTask<String, Integer, Integer> {
 		
 	}//private List<Word> _doInBackground__GetWordList()
 
-	private static List<Word> _doInBackground__GetCombo(
-			List<Word> wordList) {
+	/*********************************
+	 * @return List{@literal<Word>}<br>
+	 * 			No null returns
+	 *********************************/
+	private static List<Word>
+	_doInBackground__GetCombo(List<Word> wordList) {
 		
 		YahooFurigana yf = YahooFurigana.getInstance();
 		
@@ -320,7 +363,208 @@ public class Task_GetYomi extends AsyncTask<String, Integer, Integer> {
 		 ***************************************/
 		return wordList;
 
-	}//private static List<Word> doInBackground_B18_v_6_0__2_getFurigana
+	}//_doInBackground__GetCombo(List<Word> wordList)
+
+	private static List<Word>
+	_doInBackground___ConvertCombo2Yomi
+	(List<Word> wordList) {
+		
+		for (int i = 0; i < wordList.size(); i++) {
+
+			Word word = wordList.get(i);
+			
+			String combo = word.getCombo();
+			
+			if (combo != null) {
+				
+				// Log
+				Log.d("["
+						+ "Task_GetYomi.java : "
+						+ +Thread.currentThread().getStackTrace()[2]
+								.getLineNumber()
+						+ " : "
+						+ Thread.currentThread().getStackTrace()[2]
+								.getMethodName() + "]",
+						"combo => " + combo);
+				
+//				String gana = Methods.convert_Kana2Gana(word.getFuri());
+				String yomi = Methods.convert_Kana2Gana(combo);
+				
+				if (yomi != null) {
+					
+					// Log
+					Log.d("["
+							+ "Task_GetYomi.java : "
+							+ +Thread.currentThread().getStackTrace()[2]
+									.getLineNumber()
+							+ " : "
+							+ Thread.currentThread().getStackTrace()[2]
+									.getMethodName() + "]",
+							"yomi => " + yomi);
+					
+//					wordList.get(i).setGana(gana);
+					word.setYomi(yomi);
+					
+				} else {//if (gana != null)
+					
+//					wordList.get(i).setGana(null);
+					word.setYomi(null);
+					
+					// Log
+					Log.d("Task_GetYomi.java"
+							+ "["
+							+ Thread.currentThread().getStackTrace()[2]
+									.getLineNumber()
+							+ ":"
+							+ Thread.currentThread().getStackTrace()[2]
+									.getMethodName() + "]",
+							"yomi == null"
+							+ "(id=" + wordList.get(i).getId() + ")");
+					
+					continue;
+					
+				}//if (yomi != null)
+				
+				
+			} else {//if (combo != null)
+				
+				// Log
+				Log.d("Task_GetYomi.java"
+						+ "["
+						+ Thread.currentThread().getStackTrace()[2]
+								.getLineNumber()
+						+ ":"
+						+ Thread.currentThread().getStackTrace()[2]
+								.getMethodName() + "]", "word.getFuri() == null");
+				
+				word.setYomi(null);
+				
+			}//if (combo != null)
+			
+		}//for (int i = 0; i < wordList.size(); i++)
+		
+		/***************************************
+		 * Return
+		 ***************************************/
+		return wordList;
+		
+	}//_doInBackground___ConvertCombo2Yomi
+
+	/*********************************
+	 * @return "10/6/4"<br>
+	 * 			=> Target/Success/Fail
+	 *********************************/
+	private static String
+	_doInBackground__UpdateTable
+	(List<Word> wordList) {
+		/***************************************
+		 * Setup
+		 ***************************************/
+		DBUtils dbu = new DBUtils(actv, CONS.DBAdmin.dbName);
+		
+		SQLiteDatabase wdb = dbu.getWritableDatabase();
+		
+		String sql = null;
+		
+		// Variables for debugging
+		int numOfTargets = wordList.size();
+		int numOfSuccess = 0;
+		int numOfFail = 0;
+		
+		/***************************************
+		 * Update
+		 ***************************************/
+		for (int i = 0; i < wordList.size(); i++) {
+			
+			Word word = wordList.get(i);
+			
+//			long dbId = wordList.get(i).getId();
+			long dbId = word.getId();
+			
+			String colYomi = CONS.DBAdmin.cols_check_lists[
+	                    Methods.getArrayIndex(
+	                    		CONS.DBAdmin.cols_check_lists,
+	                    		"yomi")
+	        ];
+			
+			// Get "gana" value: "gana" value in a Word instance 
+			//	corresponds to "yomi" yomi in db
+//			String yomi = word.getName();
+			String yomi = word.getYomi();
+			
+			int res = dbu.updateData_CheckList(
+							actv,
+							wdb,
+							CONS.DBAdmin.tname_CheckLists,
+							dbId,
+							colYomi, yomi);
+
+			if (res == CONS.RetVal.DB_UPDATE_SUCCESSFUL) {
+				
+				numOfSuccess += 1;
+				
+				// Log
+				Log.d("Task_GetYomi.java"
+						+ "["
+						+ Thread.currentThread().getStackTrace()[2]
+								.getLineNumber()
+						+ ":"
+						+ Thread.currentThread().getStackTrace()[2]
+								.getMethodName() + "]",
+						"Data updated: name=" + word.getName()
+						+ "/"
+						+ "yomi=" + yomi);
+				
+			} else {//if (res == CONS.DB_UPDATE_SUCCESSFUL)
+				
+				// Log
+				Log.d("Task_GetYomi.java"
+						+ "["
+						+ Thread.currentThread().getStackTrace()[2]
+								.getLineNumber()
+						+ ":"
+						+ Thread.currentThread().getStackTrace()[2]
+								.getMethodName() + "]",
+						"Update failed => id=" + dbId
+						+ "/"
+						+ "name=" + word.getName());
+				
+			}//if (res == CONS.DB_UPDATE_SUCCESSFUL)
+			
+			
+			
+		}//for (int i = 0; i < wordList.size(); i++)
+		
+		
+		/***************************************
+		 * Close db
+		 ***************************************/
+		wdb.close();
+		
+		/***************************************
+		 * Result
+		 ***************************************/
+		// Log
+		Log.d("Task_GetYomi.java" + "["
+				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ ":"
+				+ Thread.currentThread().getStackTrace()[2].getMethodName()
+				+ "]",
+				"numOfTargets=" + numOfTargets
+				+ "/"
+				+ "numOfSuccess=" + numOfSuccess
+				+ "/"
+				+ "numOfFail=" + numOfFail);
+		
+		return StringUtils.join(
+						new String[]{
+								String.valueOf(numOfTargets),
+								String.valueOf(numOfSuccess),
+								String.valueOf(numOfFail)
+						},
+						File.separator);
+		
+	}//_doInBackground__UpdateTable
 
 	@Override
 	protected void onCancelled() {
@@ -333,8 +577,50 @@ public class Task_GetYomi extends AsyncTask<String, Integer, Integer> {
 		// TODO Auto-generated method stub
 		super.onPostExecute(res);
 		
+		String message;
+
+		int iRes = res.intValue();
+		
+		switch(iRes) {
+		
+		case CONS.RetVal.GetWordList_Failed:
+			
+			message = "Get WordList => Failed";
+			
+			break;
+			
+		case CONS.RetVal.GETYOMI_NO_ENTRY:
+			
+			message = "Get WordList => No entry";
+			
+			break;
+			
+		default:
+			
+			message = "Unknown value => " + String.valueOf(iRes);
+			
+			break;
+		}
+		
+		if (iRes >= CONS.RetVal.MAGINITUDE_ONE) {
+			
+			message = "Get Yomi => Done ("
+					+ String.valueOf(iRes - CONS.RetVal.MAGINITUDE_ONE)
+					+ ")";
+			
+		}
+		
+		
 		// debug
-		Toast.makeText(actv, "Task_GetYomi => Done", Toast.LENGTH_LONG).show();
+		Toast.makeText(actv, message, Toast.LENGTH_LONG).show();
+//		Toast.makeText(actv, "Task_GetYomi => Done", Toast.LENGTH_LONG).show();
+		
+		// Log
+		Log.d("[" + "Task_GetYomi.java : "
+				+ +Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ " : "
+				+ Thread.currentThread().getStackTrace()[2].getMethodName()
+				+ "]", message);
 		
 	}//protected void onPostExecute(Integer res)
 

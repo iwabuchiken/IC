@@ -68,6 +68,8 @@ public class CONS {
 		 *********************************/
 		public static final int DB_BACKUP_SUCCESSFUL	= 10;
 		
+		public static final int DB_UPDATE_SUCCESSFUL	= 11;
+		
 		
 		/*********************************
 		 * Errors: DB
@@ -80,7 +82,21 @@ public class CONS {
 		
 		public static final int GETYOMI_NO_ENTRY		= -13;
 		
+		public static final int EXCEPTION_SQL			= -14;
 		
+		public static final int GetWordList_Failed		= -15;
 		
-	}
-}
+		/*********************************
+		 * Others: > 0, <= -90
+		 *********************************/
+		public static final int OK				= 1;
+		
+		public static final int NOP				= -90;
+		
+		public static final int FAILED			= -91;
+		
+		public static final int MAGINITUDE_ONE	= 1000;
+		
+	}//public static class RetVal
+	
+}//public class CONS
