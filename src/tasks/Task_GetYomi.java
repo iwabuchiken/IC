@@ -75,6 +75,40 @@ public class Task_GetYomi extends AsyncTask<String, Integer, Integer> {
 		
 		List<Word> wordList = _doInBackground__GetWordList();
 		
+		//debug
+		if (wordList == null) {
+			// Log
+			Log.d("["
+					+ "Task_GetYomi.java : "
+					+ +Thread.currentThread().getStackTrace()[2]
+							.getLineNumber() + " : "
+					+ Thread.currentThread().getStackTrace()[2].getMethodName()
+					+ "]", "wordList => null");
+			
+		} else {//if (wordList == null)
+			
+			// Log
+			Log.d("["
+					+ "Task_GetYomi.java : "
+					+ +Thread.currentThread().getStackTrace()[2]
+							.getLineNumber() + " : "
+					+ Thread.currentThread().getStackTrace()[2].getMethodName()
+					+ "]", "wordList => " + wordList.size());
+			
+			for (Word word : wordList) {
+				// Log
+				Log.d("["
+						+ "Task_GetYomi.java : "
+						+ +Thread.currentThread().getStackTrace()[2]
+								.getLineNumber()
+						+ " : "
+						+ Thread.currentThread().getStackTrace()[2]
+								.getMethodName() + "]",
+						"word=" + word.getName());
+			}
+			
+		}//if (wordList == null)
+		
 		/*********************************
 		 * Null check
 		 *********************************/
@@ -124,6 +158,10 @@ public class Task_GetYomi extends AsyncTask<String, Integer, Integer> {
 		 ***************************************/
 		String res = _doInBackground__UpdateTable(wordList);
 		
+		/*********************************
+		 * Return value
+		 *	=> 1000 + number of updated records
+		 *********************************/
 		int retVal = CONS.RetVal.MAGINITUDE_ONE
 						+ Integer.parseInt(res.split(File.separator)[1]);
 		
@@ -132,9 +170,10 @@ public class Task_GetYomi extends AsyncTask<String, Integer, Integer> {
 	}//protected Integer doInBackground(String... arg0) {
 
 	/*********************************
-	 * @return (1) null => 1. Table doesn't exist<br>
-	 * 					2. Raw query failed<br><br>
-	 * 			(2) List{@literal<Word>}
+	 * @return 1. null => (1) Table doesn't exist<br>
+	 * 					(2) Raw query failed<br>
+	 * 					(3) Query result => No records<br><br>
+	 * 			2. List{@literal<Word>}
 	 *********************************/
 	//REF {@literal} http://stackoverflow.com/questions/647195/how-do-you-escape-curly-braces-in-javadoc-inline-tags-such-as-the-code-tag answered Oct 29 '13 at 12:18
 	private List<Word> _doInBackground__GetWordList() {
@@ -173,6 +212,24 @@ public class Task_GetYomi extends AsyncTask<String, Integer, Integer> {
 		 * 		2.1. Get cursor
 		 * 		2.2. Add to list
 			----------------------------*/
+		String tname	= CONS.DBAdmin.tname_CheckLists;
+		String fields[]	= CONS.DBAdmin.cols_check_lists_FULL;
+		String where	= 
+					CONS.DBAdmin.cols_check_lists_FULL[
+					     Methods.getArrayIndex(
+					    		 CONS.DBAdmin.cols_check_lists_FULL,
+					    		 "yomi")]
+					+ " is null";
+//		+ " = "
+//		+ "?";
+		
+		String args[]	= new String[]{
+				
+//				"null"
+//				null
+				""
+		};
+		
 		//
 		String sql = "SELECT * FROM " + CONS.DBAdmin.tname_CheckLists;
 		
@@ -180,8 +237,10 @@ public class Task_GetYomi extends AsyncTask<String, Integer, Integer> {
 		
 		try {
 			
-			c = rdb.rawQuery(sql, null);
-			
+//			c = rdb.rawQuery(sql, null);
+			c = rdb.query(tname, fields, where, null, null, null, null);
+//			c = rdb.query(tname, fields, where, args, null, null, null);
+		
 			// Log
 			Log.d("Task_GetYomi.java" + "["
 					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
@@ -199,6 +258,23 @@ public class Task_GetYomi extends AsyncTask<String, Integer, Integer> {
 		}
 	
 		/*********************************
+		 * Query => No records?
+		 *********************************/
+		if (c.getCount() < 1) {
+			
+			// Log
+			Log.d("["
+					+ "Task_GetYomi.java : "
+					+ +Thread.currentThread().getStackTrace()[2]
+							.getLineNumber() + " : "
+					+ Thread.currentThread().getStackTrace()[2].getMethodName()
+					+ "]", "Query => No records");
+			
+			return null;
+			
+		}
+		
+		/*********************************
 		 * Get names
 		 *********************************/
 //		List<String> itemNames = new ArrayList<String>();
@@ -209,7 +285,8 @@ public class Task_GetYomi extends AsyncTask<String, Integer, Integer> {
 		
 		c.moveToFirst();
 		
-		int numOfSamples = 5;
+		int numOfSamples = CONS.DBAdmin.GetYomi_ChunkNum;
+//		int numOfSamples = 5;
 //		int numOfSamples = 10;
 		
 		/***************************************

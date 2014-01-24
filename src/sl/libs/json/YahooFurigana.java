@@ -1,6 +1,8 @@
 package sl.libs.json;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -203,10 +205,42 @@ public class YahooFurigana {
 		
 	}
 	
+	/*********************************
+	 * @return	1. null<br>
+	 * 			(1) UnsupportedEncodingException<br>
+	 * 			(2) DefaultHttpClient exceptions<br>
+	 * 			(3) HttpResponse => null<br>
+	 * 			(4) JSONObect => Failed to instantiate<br>
+	 *********************************/
 	private static JSONObject getJsonObjectFromKeyWord(String keyWord) {
-		String url = "http://benfranklin.chips.jp/Learn_php/01/01_get_furigana.php?kw="
+		/*********************************
+		 * Build: URL
+		 *********************************/
+		String url;
+		try {
+			
+			url = "http://benfranklin.chips.jp"
+						+ "/Learn_php/01/01_get_furigana.php?kw="
 //				+ kw;
-				+ keyWord;
+						+ URLEncoder.encode(keyWord, "utf-8");
+			
+		} catch (UnsupportedEncodingException e) {
+			
+			// Log
+			Log.d("["
+					+ "YahooFurigana.java : "
+					+ +Thread.currentThread().getStackTrace()[2]
+							.getLineNumber() + " : "
+					+ Thread.currentThread().getStackTrace()[2].getMethodName()
+					+ "]", e.toString());
+			
+			return null;
+			
+//			e1.printStackTrace();
+			
+		}
+//		+ URLEncoder.encode(keyWord);
+//		+ keyWord;
 
 		// Log
 		Log.d("YahooFurigana.java" + "["

@@ -60,6 +60,11 @@ public class CONS {
 			
 		}
 		
+		/*********************************
+		 * Others
+		 *********************************/
+		public static final int GetYomi_ChunkNum	= 5;
+		
 	}//public static class DBAdmin
 
 	public static class RetVal {
