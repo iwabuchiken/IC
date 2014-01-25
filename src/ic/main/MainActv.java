@@ -380,37 +380,9 @@ public class MainActv extends ListActivity {
 		}//if (c.getCount() < 1)
 
 		c.moveToNext();
-		
-//		CLList = new ArrayList<CL>();
 
 		CLList = Methods_ic.build_CL(this, c);
 		
-//		for (int i = 0; i < c.getCount(); i++) {
-//	
-//			CL cl = new CL.Builder()
-//						.setDb_id(c.getLong(0))
-//						.setCreated_at(c.getLong(1))
-//						.setModified_at(c.getLong(2))
-//						.setName(c.getString(3))
-//						.setGenre_id(c.getInt(4))
-//						.setYomi(c.getString(5))
-//						.build();
-//						
-//			CLList.add(cl);
-//			
-////			CLList.add(new CL(
-////					c.getString(3),
-////					c.getInt(4),
-////					
-////					c.getLong(0),
-////					c.getLong(1),
-////					c.getLong(2)
-////					));
-//			
-//			c.moveToNext();
-//			
-//		}//for (int i = 0; i < c.getCount(); i++)
-
 		// Log
 		Log.d("MainActv.java" + "["
 				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
@@ -419,9 +391,20 @@ public class MainActv extends ListActivity {
 		rdb.close();
 		
 		/*********************************
-		 * 4-2. Sort list
+		 * 4-2. Sort list: Default => by "yomi"
 		 *********************************/
-		boolean res = Methods.sort_list_CLList(this, CLList);
+		// Log
+		Log.d("[" + "MainActv.java : "
+				+ +Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ " : "
+				+ Thread.currentThread().getStackTrace()[2].getMethodName()
+				+ "]", "Sorting list ...");
+		
+		boolean res = Methods_ic.sort_CheckList(
+						this,
+						CONS.Admin.SortTypes.SortBy_Yomi);
+		
+//		boolean res = Methods.sort_list_CLList(this, CLList);
 		
 		// Log
 		Log.d("MainActv.java" + "["

@@ -400,21 +400,6 @@ public class DialogOnItemClickListener implements OnItemClickListener {
 
 		MainActv.CLList.addAll(Methods_ic.build_CL(actv, c));
 		
-//		for (int i = 0; i < c.getCount(); i++) {
-//			
-//			MainActv.CLList.add(new CL(
-//					c.getString(3),
-//					c.getInt(4),
-//					
-//					c.getLong(0),
-//					c.getLong(1),
-//					c.getLong(2)
-//					));
-//			
-//			c.moveToNext();
-//			
-//		}//for (int i = 0; i < c.getCount(); i++)
-
 		// Log
 		Log.d("MainActv.java" + "["
 				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
@@ -429,7 +414,10 @@ public class DialogOnItemClickListener implements OnItemClickListener {
 		 * 4-2. Sort list
 		 *********************************/
 //		boolean res = Methods.sort_list_CLList(actv, MainActv.CLList);
-		boolean res = Methods_ic.sort_CheckList_ItemName(actv);
+//		boolean res = Methods_ic.sort_CheckList_ItemName(actv);
+		boolean res = Methods_ic.sort_CheckList(
+						actv,
+						CONS.Admin.SortTypes.SortBy_Yomi);
 		
 		// Log
 		Log.d("MainActv.java" + "["

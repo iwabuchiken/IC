@@ -74,22 +74,24 @@ public class Methods_ic {
 								"cl2.getYomi => null");
 							
 						return 1;
-							
-					} else {
-						
-						// Log
-						Log.d("["
-								+ "Methods_ic.java : "
-								+ +Thread.currentThread().getStackTrace()[2]
-										.getLineNumber()
-								+ " : "
-								+ Thread.currentThread().getStackTrace()[2]
-										.getMethodName() + "]",
-						"cl1=" + cl1.getYomi()
-						+ "/"
-						+ "cl2=" + cl2.getYomi());
 						
 					}
+					
+//					} else {
+//						
+//						// Log
+//						Log.d("["
+//								+ "Methods_ic.java : "
+//								+ +Thread.currentThread().getStackTrace()[2]
+//										.getLineNumber()
+//								+ " : "
+//								+ Thread.currentThread().getStackTrace()[2]
+//										.getMethodName() + "]",
+//						"cl1=" + cl1.getYomi()
+//						+ "/"
+//						+ "cl2=" + cl2.getYomi());
+//						
+//					}
 					
 					return (int)
 						(cl1.getYomi().compareToIgnoreCase(cl2.getYomi()));
