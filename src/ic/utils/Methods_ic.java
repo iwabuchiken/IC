@@ -3,10 +3,13 @@ package ic.utils;
 import ic.items.CL;
 import ic.main.MainActv;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 import android.app.Activity;
+import android.database.Cursor;
 import android.util.Log;
 
 public class Methods_ic {
@@ -112,5 +115,31 @@ public class Methods_ic {
 		return true;
 		
 	}//sort_CheckList_ItemName(Activity actv)
+
+	public static List<CL>
+	build_CL(Activity actv, Cursor c) {
+		// TODO Auto-generated method stub
+		List<CL> CLList = new ArrayList<CL>();
+
+		for (int i = 0; i < c.getCount(); i++) {
+	
+			CL cl = new CL.Builder()
+						.setDb_id(c.getLong(0))
+						.setCreated_at(c.getLong(1))
+						.setModified_at(c.getLong(2))
+						.setName(c.getString(3))
+						.setGenre_id(c.getInt(4))
+						.setYomi(c.getString(5))
+						.build();
+						
+			CLList.add(cl);
+			
+			c.moveToNext();
+			
+		}//for (int i = 0; i < c.getCount(); i++)
+
+		return CLList;
+		
+	}//build_CL(Activity actv, Cursor c)
 
 }//public class Methods_ic

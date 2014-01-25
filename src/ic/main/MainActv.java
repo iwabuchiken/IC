@@ -15,6 +15,7 @@ import ic.utils.DBUtils;
 import ic.utils.MainListAdapter;
 import ic.utils.Methods;
 import ic.utils.Methods_dlg;
+import ic.utils.Methods_ic;
 import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
@@ -380,33 +381,35 @@ public class MainActv extends ListActivity {
 
 		c.moveToNext();
 		
-		CLList = new ArrayList<CL>();
+//		CLList = new ArrayList<CL>();
 
-		for (int i = 0; i < c.getCount(); i++) {
-	
-			CL cl = new CL.Builder()
-						.setDb_id(c.getLong(0))
-						.setCreated_at(c.getLong(1))
-						.setModified_at(c.getLong(2))
-						.setName(c.getString(3))
-						.setGenre_id(c.getInt(4))
-						.setYomi(c.getString(5))
-						.build();
-						
-			CLList.add(cl);
-			
-//			CLList.add(new CL(
-//					c.getString(3),
-//					c.getInt(4),
-//					
-//					c.getLong(0),
-//					c.getLong(1),
-//					c.getLong(2)
-//					));
-			
-			c.moveToNext();
-			
-		}//for (int i = 0; i < c.getCount(); i++)
+		CLList = Methods_ic.build_CL(this, c);
+		
+//		for (int i = 0; i < c.getCount(); i++) {
+//	
+//			CL cl = new CL.Builder()
+//						.setDb_id(c.getLong(0))
+//						.setCreated_at(c.getLong(1))
+//						.setModified_at(c.getLong(2))
+//						.setName(c.getString(3))
+//						.setGenre_id(c.getInt(4))
+//						.setYomi(c.getString(5))
+//						.build();
+//						
+//			CLList.add(cl);
+//			
+////			CLList.add(new CL(
+////					c.getString(3),
+////					c.getInt(4),
+////					
+////					c.getLong(0),
+////					c.getLong(1),
+////					c.getLong(2)
+////					));
+//			
+//			c.moveToNext();
+//			
+//		}//for (int i = 0; i < c.getCount(); i++)
 
 		// Log
 		Log.d("MainActv.java" + "["

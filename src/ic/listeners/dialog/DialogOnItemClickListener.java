@@ -368,26 +368,52 @@ public class DialogOnItemClickListener implements OnItemClickListener {
 		}
 
 		/*********************************
+		 * Validation: Any records?
+		 *********************************/
+		if (c.getCount() < 1) {
+			
+			// debug
+			String msg = "No records: " + item;
+			
+			Toast.makeText(actv,
+					msg,
+					Toast.LENGTH_LONG).show();
+			
+			// Log
+			Log.d("["
+					+ "DialogOnItemClickListener.java : "
+					+ +Thread.currentThread().getStackTrace()[2]
+							.getLineNumber() + " : "
+					+ Thread.currentThread().getStackTrace()[2].getMethodName()
+					+ "]", msg);
+			
+			return;
+			
+		}//if (c.getCount() < 1)
+		
+		/*********************************
 		 * 3. Build list
 		 *********************************/
 		c.moveToFirst();
 		
 		MainActv.CLList.clear();
 
-		for (int i = 0; i < c.getCount(); i++) {
-			
-			MainActv.CLList.add(new CL(
-					c.getString(3),
-					c.getInt(4),
-					
-					c.getLong(0),
-					c.getLong(1),
-					c.getLong(2)
-					));
-			
-			c.moveToNext();
-			
-		}//for (int i = 0; i < c.getCount(); i++)
+		MainActv.CLList.addAll(Methods_ic.build_CL(actv, c));
+		
+//		for (int i = 0; i < c.getCount(); i++) {
+//			
+//			MainActv.CLList.add(new CL(
+//					c.getString(3),
+//					c.getInt(4),
+//					
+//					c.getLong(0),
+//					c.getLong(1),
+//					c.getLong(2)
+//					));
+//			
+//			c.moveToNext();
+//			
+//		}//for (int i = 0; i < c.getCount(); i++)
 
 		// Log
 		Log.d("MainActv.java" + "["
