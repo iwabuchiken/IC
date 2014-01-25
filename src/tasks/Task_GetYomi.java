@@ -212,6 +212,8 @@ public class Task_GetYomi extends AsyncTask<String, Integer, Integer> {
 		 * 		2.1. Get cursor
 		 * 		2.2. Add to list
 			----------------------------*/
+		//REF http://stackoverflow.com/questions/4757263/how-to-pass-two-or-more-selection-argument-in-query-method answered Jan 21 '11 at 9:55
+		//REF is null // http://stackoverflow.com/questions/3620828/sqlite-select-where-empty answered Sep 1 '10 at 18:06
 		String tname	= CONS.DBAdmin.tname_CheckLists;
 		String fields[]	= CONS.DBAdmin.cols_check_lists_FULL;
 		String where	= 

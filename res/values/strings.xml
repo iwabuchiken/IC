@@ -88,8 +88,7 @@
 	<!-- dlg_sort_list.xml -->
 		<string name="dlg_sort_list_title">Sort by</string>
 		<string name="dlg_sort_list_item_name">Item name</string>
-		<string name="dlg_sort_list_genre">Genre</string>
-		<string name="dlg_sort_list_store">Store</string>
+		<string name="dlg_sort_list_created_at">Created at</string>
 		
 		<string name="dlg_sort_list_genre_item_name">Genre/Item name</string>
 		<string name="dlg_sort_list_store_item_name">Store/Item name</string>

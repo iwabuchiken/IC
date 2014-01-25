@@ -222,6 +222,7 @@ public class YahooFurigana {
 			url = "http://benfranklin.chips.jp"
 						+ "/Learn_php/01/01_get_furigana.php?kw="
 //				+ kw;
+						//REF encode http://stackoverflow.com/questions/10786042/java-url-encoding answered May 28 '12 at 14:15
 						+ URLEncoder.encode(keyWord, "utf-8");
 			
 		} catch (UnsupportedEncodingException e) {

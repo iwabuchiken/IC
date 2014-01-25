@@ -145,10 +145,46 @@ public class MainActv extends ListActivity {
 
     private void do_debugs() {
     	
+    	_debug_D_25_v_3_0_1();
+    	
 //    	_debug_D_25_v_2_0();
     	
 //		debug_D_24_v_1_0();
 	}//private void do_debugs()
+
+	private void _debug_D_25_v_3_0_1() {
+		// TODO Auto-generated method stub
+		
+		if (CLList != null) {
+
+			for (CL cl : CLList) {
+				
+				// Log
+				Log.d("["
+						+ "MainActv.java : "
+						+ +Thread.currentThread().getStackTrace()[2]
+								.getLineNumber()
+						+ " : "
+						+ Thread.currentThread().getStackTrace()[2]
+								.getMethodName() + "]",
+				"cl.getYomi => " + cl.getYomi());
+				
+			}
+			
+		} else {//if (CLList)
+			
+			// Log
+			Log.d("["
+					+ "MainActv.java : "
+					+ +Thread.currentThread().getStackTrace()[2]
+							.getLineNumber() + " : "
+					+ Thread.currentThread().getStackTrace()[2].getMethodName()
+					+ "]", "CLList => null");
+			
+		}//if (CLList)
+		
+		
+	}//private void _debug_D_25_v_3_0_1()
 
 	private void _debug_D_25_v_2_0() {
 		
@@ -347,15 +383,26 @@ public class MainActv extends ListActivity {
 		CLList = new ArrayList<CL>();
 
 		for (int i = 0; i < c.getCount(); i++) {
+	
+			CL cl = new CL.Builder()
+						.setDb_id(c.getLong(0))
+						.setCreated_at(c.getLong(1))
+						.setModified_at(c.getLong(2))
+						.setName(c.getString(3))
+						.setGenre_id(c.getInt(4))
+						.setYomi(c.getString(5))
+						.build();
+						
+			CLList.add(cl);
 			
-			CLList.add(new CL(
-					c.getString(3),
-					c.getInt(4),
-					
-					c.getLong(0),
-					c.getLong(1),
-					c.getLong(2)
-					));
+//			CLList.add(new CL(
+//					c.getString(3),
+//					c.getInt(4),
+//					
+//					c.getLong(0),
+//					c.getLong(1),
+//					c.getLong(2)
+//					));
 			
 			c.moveToNext();
 			
@@ -391,6 +438,9 @@ public class MainActv extends ListActivity {
 		 * 6. Set adapter to view
 		 ********************************/
 		setListAdapter(mlAdp);
+		
+		//debug
+		do_debugs();
 		
 	}//private void show_list()
 
@@ -543,6 +593,19 @@ public class MainActv extends ListActivity {
 			+ +Thread.currentThread().getStackTrace()[2].getLineNumber()
 			+ "]",
 			"Prefs: Genre id => Reset to  " + CONS.Prefs.prefKey_genreId_intValue);
+		
+		/*********************************
+		 * Fields
+		 *********************************/
+		CLList = null;
+		
+		// Log
+		Log.d("[" + "MainActv.java : "
+				+ +Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ " : "
+				+ Thread.currentThread().getStackTrace()[2].getMethodName()
+				+ "]", "CLList => null");
+		
 		
 	}//protected void onDestroy()
 

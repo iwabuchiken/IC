@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import android.app.Activity;
+import android.util.Log;
 
 public class Methods_ic {
 
@@ -24,6 +25,90 @@ public class Methods_ic {
 			
 		});//Collections.sort()
 
+		return true;
+		
+	}//sort_CheckList_ItemName(Activity actv)
+	
+	public static boolean
+	sort_CheckList(Activity actv, CONS.Admin.SortTypes type) {
+		// TODO Auto-generated method stub
+		
+		CONS.Admin.sortType = type;
+		
+		Collections.sort(MainActv.CLList, new Comparator<CL>(){
+			
+			public int compare(CL cl1, CL cl2) {
+				// TODO Auto-generated method stub
+				
+				switch(CONS.Admin.sortType) {
+				
+				case SortBy_Yomi:
+					
+					if (cl1.getYomi() == null) {
+						
+						// Log
+						Log.d("["
+								+ "Methods_ic.java : "
+								+ +Thread.currentThread().getStackTrace()[2]
+										.getLineNumber()
+								+ " : "
+								+ Thread.currentThread().getStackTrace()[2]
+										.getMethodName() + "]",
+						"cl1.getYomi => null");
+						
+						return 1;
+						
+					} else	if (cl2.getYomi() == null) {
+						
+						// Log
+						Log.d("["
+								+ "Methods_ic.java : "
+								+ +Thread.currentThread().getStackTrace()[2]
+										.getLineNumber()
+										+ " : "
+										+ Thread.currentThread().getStackTrace()[2]
+												.getMethodName() + "]",
+								"cl2.getYomi => null");
+							
+						return 1;
+							
+					} else {
+						
+						// Log
+						Log.d("["
+								+ "Methods_ic.java : "
+								+ +Thread.currentThread().getStackTrace()[2]
+										.getLineNumber()
+								+ " : "
+								+ Thread.currentThread().getStackTrace()[2]
+										.getMethodName() + "]",
+						"cl1=" + cl1.getYomi()
+						+ "/"
+						+ "cl2=" + cl2.getYomi());
+						
+					}
+					
+					return (int)
+						(cl1.getYomi().compareToIgnoreCase(cl2.getYomi()));
+					
+				case SortBy_CreatedAt:
+					
+					return (int)
+							(cl1.getCreated_at() - cl2.getCreated_at());
+					
+				default:
+					
+					return (int)
+							(cl1.getYomi().compareToIgnoreCase(cl2.getYomi()));
+					
+				}//switch(CONS.Admin.sortType) {
+				
+//				return (int) (cl1.getName().compareToIgnoreCase(cl2.getName()));
+				
+			}//public int compare(CL cl1, CL cl2)
+			
+		});//Collections.sort()
+		
 		return true;
 		
 	}//sort_CheckList_ItemName(Activity actv)

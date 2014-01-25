@@ -104,4 +104,16 @@ public class CONS {
 		
 	}//public static class RetVal
 	
+	public static class Admin {
+		
+		public static SortTypes sortType;
+		
+		public static enum SortTypes {
+			SortBy_Yomi,
+			SortBy_CreatedAt,
+			
+		}
+		
+	}//public static class Admin
+	
 }//public class CONS

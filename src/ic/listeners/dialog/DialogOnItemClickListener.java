@@ -198,29 +198,44 @@ public class DialogOnItemClickListener implements OnItemClickListener {
 	private void
 	case_Dlg_sort_list_lv(String choice) {
 		
+		CONS.Admin.SortTypes type = null;
+		
 		if (choice.equals(actv.getString(
 				R.string.dlg_sort_list_item_name))) {
 			
 //			case_dlg_sort_list_ItemName();
 			
-			Methods_ic.sort_CheckList_ItemName(actv);
+			type = CONS.Admin.SortTypes.SortBy_Yomi;
 			
-			MainActv.mlAdp.notifyDataSetChanged();
+//			Methods_ic.sort_CheckList(actv, CONS.Admin.SortTypes.SortBy_Yomi);
+//			Methods_ic.sort_CheckList_ItemName(actv);
 			
-			dlg.dismiss();
+//			MainActv.mlAdp.notifyDataSetChanged();
+//			
+//			dlg.dismiss();
 			
 		} else if (choice.equals(actv.getString(
-				R.string.dlg_sort_list_genre_item_name))) {
+				R.string.dlg_sort_list_created_at))) {
 
+			type = CONS.Admin.SortTypes.SortBy_CreatedAt;
+			
+//			Methods_ic.sort_CheckList(
+//							actv,
+//							CONS.Admin.SortTypes.SortBy_CreatedAt);
+//			
+//			MainActv.mlAdp.notifyDataSetChanged();
+//			
+//			dlg.dismiss();
 
-		} else if (choice.equals(actv.getString(
-				R.string.dlg_sort_list_store))) {
+		}//if (choice.equals(actv.getString(
 
-			// debug
-			Toast.makeText(actv, "Store", Toast.LENGTH_LONG).show();
-
-		}
+		Methods_ic.sort_CheckList(actv, type);
+//		Methods_ic.sort_CheckList_ItemName(actv);
 		
+		MainActv.mlAdp.notifyDataSetChanged();
+		
+		dlg.dismiss();
+
 	}//case_Dlg_sort_list_lv(String choice)
 	
 
