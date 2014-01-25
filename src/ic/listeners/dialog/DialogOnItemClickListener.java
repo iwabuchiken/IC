@@ -198,6 +198,13 @@ public class DialogOnItemClickListener implements OnItemClickListener {
 	private void
 	case_Dlg_sort_list_lv(String choice) {
 		
+		// Log
+		Log.d("[" + "DialogOnItemClickListener.java : "
+				+ +Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ " : "
+				+ Thread.currentThread().getStackTrace()[2].getMethodName()
+				+ "]", "choice=" + choice);
+		
 		CONS.Admin.SortTypes type = null;
 		
 		if (choice.equals(actv.getString(

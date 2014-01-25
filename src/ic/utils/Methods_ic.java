@@ -98,8 +98,45 @@ public class Methods_ic {
 					
 				case SortBy_CreatedAt:
 					
-					return (int)
-							(cl1.getCreated_at() - cl2.getCreated_at());
+					// Log
+					String msg = "cl1 created_at="
+								+ String.valueOf(cl1.getCreated_at())
+								+ "/"
+								+ "cl2 created_at="
+								+ String.valueOf(cl2.getCreated_at())
+								+ "("
+								+ String.valueOf(cl1.getCreated_at() - cl2.getCreated_at())
+								+ ")";
+					
+					
+					Log.d("["
+							+ "Methods_ic.java : "
+							+ +Thread.currentThread().getStackTrace()[2]
+									.getLineNumber()
+							+ " : "
+							+ Thread.currentThread().getStackTrace()[2]
+									.getMethodName() + "]", msg);
+					
+					long diff = (cl1.getCreated_at() - cl2.getCreated_at());
+					
+					if (diff > 0) {
+						
+						return 1;
+						
+					} else if (diff < 0){//if (diff > 0)
+						
+						return -1;
+						
+					} else {//if (diff > 0)
+						
+						return 0;
+						
+					}//if (diff > 0)
+					
+					
+//					return (int)
+////							(cl2.getCreated_at() - cl1.getCreated_at());
+//							(cl1.getCreated_at() - cl2.getCreated_at());
 					
 				default:
 					

@@ -150,11 +150,8 @@ public class Methods_dlg {
 		* 2. Prep => List
 		----------------------------*/
 		String[] choices = {
-					actv.getString(R.string.dlg_sort_list_item_name)
-//					actv.getString(R.string.dlg_sort_list_item_name),
-//					actv.getString(R.string.dlg_sort_list_genre_item_name),
-//					actv.getString(R.string.dlg_sort_list_store_item_name),
-//					actv.getString(R.string.dlg_sort_list_store_genre_item_name),
+					actv.getString(R.string.dlg_sort_list_item_name),
+					actv.getString(R.string.dlg_sort_list_created_at)
 		};
 		
 		List<String> list = new ArrayList<String>();
