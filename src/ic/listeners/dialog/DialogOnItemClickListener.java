@@ -256,10 +256,10 @@ public class DialogOnItemClickListener implements OnItemClickListener {
 	
 			return;
 			
-		} else if (choice.equals(actv.getString(
-				R.string.dlg_db_admin_item_refatcor_db))) {
-		
-			return;
+//		} else if (choice.equals(actv.getString(
+//				R.string.dlg_db_admin_item_refatcor_db))) {
+//		
+//			return;
 			
 		} else if (choice.equals(actv.getString(
 				R.string.dlg_db_admin_item_restore_db))) {
@@ -276,7 +276,10 @@ public class DialogOnItemClickListener implements OnItemClickListener {
 		} else if (choice.equals(actv.getString(
 				R.string.dlg_db_admin_item_post_data))) {
 			
+		} else if (choice.equals(actv.getString(
+				R.string.dlg_db_admin_item_upload_db))) {
 			
+			return;
 			
 		}//if
 

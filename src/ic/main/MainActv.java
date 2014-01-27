@@ -146,7 +146,7 @@ public class MainActv extends ListActivity {
 
     private void do_debugs() {
     	
-    	_debug_D_25_v_3_0_1();
+//    	_debug_D_25_v_3_0_1();
     	
 //    	_debug_D_25_v_2_0();
     	

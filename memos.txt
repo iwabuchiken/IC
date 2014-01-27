@@ -61,3 +61,7 @@ adb uninstall ic.main
 [sqlite3]
 .explain on
 .tables
+SELECT name,yomi from check_lists WHERE yomi like '%アウラ%';
+
+[command line]
+pushd C:\Users\IwabuchiK\Desktop
