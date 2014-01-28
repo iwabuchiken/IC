@@ -22,6 +22,8 @@ public class CONS {
 		public static String dbName = "ic.db";
 //		public static String dbName = "ic";
 		
+		public static String dbFileExt = ".db";
+		
 		public static String dirName_ExternalStorage = "/mnt/sdcard-ext";
 
 //		public static String dirPath_db = "/data/data/shoppinglist.main/databases";
@@ -77,6 +79,12 @@ public class CONS {
 		
 		
 		/*********************************
+		 * Errors: General
+		 *********************************/
+		public static final int EXCEPTION_IO			= -50;
+		public static final int EXCEPTION_FileNotFound	= -51;
+		
+		/*********************************
 		 * Errors: DB
 		 *********************************/
 		public static final int DB_DOESNT_EXIST	= -10;
@@ -90,6 +98,13 @@ public class CONS {
 		public static final int EXCEPTION_SQL			= -14;
 		
 		public static final int GetWordList_Failed		= -15;
+		
+		/*********************************
+		 * Errors: FTP
+		 *********************************/
+		public static final int FTP_Exception_Socket	= -40;
+		
+		public static final int FTP_LOGIN_FAILED		= -41;
 		
 		/*********************************
 		 * Others: > 0, <= -90
@@ -114,6 +129,31 @@ public class CONS {
 			
 		}
 		
+		public static final int vib_Long	= 100;
+
+		public static final String appName	= "ic";
+		
+		public static final String separatorColon	= ":";
+		
 	}//public static class Admin
 	
+	public static class FTPData {
+		
+		public static final String serverName
+						= "ftp.benfranklin.chips.jp";
+		
+		public static final String userName
+						= "chips.jp-benfranklin";
+		
+		public static final String passWord
+						= "9x9jh4";
+		
+		public static final String dpath_Remote_Db
+						= "android_app_data/IC/db";
+		
+		class RetVal {
+			
+			
+		}
+	}
 }//public class CONS

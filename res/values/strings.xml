@@ -86,6 +86,9 @@
 	    <string name="dlg_db_admin_item_post_data">Post data</string>
 	    <string name="dlg_db_admin_item_upload_db">Upload db</string>
     
+	<!-- TaskFTP -->
+		<string name="task_ftp_upload_db">TaskFTP_UploadDb</string>
+		
 	<!-- dlg_sort_list.xml -->
 		<string name="dlg_sort_list_title">Sort by</string>
 		<string name="dlg_sort_list_item_name">Item name</string>

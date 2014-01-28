@@ -3761,5 +3761,54 @@ public class Methods {
 		
 	}//public static String convert_Kana2Gana(String s)
 
+	public static String
+	get_ElapsedTime(long t_Start, long t_End) {
+
+		long l_elapsedTime = t_End - t_Start;
+		
+		/*********************************
+		 * mill & seconds
+		 *********************************/
+		long mill = l_elapsedTime % 1000;
+		
+		long seconds = l_elapsedTime / 1000;
+		
+		/*********************************
+		 * min
+		 *********************************/
+		long min = seconds / 60;
+		
+		seconds = seconds % 60;
+		
+		/*********************************
+		 * hour
+		 *********************************/
+		long hour = min / 60;
+		
+		min = min % 60;
+		
+		/*********************************
+		 * Build: Label
+		 *********************************/
+		String label = StringUtils.join(
+							new String[]{
+								String.valueOf(hour),
+								String.valueOf(min),
+								String.valueOf(seconds)
+							},
+							
+							Methods.Lib.separatorColon);
+		
+		label += "." + String.valueOf(mill);
+		
+		return label;
+		
+	}//get_ElapsedTime(long t_Start, long t_End)
+
+	static class Lib {
+		
+		public static final String separatorColon	= ":";
+		
+	}
 }//public class Methods
 

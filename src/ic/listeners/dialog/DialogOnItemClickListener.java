@@ -2,6 +2,7 @@ package ic.listeners.dialog;
 
 import java.util.ArrayList;
 
+import tasks.TaskFTP;
 import tasks.Task_GetYomi;
 
 import ic.items.CL;
@@ -29,7 +30,7 @@ public class DialogOnItemClickListener implements OnItemClickListener {
 
 	//
 	Activity actv;
-	Dialog dlg;
+	Dialog dlg1;
 	Dialog dlg2;
 	
 	int item_position;
@@ -47,7 +48,7 @@ public class DialogOnItemClickListener implements OnItemClickListener {
 	public DialogOnItemClickListener(Activity actv, Dialog dlg) {
 		// 
 		this.actv = actv;
-		this.dlg = dlg;
+		this.dlg1 = dlg;
 		
 		vib = (Vibrator) actv.getSystemService(Context.VIBRATOR_SERVICE);
 		
@@ -56,7 +57,7 @@ public class DialogOnItemClickListener implements OnItemClickListener {
 	public DialogOnItemClickListener(Activity actv, Dialog dlg, int item_position) {
 		// 
 		this.actv = actv;
-		this.dlg = dlg;
+		this.dlg1 = dlg;
 		
 		this.item_position = item_position;
 		
@@ -73,7 +74,7 @@ public class DialogOnItemClickListener implements OnItemClickListener {
 		vib = (Vibrator) actv.getSystemService(Context.VIBRATOR_SERVICE);
 
 		this.actv = actv;
-		this.dlg = dlg;
+		this.dlg1 = dlg;
 		
 		this.item_position = item_position;
 		
@@ -90,7 +91,7 @@ public class DialogOnItemClickListener implements OnItemClickListener {
 		vib = (Vibrator) actv.getSystemService(Context.VIBRATOR_SERVICE);
 		
 		this.actv = actv;
-		this.dlg = dlg;
+		this.dlg1 = dlg;
 		
 		this.item_position = item_position;
 		
@@ -148,12 +149,12 @@ public class DialogOnItemClickListener implements OnItemClickListener {
 			 *********************************/
 			if (item.equals(actv.getString(R.string.dlg_checkactv_long_click_lv_edit))) {
 
-				Methods.dlg_checkactv_long_click_lv_edit_item_text(actv, dlg, item_position);
+				Methods.dlg_checkactv_long_click_lv_edit_item_text(actv, dlg1, item_position);
 				
 			} else if (item.equals(actv.getString(
 								R.string.dlg_checkactv_long_click_lv_change_serial_num))) {
 			
-				Methods.dlg_checkactv_long_click_lv_change_serial_num(actv, dlg, item_position);
+				Methods.dlg_checkactv_long_click_lv_change_serial_num(actv, dlg1, item_position);
 				
 			}//if (item.equals(actv.getString(R.string.dlg_checkactv_long_click_lv_edit)))
 			
@@ -241,7 +242,7 @@ public class DialogOnItemClickListener implements OnItemClickListener {
 		
 		MainActv.mlAdp.notifyDataSetChanged();
 		
-		dlg.dismiss();
+		dlg1.dismiss();
 
 	}//case_Dlg_sort_list_lv(String choice)
 	
@@ -279,13 +280,26 @@ public class DialogOnItemClickListener implements OnItemClickListener {
 		} else if (choice.equals(actv.getString(
 				R.string.dlg_db_admin_item_upload_db))) {
 			
-			return;
+			dlg_db_admin_item_upload_db();
 			
 		}//if
 
 		
 		
 	}//case_dlg_db_admin_lv(AdapterView<?> parent, int position)
+
+	private void dlg_db_admin_item_upload_db() {
+
+		TaskFTP task = new TaskFTP(actv);
+
+		task.execute(actv.getString(R.string.task_ftp_upload_db));
+		
+		dlg1.dismiss();
+		
+//		// debug
+//		Toast.makeText(actv, "dlg_db_admin_item_upload_db", Toast.LENGTH_LONG).show();
+		
+	}//private void dlg_db_admin_item_upload_db()
 
 	private void
 	case_dlg_main_actv_long_click_lv
@@ -296,12 +310,12 @@ public class DialogOnItemClickListener implements OnItemClickListener {
 		if (item.equals(actv.getString(
 				R.string.dlg_main_actv_long_click_lv_clear_item_status))) {
 			
-			Methods.clear_items_all_to_zero(actv, check_list_id, dlg);
+			Methods.clear_items_all_to_zero(actv, check_list_id, dlg1);
 			
 		} else if (item.equals(actv.getString(
 				R.string.dlg_main_actv_long_click_lv_delete_list))) {
 
-			Methods.delete_list(actv, check_list_id, dlg, check_list);
+			Methods.delete_list(actv, check_list_id, dlg1, check_list);
 			
 		} else {//if (item == condition)
 			
@@ -470,7 +484,7 @@ public class DialogOnItemClickListener implements OnItemClickListener {
 		/*********************************
 		 * 5. Dismiss dlg
 		 *********************************/
-		dlg.dismiss();
+		dlg1.dismiss();
 		
 	}//private void dlg_filter_by_genre_lv()
 
@@ -480,11 +494,11 @@ public class DialogOnItemClickListener implements OnItemClickListener {
 //			// debug
 //			Toast.makeText(actv, item + "=> Under construction", 2000).show();
 			
-			Methods.dlg_register_list(actv, dlg);
+			Methods.dlg_register_list(actv, dlg1);
 			
 		} else if (item.equals(actv.getString(R.string.main_menu_register_genre))) {
 			
-			Methods.dlg_register_genre(actv, dlg);
+			Methods.dlg_register_genre(actv, dlg1);
 				
 		} else {//if (item.equals(actv.getString(R.string.main_menu_register_list)))
 	
@@ -555,7 +569,7 @@ public class DialogOnItemClickListener implements OnItemClickListener {
 			/*********************************
 			 * If successful, dismiss the dialog
 			 *********************************/
-			dlg.dismiss();
+			dlg1.dismiss();
 		
 		}//if (res == CONS.DB_DOESNT_EXIST)
 		
