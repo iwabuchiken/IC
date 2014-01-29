@@ -26,6 +26,8 @@
     	<string name="main_menu_db">DB</string>
     	<string name="main_menu_filter_by_genre">Filter</string>
     	<string name="main_menu_sort_list">Sort list</string>
+    	<string name="main_menu_see_log">See log</string>
+    	<string name="main_menu_settings">Settings</string>
     
     <!-- dlg_register_genre.xml -->
     	<string name="dlg_register_genre_title">ジャンル登録</string>

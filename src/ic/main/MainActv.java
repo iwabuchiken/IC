@@ -678,10 +678,30 @@ public class MainActv extends ListActivity {
 			
 			break;// case R.id.main_opt_menu_filter_by_genre
 			
+		case R.id.main_opt_menu_see_log://---------------
+			
+			_case_main_opt_menu_see_log();
+			
+			break;// case R.id.main_opt_menu_filter_by_genre
+			
 		}//switch (item.getItemId())
 
 		return super.onOptionsItemSelected(item);
 	}//public boolean onOptionsItemSelected(MenuItem item)
+
+	private void
+	_case_main_opt_menu_see_log() {
+		// TODO Auto-generated method stub
+		Intent i = new Intent();
+		
+		i.setClass(this, LogActv.class);
+		
+		/*********************************
+		 * 3. Start
+		 *********************************/
+		startActivity(i);
+
+	}//_case_main_opt_menu_see_log()
 
 	@Override
 	protected void onPause() {

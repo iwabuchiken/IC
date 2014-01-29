@@ -16,6 +16,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.SocketException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -769,5 +770,44 @@ public class Methods_ic {
 					 * Write message
 					 *********************************/
 	}//write_Log
+
+	/*********************************
+	 * @return null => Log file ~~> No entry<br>
+	 * 				List<String>
+	 *********************************/
+	public static List<String>
+	get_LogFileList(Activity actv) {
+		
+		String dpath_Log = StringUtils.join(
+				new String[]{
+						CONS.DBAdmin.AdminLog.dName_ExternalStorage,
+						CONS.DBAdmin.AdminLog.folName_Data,
+						CONS.DBAdmin.AdminLog.folName_Logs
+				},
+				File.separator);
+
+		File dir_Log = new File(dpath_Log);
+		
+		String[] fileNames = dir_Log.list();
+		
+		if (fileNames == null || fileNames.length < 1) {
+			
+			// Log
+			String log_msg = "log file => No entry";
+
+			Log.d("["
+					+ "Methods_ic.java : "
+					+ +Thread.currentThread().getStackTrace()[2]
+							.getLineNumber() + " : "
+					+ Thread.currentThread().getStackTrace()[2].getMethodName()
+					+ "]", log_msg);
+			
+			return null;
+		}
+		
+		//REF asList http://stackoverflow.com/questions/157944/how-to-create-arraylist-arraylistt-from-array-t answered Oct 1 '08 at 14:39
+		return new ArrayList<String>(Arrays.asList(fileNames));
+		
+	}//get_LogFileList(Activity actv)
 	
 }//public class Methods_ic

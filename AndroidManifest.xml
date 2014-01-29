@@ -21,7 +21,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CheckActv" android:screenOrientation="portrait"></activity>
+        
+        <activity
+            android:name=".CheckActv"
+            android:screenOrientation="portrait">
+           
+        </activity>
+        
+        <activity
+            android:name=".LogActv"
+            android:screenOrientation="portrait">
+           
+        </activity>
+        
+        <activity
+            android:name=".ShowLogActv"
+            android:screenOrientation="portrait">
+           
+        </activity>
+        
     </application>
 
 </manifest>

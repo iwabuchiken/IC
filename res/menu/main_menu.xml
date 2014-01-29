@@ -28,4 +28,18 @@
 	    
 	</item>
 		
+	<item 
+	    android:id="@+id/main_opt_menu_see_log" 
+	    android:title="@string/main_menu_see_log" 
+	    android:icon="@android:drawable/ic_dialog_info">
+	    
+	</item>
+		
+	<item 
+	    android:id="@+id/main_opt_menu_settings" 
+	    android:title="@string/main_menu_settings" 
+	    android:icon="@android:drawable/ic_menu_preferences">
+	    
+	</item>
+		
 </menu>
