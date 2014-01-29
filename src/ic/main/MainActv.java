@@ -146,12 +146,65 @@ public class MainActv extends ListActivity {
 
     private void do_debugs() {
     	
+//    	_debug_SEG_5_v_0_1();
+    	
 //    	_debug_D_25_v_3_0_1();
     	
 //    	_debug_D_25_v_2_0();
     	
 //		debug_D_24_v_1_0();
 	}//private void do_debugs()
+
+	private void _debug_SEG_5_v_0_1() {
+
+		//Log
+		String log_msg = "I have included comments to help you further " +
+					"analyze my points as to where I want the " +
+					"operations to be done/variables to be used.";
+		
+		boolean res = Methods_ic.write_Log(
+				this,
+				"MainActv.java", String.valueOf(Thread
+				.currentThread().getStackTrace()[2].getLineNumber()), Thread
+				.currentThread().getStackTrace()[2].getMethodName(), log_msg);
+		
+		if (res == true) {
+			
+			// Log
+			log_msg = "Log written";
+
+			Log.d("["
+					+ "MainActv.java : "
+					+ +Thread.currentThread().getStackTrace()[2]
+							.getLineNumber() + " : "
+					+ Thread.currentThread().getStackTrace()[2].getMethodName()
+					+ "]", log_msg);
+			
+		} else {//if (res == true)
+			
+			// Log
+			
+
+			Log.d("["
+					+ "MainActv.java : "
+					+ +Thread.currentThread().getStackTrace()[2]
+							.getLineNumber() + " : "
+					+ Thread.currentThread().getStackTrace()[2].getMethodName()
+					+ "]", log_msg);
+			
+		}//if (res == true)
+		
+		
+		// Log
+		log_msg = "";
+
+		Log.d("[" + "MainActv.java : "
+				+ +Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ " : "
+				+ Thread.currentThread().getStackTrace()[2].getMethodName()
+				+ "]", log_msg);
+		
+	}//private void _debug_SEG_5_v_0_1()
 
 	private void _debug_D_25_v_3_0_1() {
 		// TODO Auto-generated method stub

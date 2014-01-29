@@ -2,11 +2,18 @@ package ic.utils;
 
 import ic.items.CL;
 import ic.main.MainActv;
+import ic.utils.CONS.DBAdmin.AdminLog;
 
+import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,6 +25,7 @@ import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 
 import android.app.Activity;
+import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 
@@ -472,5 +480,294 @@ public class Methods_ic {
 		}
 
 	}//uploadDbFile_Disconnect(FTPClient fp)
+
+	public static boolean
+	write_Log
+	(Activity actv,
+			String fname, String lineNum,
+			String methodName,
+			String msg) {
+		
+		/*********************************
+		 * Log directory exists?
+		 *********************************/
+		String fPath_Log = StringUtils.join(
+				
+					new String[]{
+							
+						CONS.DBAdmin.AdminLog.dName_ExternalStorage,
+						CONS.DBAdmin.AdminLog.folName_Data,
+						CONS.DBAdmin.AdminLog.folName_Logs
+					},
+					
+					File.separator);
+		
+		File f = new File(fPath_Log);
+		
+		if (!f.exists()) {
+			
+			//REF mkdirs() http://stackoverflow.com/questions/3634853/how-to-create-a-directory-in-java answered Sep 3 '10 at 10:34
+			boolean res = f.mkdirs();
+			
+			if (res == false) {
+				
+				// Log
+				String log_msg = "Can't create folder => " + f.getAbsolutePath();
+				
+				Log.d("["
+						+ "Methods_ic.java : "
+						+ +Thread.currentThread().getStackTrace()[2]
+								.getLineNumber()
+						+ " : "
+						+ Thread.currentThread().getStackTrace()[2]
+								.getMethodName() + "]", log_msg);
+				
+				return false;
+				
+			} else {
+				
+				// Log
+				String log_msg = "Folder created => " + f.getAbsolutePath();
+				
+				Log.d("["
+						+ "Methods_ic.java : "
+						+ +Thread.currentThread().getStackTrace()[2]
+								.getLineNumber()
+//						+ " : "
+						+ Thread.currentThread().getStackTrace()[2]
+								.getMethodName() + "]", log_msg);
+				
+			}//if (res == false)
+			
+		}//if (!f.exists())
+					/*********************************
+					 * Log directory exists?
+					 *********************************/
+		
+		/*********************************
+		 * File exists?
+		 *********************************/
+		String fName_Log =
+				CONS.DBAdmin.AdminLog.fname_LogTrunk
+				+ CONS.DBAdmin.AdminLog.extLog;
+		
+		fPath_Log = StringUtils.join(
+				
+				new String[]{fPath_Log, fName_Log},
+				File.separator);
+		
+		f = new File(fPath_Log);
+		
+		if (!f.exists()) {
+			
+			//REF mkdirs() http://stackoverflow.com/questions/3634853/how-to-create-a-directory-in-java answered Sep 3 '10 at 10:34
+			boolean res = false;
+			
+			try {
+				
+				res = f.createNewFile();
+				
+			} catch (IOException e) {
+
+				// Log
+				String log_msg = e.toString();
+
+				Log.d("["
+						+ "Methods_ic.java : "
+						+ +Thread.currentThread().getStackTrace()[2]
+								.getLineNumber()
+						+ " : "
+						+ Thread.currentThread().getStackTrace()[2]
+								.getMethodName() + "]", log_msg);
+				
+				return false;
+
+			}//try
+			
+			if (res == false) {
+				
+				// Log
+				String log_msg = "Can't create file => " + f.getAbsolutePath();
+				
+				Log.d("["
+						+ "Methods_ic.java : "
+						+ +Thread.currentThread().getStackTrace()[2]
+								.getLineNumber()
+						+ " : "
+						+ Thread.currentThread().getStackTrace()[2]
+								.getMethodName() + "]", log_msg);
+				
+				return false;
+				
+			} else {//if (res == false)
+				
+				// Log
+				String log_msg = "File created => " + f.getAbsolutePath();
+				
+				Log.d("["
+						+ "Methods_ic.java : "
+						+ +Thread.currentThread().getStackTrace()[2]
+								.getLineNumber()
+//						+ " : "
+						+ Thread.currentThread().getStackTrace()[2]
+								.getMethodName() + "]", log_msg);
+				
+			}//if (res == false)
+			
+		}//if (!f.exists())
+					/*********************************
+					 * File exists?
+					 *********************************/
+		
+		/*********************************
+		 * File full?
+		 *********************************/
+		long fSize = f.length();
+		
+		if (fSize > CONS.DBAdmin.AdminLog.logFile_Limit) {
+			
+			// Change the name of the current log file
+			String orig = f.getAbsolutePath();
+			
+			String[] arrays = orig.split(".");
+			
+			String new_trunk =
+					arrays[0]
+					+ "_"
+					+ Methods.getTimeLabel(Methods.getMillSeconds_now());
+			
+			String new_name = new_trunk + CONS.DBAdmin.AdminLog.extLog;
+			
+			//REF rename http://stackoverflow.com/questions/1158777/renaming-a-file-using-java answered Jul 21 '09 at 12:09
+			boolean res = f.renameTo(new File(new_name));
+			
+			if (res == false) {
+				
+				// Log
+				String log_msg = "Renaming log file => Failed ("
+								+ new_name
+								+ ")";
+
+				Log.d("["
+						+ "Methods_ic.java : "
+						+ Thread.currentThread().getStackTrace()[2]
+								.getLineNumber()
+						+ " : "
+						+ Thread.currentThread().getStackTrace()[2]
+								.getMethodName() + "]", log_msg);
+				
+			} else {
+				
+				// Log
+				String log_msg = "Log file => Renamed ("
+								+ new_name
+								+ ")";
+
+				Log.d("["
+						+ "Methods_ic.java : "
+						+ +Thread.currentThread().getStackTrace()[2]
+								.getLineNumber()
+						+ " : "
+						+ Thread.currentThread().getStackTrace()[2]
+								.getMethodName() + "]", log_msg);
+			}//if (res == false)
+			
+			// Then, create a new log file
+			File logFile = new File(orig);
+			
+			//REF touch http://stackoverflow.com/questions/1406473/simulate-touch-command-with-java
+			res = logFile.setLastModified(Methods.getMillSeconds_now());
+			
+			if (res == false) {
+				
+				// Log
+				String log_msg = "Create a new log file => Failed ("
+								+ logFile.getAbsolutePath()
+								+ ")";
+
+				Log.d("["
+						+ "Methods_ic.java : "
+						+ +Thread.currentThread().getStackTrace()[2]
+								.getLineNumber()
+						+ " : "
+						+ Thread.currentThread().getStackTrace()[2]
+								.getMethodName() + "]", log_msg);
+				
+			}//if (res == false)
+			
+		}//if (fSize > CONS.DBAdmin.AdminLog.logFile_Limit)
+						/*********************************
+						 * File full?
+						 *********************************/
+
+		/*********************************
+		 * Write message
+		 *********************************/
+		//REF Get context http://stackoverflow.com/questions/4015773/the-method-openfileoutput-is-undefined answered Jan 4 at 12:30
+		try {
+//			OutputStreamWriter osw =
+//					new OutputStreamWriter(
+//							actv.getApplicationContext().openFileOutput(
+//									f.getAbsolutePath(),
+//									Context.MODE_PRIVATE));
+			
+//			FileOutputStream osw =
+//					new FileOutputStream(f);
+			
+			BufferedWriter bf = new BufferedWriter(new FileWriter(f, true));
+			
+			String msg_full = "["
+								+ fname
+								+ ":"
+								+ lineNum
+								+ ":"
+								+ methodName
+								+ "]";
+					
+			msg_full += " " + msg;
+			
+			bf.write(msg_full);
+			
+			bf.write("\n");
+			
+//			osw.write(msg);
+			
+			bf.close();
+			
+			return true;
+			
+		} catch (FileNotFoundException e) {
+			
+			// Log
+			String log_msg = e.toString();
+
+			Log.d("["
+					+ "Methods_ic.java : "
+					+ +Thread.currentThread().getStackTrace()[2]
+							.getLineNumber() + " : "
+					+ Thread.currentThread().getStackTrace()[2].getMethodName()
+					+ "]", log_msg);
+			
+			return false;
+			
+		} catch (IOException e) {
+			
+			// Log
+			String log_msg = e.toString();
+
+			Log.d("["
+					+ "Methods_ic.java : "
+					+ +Thread.currentThread().getStackTrace()[2]
+							.getLineNumber() + " : "
+					+ Thread.currentThread().getStackTrace()[2].getMethodName()
+					+ "]", log_msg);
+
+			return false;
+			
+		}//try
+					/*********************************
+					 * Write message
+					 *********************************/
+	}//write_Log
 	
 }//public class Methods_ic

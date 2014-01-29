@@ -19,6 +19,25 @@ public class CONS {
 	
 	public static class DBAdmin {
 
+		static class AdminLog {
+			
+			public static String dName_ExternalStorage =
+							"/mnt/sdcard-ext";
+			
+			public static String folName_Data =
+					"IC_DATA";
+			
+			public static String folName_Logs =
+					"IC_LOGS";
+			
+			public static String fname_LogTrunk = "log";
+			
+			public static String extLog = ".log";
+			
+			public static long logFile_Limit = 6000;
+			
+		}//static class Logs
+		
 		public static String dbName = "ic.db";
 //		public static String dbName = "ic";
 		
