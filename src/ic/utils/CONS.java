@@ -19,7 +19,7 @@ public class CONS {
 	
 	public static class DBAdmin {
 
-		static class AdminLog {
+		public static class AdminLog {
 			
 			public static String dName_ExternalStorage =
 							"/mnt/sdcard-ext";
@@ -30,9 +30,12 @@ public class CONS {
 			public static String folName_Logs =
 					"IC_LOGS";
 			
-			public static String fname_LogTrunk = "log";
+			public static String fname_Log_Trunk = "log";
 			
-			public static String extLog = ".log";
+			public static String ext_Log = ".log";
+			
+			public static String fname_Log_Full = "log.log";
+			
 			
 			public static long logFile_Limit = 6000;
 			
@@ -153,6 +156,12 @@ public class CONS {
 		public static final String appName	= "ic";
 		
 		public static final String separatorColon	= ":";
+		
+		public static enum IntentKeys {
+			
+			LogFilePath,
+			
+		}
 		
 	}//public static class Admin
 	

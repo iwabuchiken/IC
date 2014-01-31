@@ -5,11 +5,13 @@ import ic.main.MainActv;
 import ic.utils.CONS.DBAdmin.AdminLog;
 
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -29,6 +31,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
+import android.widget.Toast;
 
 public class Methods_ic {
 
@@ -549,8 +552,8 @@ public class Methods_ic {
 		 * File exists?
 		 *********************************/
 		String fName_Log =
-				CONS.DBAdmin.AdminLog.fname_LogTrunk
-				+ CONS.DBAdmin.AdminLog.extLog;
+				CONS.DBAdmin.AdminLog.fname_Log_Trunk
+				+ CONS.DBAdmin.AdminLog.ext_Log;
 		
 		fPath_Log = StringUtils.join(
 				
@@ -637,7 +640,7 @@ public class Methods_ic {
 					+ "_"
 					+ Methods.getTimeLabel(Methods.getMillSeconds_now());
 			
-			String new_name = new_trunk + CONS.DBAdmin.AdminLog.extLog;
+			String new_name = new_trunk + CONS.DBAdmin.AdminLog.ext_Log;
 			
 			//REF rename http://stackoverflow.com/questions/1158777/renaming-a-file-using-java answered Jul 21 '09 at 12:09
 			boolean res = f.renameTo(new File(new_name));
@@ -809,5 +812,93 @@ public class Methods_ic {
 		return new ArrayList<String>(Arrays.asList(fileNames));
 		
 	}//get_LogFileList(Activity actv)
+
+	public static String get_Dirpath_Log() {
+		
+		return StringUtils.join(
+				new String[]{
+						CONS.DBAdmin.AdminLog.dName_ExternalStorage,
+						CONS.DBAdmin.AdminLog.folName_Data,
+						CONS.DBAdmin.AdminLog.folName_Logs
+				},
+				File.separator);
+		
+	}
+
+	/*********************************
+	 * @return null => 1. File not found
+	 *********************************/
+	public static List<String>
+	read_LogFile(Activity actv, String fpath_Log) {
+		// TODO Auto-generated method stub
+		
+		// Build a ListArray of file content
+		List<String> logLines = new ArrayList<String>();
+		
+		/// Open a buffer
+		File f = new File(fpath_Log);
+		
+		BufferedReader bf = null;
+		
+		try {
+			
+			bf = new BufferedReader(new FileReader(f));
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			// Log
+			String log_msg = e.toString();
+
+			Log.d("["
+					+ "Methods_ic.java : "
+					+ +Thread.currentThread().getStackTrace()[2]
+							.getLineNumber() + " : "
+					+ Thread.currentThread().getStackTrace()[2].getMethodName()
+					+ "]", log_msg);
+			
+//			// debug
+//			String toa_msg = "Log file => Not found";
+//			Toast.makeText(actv, toa_msg, Toast.LENGTH_LONG).show();
+			
+			e.printStackTrace();
+			
+			return null;
+			
+		}
+		
+		/// Read each line
+		String line;
+		
+		try {
+			
+			line = bf.readLine();
+			
+			while (line != null) {
+				
+				logLines.add(line);
+				
+				line = bf.readLine();
+				
+			}
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			// Log
+			String log_msg = e.toString();
+
+			Log.d("["
+					+ "Methods_ic.java : "
+					+ +Thread.currentThread().getStackTrace()[2]
+							.getLineNumber() + " : "
+					+ Thread.currentThread().getStackTrace()[2].getMethodName()
+					+ "]", log_msg);
+			
+			e.printStackTrace();
+			
+		}//try
+
+		return logLines;
+		
+	}//read_LogFile(String fpath_Log)
 	
 }//public class Methods_ic
