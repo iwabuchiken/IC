@@ -11,6 +11,7 @@ import java.util.List;
 
 import ic.utils.CONS;
 import ic.utils.Methods_ic;
+import adapters.LogAdapter;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -107,16 +108,18 @@ public class ShowLogActv  extends ListActivity {
 				+ "]", log_msg);
 		
 		// Build: Array adapter
-		ArrayAdapter adapter = new ArrayAdapter<String>(
+		LogAdapter adapter = new LogAdapter(
+//				ArrayAdapter adapter = new ArrayAdapter<String>(
 						this,
-						android.R.layout.simple_list_item_1,
+						R.layout.list_row_log_line,
+//						android.R.layout.simple_list_item_1,
 						logLines
 						);
 		
 		// Set: adapter to the list
 		this.setListAdapter(adapter);
 		
-	}
+	}//protected void onStart()
 	
 
 	@Override

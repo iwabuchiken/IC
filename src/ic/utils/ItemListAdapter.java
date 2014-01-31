@@ -80,10 +80,10 @@ public class ItemListAdapter extends ArrayAdapter<Item> {
 				(TextView) v.findViewById(R.id.list_row_item_list_tv_text);
 		
 		TextView tv_status =
-				(TextView) v.findViewById(R.id.list_row_item_list_tv_status);
+				(TextView) v.findViewById(R.id.list_row_log_line_tv_meta);
 		
 		TextView tv_serial_num = 
-				(TextView) v.findViewById(R.id.list_row_item_list_tv_serial_num);
+				(TextView) v.findViewById(R.id.list_row_log_line_tv_content);
 
 		/*----------------------------
 		 * 3. Get item

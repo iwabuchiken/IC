@@ -6,3 +6,4 @@
 *.*.class
 bin/*
 gen/*
+Test.java
