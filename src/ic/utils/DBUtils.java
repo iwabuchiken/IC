@@ -1143,38 +1143,6 @@ public class DBUtils extends SQLiteOpenHelper{
 	public static boolean
 	delete_list(Activity actv, long check_list_id, CL check_list) {
 		
-//		//debug
-//		List<String> tableNames = Methods.get_tableNames(actv);
-//		
-//		if (tableNames == null) {
-//			
-//			// Log
-//			Log.d("["
-//					+ "DBUtils.java : "
-//					+ +Thread.currentThread().getStackTrace()[2]
-//							.getLineNumber() + " : "
-//					+ Thread.currentThread().getStackTrace()[2].getMethodName()
-//					+ "]", "Get table names => Returned null");
-//			
-//			return false;
-//			
-//		}//if (tableNames == null)
-//		
-//		for (String name : tableNames) {
-//			
-//			// Log
-//			Log.d("["
-//					+ "DBUtils.java : "
-//					+ +Thread.currentThread().getStackTrace()[2]
-//							.getLineNumber() + " : "
-//					+ Thread.currentThread().getStackTrace()[2].getMethodName()
-//					+ "]", "table name=" + name);
-//			
-//		}
-//		
-//		return true;
-		
-		
 		/*********************************
 		 * Setup: Db
 		 *********************************/

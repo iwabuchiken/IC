@@ -65,3 +65,7 @@ SELECT name,yomi from check_lists WHERE yomi like '%アウラ%';
 
 [command line]
 pushd C:\Users\IwabuchiK\Desktop
+
+=====================================
+[Resources]
+memo_icon.png	http://www.iconarchive.com/show/radium-neue-icons-by-gakuseisean/Memo-icon.html

@@ -6,6 +6,7 @@ import tasks.TaskFTP;
 import tasks.Task_GetYomi;
 
 import ic.items.CL;
+import ic.items.Item;
 import ic.main.MainActv;
 import ic.main.R;
 import ic.utils.CONS;
@@ -38,6 +39,8 @@ public class DialogOnItemClickListener implements OnItemClickListener {
 	long check_list_id;
 	
 	CL check_list;
+	
+	Item item;
 	
 	//
 	Vibrator vib;
@@ -101,6 +104,20 @@ public class DialogOnItemClickListener implements OnItemClickListener {
 
 	}
 
+	public DialogOnItemClickListener
+	(Activity actv,
+			Dialog dlg1,
+			int item_position, Item item) {
+		// TODO Auto-generated constructor stub
+		this.actv	= actv;
+		this.dlg1	= dlg1;
+		
+		this.item_position = item_position;
+		
+		this.item	= item;
+
+	}
+
 	public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 		/*----------------------------
 		 * Steps
@@ -147,18 +164,27 @@ public class DialogOnItemClickListener implements OnItemClickListener {
 			/*********************************
 			 * 2. Switching
 			 *********************************/
-			if (item.equals(actv.getString(R.string.dlg_checkactv_long_click_lv_edit))) {
+			if (item.equals(actv.getString(
+					R.string.dlg_checkactv_long_click_lv_edit))) {
 
-				Methods.dlg_checkactv_long_click_lv_edit_item_text(actv, dlg1, item_position);
+				Methods.dlg_checkactv_long_click_lv_edit_item_text(
+								actv, dlg1, item_position);
 				
 			} else if (item.equals(actv.getString(
-								R.string.dlg_checkactv_long_click_lv_change_serial_num))) {
+					R.string.dlg_checkactv_long_click_lv_change_serial_num))) {
 			
-				Methods.dlg_checkactv_long_click_lv_change_serial_num(actv, dlg1, item_position);
+				Methods.dlg_checkactv_long_click_lv_change_serial_num(
+								actv, dlg1, item_position);
+				
+			} else if (item.equals(actv.getString(
+					R.string.dlg_checkactv_long_click_lv_delete_item))) {
+				
+				Item item_CheckActv = (Item) parent.getItemAtPosition(position);
+				
+				Methods.dlg_checkactv_long_click_lv_delete_item(
+						actv, dlg1, item_position, item_CheckActv);
 				
 			}//if (item.equals(actv.getString(R.string.dlg_checkactv_long_click_lv_edit)))
-			
-			
 			
 			break;// case dlg_checkactv_long_click_lv
 			

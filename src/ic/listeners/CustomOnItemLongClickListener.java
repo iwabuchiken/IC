@@ -94,7 +94,8 @@ public class CustomOnItemLongClickListener implements OnItemLongClickListener {
 			
 			Item item = (Item) parent.getItemAtPosition(position);
 			
-			Methods.dlg_checkactv_long_click(actv, position);
+			Methods.dlg_checkactv_long_click(actv, position, item);
+//			Methods.dlg_checkactv_long_click(actv, position);
 			
 			// Log
 			Log.d("Methods.java" + "["

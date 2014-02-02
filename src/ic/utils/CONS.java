@@ -75,6 +75,12 @@ public class CONS {
 		 *********************************/
 		public static final String tname_CheckLists = "check_lists";
 		
+		public static enum tableNames {
+			
+			items,
+			
+		}
+		
 		/*********************************
 		 * SQLite
 		 *********************************/
@@ -163,6 +169,11 @@ public class CONS {
 			
 		}
 		
+		public static class Miscs {
+			
+			public static final int DialogTitleLength = 10;
+			
+		}
 	}//public static class Admin
 	
 	public static class FTPData {

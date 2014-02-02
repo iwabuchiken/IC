@@ -941,6 +941,51 @@ public class Methods {
 		return dlg;
 	
 	}//public static Dialog dlg_template_okCancel()
+	
+	public static Dialog
+	dlg_template_cancel
+	(Activity actv, int layoutId, String titleStringId,
+			int cancelButtonId, DialogButtonTags cancelTag) {
+		/*----------------------------
+		 * Steps
+		 * 1. Set up
+		 * 2. Add listeners => OnTouch
+		 * 3. Add listeners => OnClick
+		----------------------------*/
+		
+		// 
+		Dialog dlg = new Dialog(actv);
+		
+		//
+		dlg.setContentView(layoutId);
+		
+		// Title
+		dlg.setTitle(titleStringId);
+		
+		/*----------------------------
+		 * 2. Add listeners => OnTouch
+		----------------------------*/
+		//
+		Button btn_cancel = (Button) dlg.findViewById(cancelButtonId);
+		
+		//
+		btn_cancel.setTag(cancelTag);
+		
+		//
+		btn_cancel.setOnTouchListener(new DialogButtonOnTouchListener(actv, dlg));
+		
+		/*----------------------------
+		 * 3. Add listeners => OnClick
+		----------------------------*/
+		//
+		btn_cancel.setOnClickListener(new DialogButtonOnClickListener(actv, dlg));
+		
+		//
+		//dlg.show();
+		
+		return dlg;
+		
+	}//dlg_template_cancel
 
 	public static Dialog dlg_template_okCancel(Activity actv, int layoutId, int titleStringId,
 			int okButtonId, int cancelButtonId, DialogButtonTags okTag, DialogButtonTags cancelTag) {
@@ -2114,6 +2159,7 @@ public class Methods {
 		CheckActv.ilAdp = new ItemListAdapter(
 				actv,
 				R.layout.list_row_item_list,
+//				CheckActv.iList
 				CheckActv.iList
 				);
 		
@@ -2162,14 +2208,18 @@ public class Methods {
 	}//public static void change_item_status(Activity actv, Item item)s
 
 	
-	public static void dlg_checkactv_long_click(Activity actv, int item_position) {
+	public static void
+	dlg_checkactv_long_click
+	(Activity actv, int item_position) {
 		/*********************************
 		 * 1. Dialog
 		 * 2. List view
 		 * 3. Show dialog
 		 *********************************/
 		Dialog dlg = dlg_template_cancel(actv, 
-				R.layout.dlg_checkactv_long_click, R.string.dlg_checkactv_long_click_title,
+				R.layout.dlg_checkactv_long_click,
+				R.string.dlg_checkactv_long_click_title,
+				
 				R.id.dlg_checkactv_long_click_bt_cancel,
 				Methods.DialogButtonTags.dlg_generic_dismiss);
 
@@ -2191,8 +2241,11 @@ public class Methods {
 			----------------------------*/
 		List<String> long_click_items = new ArrayList<String>();
 		
-		long_click_items.add(actv.getString(R.string.dlg_checkactv_long_click_lv_edit));
-		long_click_items.add(actv.getString(R.string.dlg_checkactv_long_click_lv_change_serial_num));
+		long_click_items.add(actv.getString(
+				R.string.dlg_checkactv_long_click_lv_edit));
+		
+		long_click_items.add(actv.getString(
+				R.string.dlg_checkactv_long_click_lv_change_serial_num));
 		
 		ArrayAdapter<String> adp = new ArrayAdapter<String>(
 		
@@ -2226,6 +2279,109 @@ public class Methods {
 		dlg.show();
 		
 	}//public static void dlg_checkactv_long_click(Activity actv)
+	
+	public static void
+	dlg_checkactv_long_click
+	(Activity actv, int item_position, Item item) {
+		/*********************************
+		 * 1. Dialog
+		 * 2. List view
+		 * 3. Show dialog
+		 *********************************/
+		String dlgTitle = null;
+		
+		if (item.getText() != null) {
+
+			int textLen = item.getText().length();
+			
+			if (textLen < CONS.Admin.Miscs.DialogTitleLength) {
+				
+				dlgTitle = item.getText();
+				
+			} else {//if (textLen < 6)
+				
+				dlgTitle = item.getText().substring(
+								0,
+								CONS.Admin.Miscs.DialogTitleLength);
+				
+			}//if (textLen < 6)
+			
+					
+		} else {//if (item.getText() != null)
+			
+			dlgTitle = actv.getString(R.string.dlg_checkactv_long_click_title);
+			
+		}//if (item.getText() != null)
+		
+		
+		
+		Dialog dlg = dlg_template_cancel(actv, 
+				R.layout.dlg_checkactv_long_click,
+//				R.string.dlg_checkactv_long_click_title,
+				dlgTitle,
+				
+				R.id.dlg_checkactv_long_click_bt_cancel,
+				Methods.DialogButtonTags.dlg_generic_dismiss);
+		
+		/*----------------------------
+		 * 2. List view
+		 * 	1. Get view
+		 * 	1-2. Set tag to view
+		 * 
+		 * 	2. Prepare list data
+		 * 	3. Prepare adapter
+		 * 	4. Set adapter
+			----------------------------*/
+		ListView lv = (ListView) dlg.findViewById(R.id.dlg_checkactv_long_click_lv);
+		
+		lv.setTag(Methods.DialogItemTags.dlg_checkactv_long_click_lv);
+		
+		/*----------------------------
+		 * 2.2. Prepare list data
+			----------------------------*/
+		List<String> long_click_items = new ArrayList<String>();
+		
+		long_click_items.add(actv.getString(
+				R.string.dlg_checkactv_long_click_lv_edit));
+		
+		long_click_items.add(actv.getString(
+				R.string.dlg_checkactv_long_click_lv_change_serial_num));
+
+		long_click_items.add(actv.getString(
+				R.string.dlg_checkactv_long_click_lv_delete_item));
+
+		ArrayAdapter<String> adp = new ArrayAdapter<String>(
+				
+				actv,
+				android.R.layout.simple_list_item_1,
+				long_click_items
+				);
+		
+		/*----------------------------
+		 * 2.4. Set adapter
+			----------------------------*/
+		lv.setAdapter(adp);
+		
+		/*----------------------------
+		 * 3. Set listener => list
+			----------------------------*/
+		// Log
+		Log.d("Methods.java" + "["
+				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ "]", "item_position: " + item_position);
+		
+		
+		lv.setOnItemClickListener(
+				new DialogOnItemClickListener(
+						actv, 
+						dlg, item_position));
+		
+		/*********************************
+		 * 3. Show dialog
+		 *********************************/
+		dlg.show();
+		
+	}//dlg_checkactv_long_click
 
 	public static void
 	dlg_main_actv_long_click
@@ -3810,5 +3966,61 @@ public class Methods {
 		public static final String separatorColon	= ":";
 		
 	}
+
+	public static void
+	dlg_checkactv_long_click_lv_delete_item
+	(Activity actv, Dialog dlg1,
+			int item_position, Item item) {
+		
+		/*********************************
+		 * Setup: Db
+		 *********************************/
+		DBUtils dbu = new DBUtils(actv, MainActv.dbName);
+		
+		SQLiteDatabase wdb = dbu.getWritableDatabase();
+		
+		/*********************************
+		 * Validate: Check list exists?
+		 *********************************/
+		boolean result = DBUtils.isInTable(
+				actv,
+				wdb,
+				CONS.DBAdmin.tableNames.items.toString(),
+				android.provider.BaseColumns._ID,
+				item.getDb_id());
+		
+		if (result == false) {		// Result is false ==> Meaning the target data doesn't exist
+		//							in db; Hence, not executing delete op
+
+			// Log
+			String log_msg = 
+					"Item list doesn't exist in db: "
+					+ String.valueOf(item.getDb_id());
+
+			Log.d("["
+					+ "Methods.java : "
+					+ +Thread.currentThread().getStackTrace()[2]
+							.getLineNumber() + " : "
+					+ Thread.currentThread().getStackTrace()[2].getMethodName()
+					+ "]", log_msg);
+			
+			return;
+		
+		} else {//if (result == false)
+		
+			// Log
+			Log.d("Methods.java" + "["
+			+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+			+ "]", 
+			"Item list exists in db(id="
+			+ String.valueOf(item.getDb_id()) + ")");
+		
+		}//if (result == false)
+
+		wdb.close();
+		
+		
+	}//dlg_checkactv_long_click_lv_delte_item
+	
 }//public class Methods
 

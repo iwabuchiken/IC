@@ -1,3 +1,4 @@
+
 package adapters;
 
 import ic.main.R;
@@ -106,6 +107,7 @@ public class LogAdapter extends ArrayAdapter<String> {
     		
 		}
     	
+    	//REF matcher http://stackoverflow.com/questions/9366742/android-regular-expression-return-matched-string answered Feb 20 '12 at 18:56
         String p1 = "\\[(.+)\\] (.+)";
         Pattern p = Pattern.compile(p1);
         Matcher m = p.matcher(fullText);

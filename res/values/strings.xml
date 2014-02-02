@@ -56,8 +56,9 @@
     	
     <!-- dlg_checkactv_long_click.xml -->
     	<string name="dlg_checkactv_long_click_title">アイテム</string>
-    	<string name="dlg_checkactv_long_click_lv_edit">本文変更</string>
+    	<string name="dlg_checkactv_long_click_lv_edit">Change text</string>
     	<string name="dlg_checkactv_long_click_lv_change_serial_num">順番変更</string>
+    	<string name="dlg_checkactv_long_click_lv_delete_item">Delete this item</string>
     
     
     <!-- dlg_checkactv_change_serial_num.xml -->
