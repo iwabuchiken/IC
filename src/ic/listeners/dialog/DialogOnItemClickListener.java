@@ -116,6 +116,8 @@ public class DialogOnItemClickListener implements OnItemClickListener {
 		
 		this.item	= item;
 
+		vib = (Vibrator) actv.getSystemService(Context.VIBRATOR_SERVICE);
+		
 	}
 
 	public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
@@ -179,10 +181,10 @@ public class DialogOnItemClickListener implements OnItemClickListener {
 			} else if (item.equals(actv.getString(
 					R.string.dlg_checkactv_long_click_lv_delete_item))) {
 				
-				Item item_CheckActv = (Item) parent.getItemAtPosition(position);
+//				Item item_CheckActv = (Item) parent.getItemAtPosition(position);
 				
 				Methods.dlg_checkactv_long_click_lv_delete_item(
-						actv, dlg1, item_position, item_CheckActv);
+						actv, dlg1, item_position, this.item);
 				
 			}//if (item.equals(actv.getString(R.string.dlg_checkactv_long_click_lv_edit)))
 			

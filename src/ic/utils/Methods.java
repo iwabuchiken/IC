@@ -2234,8 +2234,6 @@ public class Methods {
 			----------------------------*/
 		ListView lv = (ListView) dlg.findViewById(R.id.dlg_checkactv_long_click_lv);
 		
-		lv.setTag(Methods.DialogItemTags.dlg_checkactv_long_click_lv);
-		
 		/*----------------------------
 		 * 2.2. Prepare list data
 			----------------------------*/
@@ -2266,7 +2264,8 @@ public class Methods {
 		Log.d("Methods.java" + "["
 				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
 				+ "]", "item_position: " + item_position);
-
+		
+		lv.setTag(Methods.DialogItemTags.dlg_checkactv_long_click_lv);
 		
 		lv.setOnItemClickListener(
 						new DialogOnItemClickListener(
@@ -2334,8 +2333,6 @@ public class Methods {
 			----------------------------*/
 		ListView lv = (ListView) dlg.findViewById(R.id.dlg_checkactv_long_click_lv);
 		
-		lv.setTag(Methods.DialogItemTags.dlg_checkactv_long_click_lv);
-		
 		/*----------------------------
 		 * 2.2. Prepare list data
 			----------------------------*/
@@ -2370,11 +2367,13 @@ public class Methods {
 				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
 				+ "]", "item_position: " + item_position);
 		
+		lv.setTag(Methods.DialogItemTags.dlg_checkactv_long_click_lv);
 		
 		lv.setOnItemClickListener(
 				new DialogOnItemClickListener(
 						actv, 
-						dlg, item_position));
+						dlg, item_position,
+						item));
 		
 		/*********************************
 		 * 3. Show dialog
@@ -3967,10 +3966,23 @@ public class Methods {
 		
 	}
 
+	/*********************************
+	 * @param item_position => Integer number in CheckActv.iList
+	 * @param dlg1 => By long click on an item in CheckActv.iList
+	 * @param item => Item class
+	 * @return void
+	 * @see Overload => Exists
+	 *********************************/
 	public static void
 	dlg_checkactv_long_click_lv_delete_item
 	(Activity actv, Dialog dlg1,
 			int item_position, Item item) {
+		// Delete item from: db
+		
+		// Update serial num of each item
+		// Ending:
+		//		- Close db
+		//		- Dismiss dlg1
 		
 		/*********************************
 		 * Setup: Db
@@ -3980,7 +3992,7 @@ public class Methods {
 		SQLiteDatabase wdb = dbu.getWritableDatabase();
 		
 		/*********************************
-		 * Validate: Check list exists?
+		 * Validate: Item exists?
 		 *********************************/
 		boolean result = DBUtils.isInTable(
 				actv,
@@ -4017,8 +4029,75 @@ public class Methods {
 		
 		}//if (result == false)
 
+		/*********************************
+		 * Delete: Items
+		 *********************************/
+		String sql = 
+				"DELETE FROM "
+				+ CONS.DBAdmin.tableNames.items.toString()
+				+ " WHERE "
+				+ android.provider.BaseColumns._ID + " = '"
+				+ String.valueOf(item.getDb_id()) + "'";
+		
+		// Log
+		Log.d("DBUtils.java" + "["
+				+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ "]", "sql=" + sql);
+		
+		try {
+			
+			wdb.execSQL(sql);
+			
+			// debug
+			Toast.makeText(actv, "Items deleted", Toast.LENGTH_LONG).show();
+			
+			// Log
+			String log_msg = "Items deleted: "
+							+ String.valueOf(item.getDb_id());
+
+			Log.d("["
+					+ "Methods.java : "
+					+ +Thread.currentThread().getStackTrace()[2]
+							.getLineNumber() + " : "
+					+ Thread.currentThread().getStackTrace()[2].getMethodName()
+					+ "]", log_msg);
+			
+		} catch (SQLException e) {
+			// Log
+			Log.d("DBUtils.java" + "["
+					+ Thread.currentThread().getStackTrace()[2].getLineNumber()
+					+ "]", "Exception => " + e.toString());
+			
+			// debug
+			String toa_msg = "Deletion failed for "
+							+ String.valueOf(item.getDb_id())
+							+ "(" + e.toString() + ")";
+			
+			Toast.makeText(actv, toa_msg, Toast.LENGTH_LONG).show();
+			
+		}//try
+
+		/*********************************
+		 * Delete item from: iList
+		 *********************************/
+		CheckActv.iList.remove(item_position);
+		
+		/*********************************
+		 * Notify the adapter
+		 *********************************/
+		CheckActv.ilAdp.notifyDataSetChanged();
+		
+		/*********************************
+		 * Update serial num of each item
+		 *********************************/
+		boolean res = Methods_ic.update_ItemsList(CheckActv.iList);
+		
+		/*********************************
+		 * Ending operations
+		 *********************************/
 		wdb.close();
 		
+		dlg1.dismiss();
 		
 	}//dlg_checkactv_long_click_lv_delte_item
 	

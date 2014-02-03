@@ -1,6 +1,7 @@
 package ic.utils;
 
 import ic.items.CL;
+import ic.items.Item;
 import ic.main.MainActv;
 import ic.utils.CONS.DBAdmin.AdminLog;
 
@@ -900,5 +901,12 @@ public class Methods_ic {
 		return logLines;
 		
 	}//read_LogFile(String fpath_Log)
+
+	public static boolean
+	update_ItemsList(List<Item> iList) {
+		// TODO Auto-generated method stub
+		return false;
+		
+	}//update_ItemsList(List<Item> iList)
 	
 }//public class Methods_ic
