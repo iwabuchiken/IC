@@ -100,5 +100,12 @@
 		<string name="dlg_sort_list_genre_item_name">Genre/Item name</string>
 		<string name="dlg_sort_list_store_item_name">Store/Item name</string>
 		<string name="dlg_sort_list_store_genre_item_name">Store/Genre/Item name</string>
-	    
+		
+	<!-- preferences.xml -->
+		<!-- ListPreference -->
+		<string name="pref_key_sort_type">pref_IC_sort_type</string>
+		<string name="pref_sort_type_title">Sort type</string>
+		<string name="pref_sort_type_summary">
+		    			Set the sort type for the check list</string>
+		
 </resources>

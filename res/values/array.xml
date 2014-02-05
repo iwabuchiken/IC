@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="updateFrequency">
+        <item name="1">Daily</item>
+        <item name="7">Weekly</item>
+        <item name="3">Yearly</item>
+        <item name="0">Never(I will Myself) </item>
+    </string-array>
+    
+    <string-array name="updateFrequencyValues">
+        <item name="1">1</item>
+        <item name="700">7</item>
+        <item name="3">3</item>
+        
+    </string-array>
+    
+    <string-array name="sort_types">
+        
+        <item name="1">Created at</item>
+        <item name="2">Item name</item>
+        
+    </string-array>
+    
+    <string-array name="sort_types_values">
+        
+        <item name="1">created_at</item>
+        <item name="2">item_name</item>
+        
+    </string-array>
+    
+</resources>

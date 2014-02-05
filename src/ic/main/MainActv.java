@@ -21,6 +21,7 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -453,9 +454,45 @@ public class MainActv extends ListActivity {
 				+ Thread.currentThread().getStackTrace()[2].getMethodName()
 				+ "]", "Sorting list ...");
 		
+		String sortType = prefs.getString(
+							this.getString(R.string.pref_key_sort_type),
+							"NOUPDATE");
+
+		TypedArray selectedValues = this.getResources()
+		        	.obtainTypedArray(R.array.sort_types_values);
+		
+		// Log
+		String log_msg = "sortType="
+						+ sortType
+						+ "/"
+						+ "selectedValues.getString(0)="
+						+ selectedValues.getString(0);
+
+		Log.d("[" + "MainActv.java : "
+				+ +Thread.currentThread().getStackTrace()[2].getLineNumber()
+				+ " : "
+				+ Thread.currentThread().getStackTrace()[2].getMethodName()
+				+ "]", log_msg);
+		
+		// created_at
+		if (sortType.equals(selectedValues.getString(0))) {
+			
+			CONS.Admin.sortType = CONS.Admin.SortTypes.SortBy_CreatedAt;
+	
+		// item_name
+		} else if (sortType.equals(selectedValues.getString(1))){//if (selectedValues.equals(o))
+			
+			CONS.Admin.sortType = CONS.Admin.SortTypes.SortBy_Yomi;
+			
+		} else {//if (selectedValues.equals(o))
+			
+			CONS.Admin.sortType = CONS.Admin.SortTypes.SortBy_Yomi;
+			
+		}//if (selectedValues.equals(o))
+		
 		boolean res = Methods_ic.sort_CheckList(
-						this,
-						CONS.Admin.SortTypes.SortBy_Yomi);
+						this, CONS.Admin.sortType);
+//					this,CONS.Admin.SortTypes.SortBy_Yomi);
 		
 //		boolean res = Methods.sort_list_CLList(this, CLList);
 		
@@ -684,10 +721,32 @@ public class MainActv extends ListActivity {
 			
 			break;// case R.id.main_opt_menu_filter_by_genre
 			
+		case R.id.main_opt_menu_settings://---------------
+			
+			_case_main_opt_menu_settings();
+			
+			break;// case R.id.main_opt_menu_filter_by_genre
+			
 		}//switch (item.getItemId())
 
 		return super.onOptionsItemSelected(item);
 	}//public boolean onOptionsItemSelected(MenuItem item)
+
+	private void
+	_case_main_opt_menu_settings() {
+		// TODO Auto-generated method stub
+		Intent i = new Intent();
+		
+		i.setClass(this, SettingsActv.class);
+		
+		i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+		
+		/*********************************
+		 * 3. Start
+		 *********************************/
+		startActivity(i);
+
+	}//_case_main_opt_menu_settings()
 
 	private void
 	_case_main_opt_menu_see_log() {
